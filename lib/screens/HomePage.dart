@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 import '../widgets/widgetsLib.dart';
 import '../models/Lecture.dart';
@@ -15,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var theLec = Lecture(courseCode: 'TM112', room: 'MLab-6', day: 1, repeatType: 0, startTime: TimeOfDay(hour: 20, minute: 0), endTime: TimeOfDay(hour: 22, minute: 0));
+  var theLec = Lecture(courseCode: 'TM112', room: 'MLab-6', day: 1, repeatType: 0, startTime: MyTimeOfDay(hour: 20, minute: 0), endTime: MyTimeOfDay(hour: 22, minute: 0));
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,7 @@ class ScheduleView extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              LectureCard(dayOfMonth: 23, lecture: Lecture(courseCode: 'TM351', room: 'MC-6', day: 1, repeatType: 1, startTime: TimeOfDay(hour: 8, minute: 00), endTime: TimeOfDay(hour: 10, minute: 00))),
+              LectureCard(dayOfMonth: 23, lecture: Lecture(courseCode: 'TM351', room: 'MC-6', day: 1, repeatType: 1, startTime: MyTimeOfDay(hour: 8, minute: 00), endTime: MyTimeOfDay(hour: 10, minute: 00))),
             ],
           )
         ],

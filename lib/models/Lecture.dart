@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 class Lecture {
   String courseCode;
   String room;
   int day;
   int repeatType;
-  TimeOfDay startTime;
-  TimeOfDay endTime;
+  MyTimeOfDay startTime;
+  MyTimeOfDay endTime;
 
   Lecture({Key key,  @required this.courseCode, @required this.room, @required this.day, @required this.repeatType, @required this.startTime, @required this.endTime}){
     if(day > 6 || day < 1) throw ArgumentError('day number should be from 1 to 6: $day');

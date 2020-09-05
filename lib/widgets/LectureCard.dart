@@ -9,12 +9,8 @@ class LectureCard extends StatelessWidget {
   String endTimeString;
 
   LectureCard({Key key, @required this.lecture, @required this.dayOfMonth}) : super(key: key){
-    final now = new DateTime.now();
-    final dtStart = DateTime(now.year, now.month, now.day, lecture.startTime.hour, lecture.startTime.minute);
-    final dtEnd = DateTime(now.year, now.month, now.day, lecture.endTime.hour, lecture.endTime.minute);
-
-    startTimeString = DateFormat('hh:mm a').format(dtStart);
-    endTimeString = DateFormat('hh:mm a').format(dtEnd);
+    startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
+    endTimeString = DateFormat('hh:mm a').format(lecture.endTime);
   }
 
   @override
