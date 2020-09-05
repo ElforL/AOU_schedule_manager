@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uni_assistant/models/Course.dart';
+import 'package:uni_assistant/models/Event.dart';
+import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 import '../widgets/widgetsLib.dart';
 
@@ -16,9 +20,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   @override
+  void initState() {
+    super.initState();
+    loadCourses();
+  }
+
+  loadCourses() async{
+    await widget.userServices.loadCourses();
+    setState(() {
+      
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var lectures = widget.userServices.getNextLectures();
-    var alerts = widget.userServices.getAlerts();
+    List<Lecture> lectures; 
+    List<Event> alerts; 
+    if(widget.userServices.courses.length > 0){
+      lectures = widget.userServices.getNextLectures();
+      alerts = widget.userServices.getAlerts();
+    }
 
     return Scaffold(
 
@@ -54,6 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ScheduleView(lectures: lectures)
             ],
           )
+
+
+
+
+          // Empty Courses
           :Column(
             children: [
               Expanded(
@@ -81,6 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       RaisedButton(
                         onPressed: (){
                           // TODO: add navigator
+                          setState(() {
+                            widget.userServices.courses.add(Course('TM112'));
+                            widget.userServices.courses[0].addLecture(
+                              Lecture('TM112', 'MC-6', 2, 0, MyTimeOfDay(hour: 20), MyTimeOfDay(hour: 22))
+                            );
+                            widget.userServices.writeToFile();
+                          });
                         },
                         child: Text(
                           "ADD COURSES",

@@ -11,6 +11,45 @@ class Event {
     if(description.length > 46) throw ArgumentError('Event "included" can\'t be more than 46 characters long');
   }
 
+  Event.fromJson(Map<String, dynamic> parsedJson):
+    _type = parsedJson['type'],
+    _courseCode = parsedJson['courseCode'],
+    _description = parsedJson['description'],
+    _startDateTime = DateTime(parsedJson['startDateTime']['year'],
+                              parsedJson['startDateTime']['month'],
+                              parsedJson['startDateTime']['day'],
+                              parsedJson['startDateTime']['hour'],
+                              parsedJson['startDateTime']['minute']
+    ),
+    _endDateTime = DateTime(parsedJson['endDateTime']['year'],
+                            parsedJson['endDateTime']['month'],
+                            parsedJson['endDateTime']['day'],
+                            parsedJson['endDateTime']['hour'],
+                            parsedJson['endDateTime']['minute']
+  );
+
+  Map<String, dynamic> toJson(){
+    return <String, dynamic>{
+      'type': type,
+      'courseCode': courseCode,
+      'description': description,
+      'startDateTime': {
+        'year': startDateTime.year,
+        'month': startDateTime.month,
+        'day': startDateTime.day,
+        'hour': startDateTime.hour,
+        'minute': startDateTime.minute,
+      },
+      'endDateTime': {
+        'year': endDateTime.year,
+        'month': endDateTime.month,
+        'day': endDateTime.day,
+        'hour': endDateTime.hour,
+        'minute': endDateTime.minute,
+      },
+    };
+  }
+
   int get type{
     return _type;
   }

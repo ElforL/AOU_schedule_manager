@@ -16,6 +16,26 @@ class Lecture {
     if(startTime.hour > endTime.hour ) throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
   }
 
+  Lecture.fromJson(Map<String, dynamic> parsedJson):
+    _courseCode = parsedJson['code'],
+    _room = parsedJson['room'],
+    _day = parsedJson['day'],
+    _repeatType = parsedJson['repeatType'],
+    _startTime = MyTimeOfDay.fromJson(parsedJson['startTime']),
+    _endTime = MyTimeOfDay.fromJson(parsedJson['endTime'])
+  ;
+
+  Map<String, dynamic> toJson(){
+    return <String, dynamic>{
+      'code': courseCode,
+      'room': room,
+      'day': day,
+      'repeatType': repeatType,
+      'startTime': startTime.toJson(),
+      'endTime':  endTime.toJson(),
+    };
+  }
+
   String get courseCode{
     return _courseCode;
   }
