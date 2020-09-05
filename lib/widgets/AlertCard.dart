@@ -5,7 +5,6 @@ class AlertCard extends StatelessWidget {
   final Event event;
   Color cardColor;
   String title, line1, line2;
-  DateTime compareDate;
 
   AlertCard({Key key, @required this.event}){
     var diff = event.endDateTime.difference(DateTime.now()).inDays;
@@ -36,22 +35,25 @@ class AlertCard extends StatelessWidget {
     switch (event.type) {
       case 0: 
         title += 'TMA';
-        compareDate = event.endDateTime;
         break;
       case 1: 
         title += 'MTA';
-        compareDate = event.startDateTime;
         break;
       default: 
         title += 'Final';
-        compareDate = event.startDateTime;
     }
 
-    var daysRem = compareDate.difference(DateTime.now()).inDays;
-    line1 = '$daysRem days remainig';
+    if(event.remainingTime >= 1440){
+      line1 = '${event.remainingTime ~/ 1440} day${event.remainingTime ~/ 1440 != 1?'s':''} remainig';
+    }else{
+      if(event.remainingTime >= 60){
+        line1 = '${event.remainingTime ~/ 60} hour${event.remainingTime ~/ 60 != 1?'s':''} remainig';
+      }else{
+        line1 = '${event.remainingTime} minute${event.remainingTime != 1?'s':''} remainig';
+      }
+    }
 
-    line2 = 'Due at ' + DateFormat('dd/MM/yyyy – hh:mm a').format(compareDate);
-
+    line2 = 'Due at ' + DateFormat('dd/MM/yyyy – hh:mm a').format(event.compareDate);
   }
 
   @override

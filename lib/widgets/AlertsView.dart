@@ -1,12 +1,19 @@
 part of widgets;
 
 class AlertsView extends StatelessWidget {
-  const AlertsView({
+  AlertsView({
     Key key,
+    this.alerts,
   }) : super(key: key);
+  
+  final List<Event> alerts;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> cards = List<Widget>();
+    for (var i = 0; i < alerts.length; i++) {
+      cards.add(AlertCard(event: alerts[i]));
+    }
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,10 +26,7 @@ class AlertsView extends StatelessWidget {
           SizedBox(height: 6),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AlertCard(event: Event(0,'TM112', 'Included Text', DateTime(2019, 5, 12), DateTime(2020,9,22,21,30))),
-              AlertCard(event: Event(2,'TM111', 'Included Text', DateTime(2020, 12, 12), DateTime(2020,9,22,21,30))),
-            ],
+            children: cards,
           )
         ],
       ),

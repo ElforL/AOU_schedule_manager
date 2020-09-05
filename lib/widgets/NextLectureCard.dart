@@ -1,9 +1,8 @@
 part of widgets;
 
 class NextLectureCard extends StatelessWidget {
-  const NextLectureCard({Key key, @required this.status, @required this.lecture}) : super(key: key);
+  const NextLectureCard({Key key, @required this.lecture}) : super(key: key);
 
-  final int status;
   final Lecture lecture;
 
   @override
@@ -11,24 +10,27 @@ class NextLectureCard extends StatelessWidget {
 
     var cardColor;
     var title;
-    var subtitle = '${lecture.courseCode} : ${lecture.room}  ${DateFormat('hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
-
-    switch (status) {
-      case 0: 
-        cardColor = Colors.amber;
-        title = 'Next up';
-        break;
-      case 1: 
-        cardColor = Colors.red; 
-        title = 'Going on';
-        break;
-      case 2: 
+    var subtitle;
+    var status = lecture == null? 2: lecture.getStatus(DateTime.now());
+      
+      if(status == 2){
         cardColor = Colors.blue; 
         title = 'Free';
         subtitle = "We're done for the week";
-        break;
-      default: throw ArgumentError("NextLectureCard: status can't be other than 0, 1, or 2");
-    }
+      }else{
+        subtitle = '${lecture.courseCode} : ${lecture.room}  ${DateFormat('EEEE hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
+        switch (status) {
+          case 0: 
+            cardColor = Colors.amber;
+            title = 'Next up';
+            break;
+          case 1: 
+            cardColor = Colors.red; 
+            title = 'Going on';
+            break;
+        }
+      }
+    
 
     return Material(
       color: Colors.transparent,

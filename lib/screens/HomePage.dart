@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:uni_assistant/models/myTimeOfDay.dart';
+import 'package:uni_assistant/models/UserServices.dart';
 
 import '../widgets/widgetsLib.dart';
-import '../models/Lecture.dart';
 
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.coursesList,});
+  MyHomePage({Key key, this.userServices,});
 
-  var coursesList;
+  final UserServices userServices;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -16,10 +15,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var theLec = Lecture(courseCode: 'TM112', room: 'MLab-6', day: 1, repeatType: 0, startTime: MyTimeOfDay(hour: 20, minute: 0), endTime: MyTimeOfDay(hour: 22, minute: 0));
-
   @override
   Widget build(BuildContext context) {
+    var lectures = widget.userServices.getNextLectures();
+    var alerts = widget.userServices.getAlerts();
+
     return Scaffold(
 
       appBar: PreferredSize(
@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Center(
           // Main View
-          child: ListView(
+          child: widget.userServices.courses.length > 0? ListView(
             children: [
               Row(
                 children: [
@@ -46,17 +46,59 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
 
-              NextLectureCard(status: 2, lecture: theLec),
+              NextLectureCard(lecture: lectures.length > 0? lectures[0]: null),
               SizedBox(height: 10),
-              // TODO: add alerts count check for alerts widget
-              true? AlertsView(): SizedBox(),
+              alerts.length > 0? AlertsView(alerts: alerts): SizedBox(),
               SizedBox(height: 10),
 
-              ScheduleView()
+              ScheduleView(lectures: lectures)
+            ],
+          )
+          :Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Empty :(",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "You dont have any courses registered",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      RaisedButton(
+                        onPressed: (){
+                          // TODO: add navigator
+                        },
+                        child: Text(
+                          "ADD COURSES",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           ), // Main View
         ),
-      ),
+      )
+      ,
+    
     );
   }
 }

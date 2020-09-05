@@ -3,10 +3,17 @@ part of widgets;
 class ScheduleView extends StatelessWidget {
   const ScheduleView({
     Key key,
+    this.lectures,
   }) : super(key: key);
+
+  final List<Lecture> lectures;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> cards = new List();
+    for (var i = 0; i < lectures.length; i++) {
+      cards.add(LectureCard(dayOfMonth: 22, lecture: lectures[i]));
+    }
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,9 +27,7 @@ class ScheduleView extends StatelessWidget {
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LectureCard(dayOfMonth: 23, lecture: Lecture(courseCode: 'TM351', room: 'MC-6', day: 1, repeatType: 1, startTime: MyTimeOfDay(hour: 8, minute: 00), endTime: MyTimeOfDay(hour: 10, minute: 00))),
-            ],
+            children: cards,
           )
         ],
       ),
