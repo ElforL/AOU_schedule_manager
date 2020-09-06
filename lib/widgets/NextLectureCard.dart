@@ -54,7 +54,10 @@ class NextLectureCard extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              subtitle
+              subtitle,
+              style: TextStyle(
+                fontSize: 12
+              ),
             )
           ],
         ),

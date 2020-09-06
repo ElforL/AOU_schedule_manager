@@ -36,7 +36,10 @@ class _CoursesListScreenState extends State<CoursesListScreen> {
           SizedBox(height: 50),
         ]+
         List<Widget>.generate(widget.userServices.courses.length, (index) {
-          return CourseCard(userServices: widget.userServices ,course: widget.userServices.courses[index]);
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: CourseCard(userServices: widget.userServices ,course: widget.userServices.courses[index]),
+          );
         })
       ),
 
@@ -46,6 +49,10 @@ class _CoursesListScreenState extends State<CoursesListScreen> {
           await Navigator.push(context, MaterialPageRoute(builder: 
             (context) => CourseEditScreen(userServices: widget.userServices, course: null)
           ));
+          widget.userServices.writeToFile();
+          setState(() {
+            
+          });
         },
         child: Icon(Icons.add),
       ),
@@ -88,6 +95,7 @@ class _DatePickerState extends State<DatePicker> {
                 ),
                 onTap: () async{
                   widget.userServices.semesterStart = await _selectDate(context, widget.userServices.semesterStart);
+                  widget.userServices.writeToFile();
                   setState(() {
                   });
                 },

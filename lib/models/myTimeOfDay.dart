@@ -19,4 +19,14 @@ class MyTimeOfDay extends DateTime{
       'minute': minute,
     };
   }
+
+  bool operator <(MyTimeOfDay other){
+    var today = DateTime.now();
+    var first = DateTime(today.year, today.year, today.year, hour, minute);
+    var second = DateTime(today.year, today.year, today.year, other.hour, other.minute);
+    if(first.difference(second) < Duration.zero){
+      return true;
+    }
+    return false;
+  }
 }

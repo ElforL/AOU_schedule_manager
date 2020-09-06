@@ -68,11 +68,11 @@ class Lecture {
     _repeatType = newRepeat;
   }
   set startTime(MyTimeOfDay newStart){
-    if(startTime.hour > endTime.hour ) throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
+    if(!(newStart < endTime)) throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
     _startTime = newStart;
   }
   set endTime(MyTimeOfDay newEnd){
-    if(startTime.hour > endTime.hour ) throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
+    if(!(startTime < newEnd)) throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
     _endTime = newEnd;
   }
 
@@ -127,7 +127,8 @@ class Lecture {
     }
   }
 
-  String getDayName(){
+  String getDayName([int day]){
+    if(day== null) day = _day;
     switch (day) {
       case 1: return 'Saturday';
       case 2: return 'Sunday';

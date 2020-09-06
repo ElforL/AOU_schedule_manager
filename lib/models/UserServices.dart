@@ -41,7 +41,7 @@ class UserServices {
   }
 
   Map<String, dynamic> toJson(){
-    return <String, dynamic>{
+    return {
       'semesterStart':{
         'year': semesterStart.year,
         'month': semesterStart.month,
@@ -53,9 +53,8 @@ class UserServices {
         'day': semesterEnd.day,
       },
       'courses':[
-        for (var course in courses) {
+        for (var course in courses)
           course.toJson()
-        }
       ]
     };
   }  
@@ -71,14 +70,14 @@ class UserServices {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/courses.json');
+    return File('$path/user.json');
   }
 
   Future<File> writeToFile() async {
     final file = await _localFile;
 
     // Write the file.
-    return file.writeAsString(jsonEncode(courses));
+    return file.writeAsString(jsonEncode(this));
   }
   
   Future<String> readFile() async {
@@ -95,11 +94,13 @@ class UserServices {
     }
   }
 
-  void loadCourses() async {
+  void loadUser() async {
     String jsonString = await readFile();
     final jsonResponse = json.decode(jsonString);
-    List<Course> parsedcourses = List<Course>.from(jsonResponse.map((i) => Course.fromJson(i)).toList());
-    courses = parsedcourses;
+    UserServices parsedUser = UserServices.fromJson(jsonResponse);
+    courses = parsedUser.courses;
+    semesterStart = parsedUser.semesterStart;
+    semesterEnd = parsedUser.semesterEnd;
   }
   
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
@@ -142,4 +143,7 @@ class UserServices {
   static int getWeekday(DateTime date){
     return date.weekday + 2 > 7? date.weekday - 5: date.weekday + 2;
   }
+
+  // ///////////////////////////////////////////////////////////////// constants ///////////////////////////////////////////////////////////////////
+
 }

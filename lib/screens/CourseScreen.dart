@@ -31,11 +31,12 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
               onPressed: () async{
                 await Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => CourseEditScreen(course: widget.course)
+                  builder: (context) => CourseEditScreen(userServices: widget.userServices,course: widget.course)
                 ));
-                // widget.course.addLecture(Lecture(widget.course.code, 'MC-6', 4, 0, MyTimeOfDay(hour: 20), MyTimeOfDay(hour: 22)));
+                widget.userServices.writeToFile();
+                if(!widget.userServices.courses.contains(widget.course))
+                  Navigator.pop(context);
                 setState(() {
-                  widget.userServices.writeToFile();
                 });
               }
             )

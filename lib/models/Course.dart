@@ -2,7 +2,7 @@ import 'Event.dart';
 import 'Lecture.dart';
 
 class Course{
-  final String _code;
+  String _code;
   List<Lecture> _lectures;
   List<Event> _events;
 
@@ -32,15 +32,13 @@ class Course{
       'code': code,
       'lectures': [
         if(lectures.length > 0)
-          for (var lecture in lectures) {
+          for (var lecture in lectures) 
             lecture.toJson()
-          }
       ],
       'events': [
         if(lectures.length > 0)
-          for (var event in events) {
+          for (var event in events)
             event.toJson()
-          }
       ]
     };
   }
@@ -54,6 +52,10 @@ class Course{
   }
   List<Event> get events{
     return _events;
+  }
+
+  set code(String code){
+    _code = code;
   }
 
   void addLecture(Lecture newLec){
