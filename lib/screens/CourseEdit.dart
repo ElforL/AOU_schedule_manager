@@ -106,7 +106,6 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                         ),
                         onPressed: (){
                           setState(() {
-                            //TODO save
                             widget.course.addLecture(Lecture(widget.course.code, '', 1, 0, MyTimeOfDay(hour: DateTime.now().hour), MyTimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute+1)));
                           });
                         }
@@ -188,7 +187,6 @@ class CourseEditScreenState extends State<CourseEditScreen> {
               ),
               onPressed: (){
                 widget.userServices.courses.remove(widget.course);
-                // widget.userServices.writeToFile();
                 Navigator.pop(context);
               },
             ),

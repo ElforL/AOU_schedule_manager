@@ -56,7 +56,7 @@ class LectureCard extends StatelessWidget {
 
                         // Date
                         Text(
-                          subBlueString, //TODO: try to calculate the day in the card?
+                          subBlueString,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: type == 0? 15: 10,

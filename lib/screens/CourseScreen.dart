@@ -36,6 +36,9 @@ class _CourseScreenState extends State<CourseScreen> {
                 widget.userServices.writeToFile();
                 if(!widget.userServices.courses.contains(widget.course))
                   Navigator.pop(context);
+                for (var i = 0; i < widget.course.lectures.length; i++) {
+                  widget.course.lectures[i].courseCode = widget.course.code;
+                }
                 setState(() {
                 });
               }

@@ -2,7 +2,7 @@ import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 class Lecture {
-  final String _courseCode;
+  String _courseCode;
   String _room;
   int _day;
   int _repeatType;
@@ -56,6 +56,9 @@ class Lecture {
     return _endTime;
   }
 
+  set courseCode(String newCode){
+    _courseCode = newCode;
+  }
   set room(String newRoom){
     _room = newRoom;
   }

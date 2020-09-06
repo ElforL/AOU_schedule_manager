@@ -44,7 +44,6 @@ class CoursesListScreenState extends State<CoursesListScreen> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        // TODO implement new Course
         onPressed: () async{
           await Navigator.push(context, MaterialPageRoute(builder: 
             (context) => CourseEditScreen(userServices: widget.userServices, course: null)
