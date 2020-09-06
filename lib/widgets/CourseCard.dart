@@ -4,8 +4,9 @@ class CourseCard extends StatefulWidget {
 
   final Course course;
   final UserServices userServices;
+  final CoursesListScreenState parent;
 
-  const CourseCard({Key key, this.course, this.userServices}) : super(key: key);
+  const CourseCard({Key key, this.course, this.userServices, this.parent}) : super(key: key);
 
   @override
   _CourseCardState createState() => _CourseCardState();
@@ -22,6 +23,9 @@ class _CourseCardState extends State<CourseCard> {
         onTap: () async{
           await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseScreen(userServices: widget.userServices,course: widget.course)));
           setState(() {
+            
+          });
+          widget.parent.setState(() {
             
           });
         },

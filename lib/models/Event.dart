@@ -1,6 +1,6 @@
 class Event {
   //0 TMA, 1 MTA, 2 Final
-  final int _type;
+  int _type;
   final String _courseCode;
   String _description;
   DateTime _startDateTime;
@@ -66,6 +66,9 @@ class Event {
     return _endDateTime;
   }
 
+  set type(int newType){
+    _type = newType;
+  }
   set description(String newDesc){
     _description = newDesc;
   }
@@ -76,11 +79,17 @@ class Event {
     _endDateTime = newEnd;
   }
 
-  // get remainingDays{
-  //   DateTime today = DateTime.now();
-  //   DateTime todayFixed = DateTime(today.year, today.month, today.day);
-  //   return compareDate.difference(todayFixed).inDays;
-  // }
+  /// null: error,
+  /// 0: TMA,
+  /// 1: MTA,
+  /// 2: Final.
+  static String getTypeName(int type){
+    return 
+    type == 0 ? 'TMA':
+    type == 1? 'MTA':
+    type == 2?  'Final':
+    null;
+  }
 
   get remainingTime{
     DateTime today = DateTime.now();

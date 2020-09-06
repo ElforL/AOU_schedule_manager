@@ -7,7 +7,9 @@ class AlertCard extends StatelessWidget {
   String title, line1, line2;
 
   AlertCard({Key key, @required this.event}){
-    var diff = event.endDateTime.difference(DateTime.now()).inDays;
+    var diff = event.type == 0?
+      event.endDateTime.difference(DateTime.now()).inDays
+      :event.startDateTime.difference(DateTime.now()).inDays;
     
     // Colors
     // amber[500]  14 13 12

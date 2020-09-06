@@ -31,6 +31,9 @@ class MyApp extends StatelessWidget {
         
         accentColor: Color(0xFFe7e7e7),
 
+        textSelectionColor: Colors.blue,
+        textSelectionHandleColor: Colors.blue,
+
         brightness: Brightness.dark,
         // Setting background and appbar color
         backgroundColor: kBackgroundColor,

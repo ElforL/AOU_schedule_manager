@@ -82,4 +82,28 @@ class Course{
   void removeEventAt(int index){
     events.removeAt(index);
   }
+
+  /// -1: full,
+  /// 0: TMA,
+  /// 1: MTA,
+  /// 2: Final.
+  int nextAvailableEvent(){
+    var available = [true, true, true];
+    for (var event in events) {
+      available[event.type] = false;
+    }
+    for (var i = 0; i < available.length; i++) {
+      if(available[i]) return i;
+    }
+    return -1;
+  }
+
+  List<int> nextEventsList(){
+    var out = [0,1,2];
+    for (var event in events) {
+      if(out.contains(event.type))
+        out.remove(event.type);
+    }
+    return out;
+  }
 }

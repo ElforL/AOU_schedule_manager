@@ -14,10 +14,10 @@ class CoursesListScreen extends StatefulWidget {
   final UserServices userServices;
 
   @override
-  _CoursesListScreenState createState() => _CoursesListScreenState();
+  CoursesListScreenState createState() => CoursesListScreenState();
 }
 
-class _CoursesListScreenState extends State<CoursesListScreen> {
+class CoursesListScreenState extends State<CoursesListScreen> {
 
   List<Widget> liist = List<Widget>();
 
@@ -38,7 +38,7 @@ class _CoursesListScreenState extends State<CoursesListScreen> {
         List<Widget>.generate(widget.userServices.courses.length, (index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CourseCard(userServices: widget.userServices ,course: widget.userServices.courses[index]),
+            child: CourseCard(parent: this, userServices: widget.userServices ,course: widget.userServices.courses[index]),
           );
         })
       ),

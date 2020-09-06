@@ -7,6 +7,7 @@ import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/screens/CourseScreen.dart';
+import 'package:uni_assistant/screens/CoursesListScreen.dart';
 
 
 import '../constants.dart';
@@ -26,6 +27,8 @@ part 'LectureCard.dart';
 
 part 'CourseCard.dart';
 part 'LectureEditCard.dart';
+part 'EventEditCard.dart';
+part 'EventCard.dart';
 
 
 

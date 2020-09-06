@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uni_assistant/constants.dart';
 import 'package:uni_assistant/models/Course.dart';
+import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
@@ -32,6 +33,8 @@ class CourseEditScreenState extends State<CourseEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var nextEvent = widget.course.nextAvailableEvent();
+    
     codeTfController = TextEditingController(text: widget.course.code);
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +107,7 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                         onPressed: (){
                           setState(() {
                             //TODO save
-                            widget.course.addLecture(Lecture(widget.course.code, '', 1, 0, MyTimeOfDay(hour: DateTime.now().hour), MyTimeOfDay(hour: DateTime.now().hour+2)));
+                            widget.course.addLecture(Lecture(widget.course.code, '', 1, 0, MyTimeOfDay(hour: DateTime.now().hour), MyTimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute+1)));
                           });
                         }
                       ),
@@ -115,7 +118,66 @@ class CourseEditScreenState extends State<CourseEditScreen> {
             ]
             ,
           ),
-        
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+
+            // Label
+            children: <Widget>[
+              Text("Events",
+                style: TextStyle(
+                  color: kOnBackgroundColor,
+                  fontSize: 12,
+                ),
+              )
+            ]+
+
+            // Cards
+            List<Widget>.generate(widget.course.events.length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: EventEditCard(event: widget.course.events[index], parent: this),
+              );
+            })+
+
+            // Button
+            [
+              nextEvent != -1? Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: SizedBox(
+                      height: 28,
+                      child: RaisedButton.icon(
+                        icon: Icon(Icons.add,
+                          size: 20,
+                        ),
+                        label: Text("ADD EVENT",
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        textColor: Colors.black,
+                        color: Color(0xffe7e7e7),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: (){
+                          setState(() {
+                            widget.course.addEvent(Event(nextEvent, widget.course.code, '', DateTime.now(), DateTime.now().add(Duration(days: 90))));
+                          });
+                        }
+                      ),
+                    ),
+                  ),
+                ],
+              ):SizedBox(),
+            ]
+            ,
+          ),
+
+          // DELETE
           Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 50),
             child: RaisedButton(
@@ -126,6 +188,7 @@ class CourseEditScreenState extends State<CourseEditScreen> {
               ),
               onPressed: (){
                 widget.userServices.courses.remove(widget.course);
+                // widget.userServices.writeToFile();
                 Navigator.pop(context);
               },
             ),

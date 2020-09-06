@@ -120,8 +120,11 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
               ),
               Column(
-                children: List<Widget>.generate(widget.course.lectures.length, (index){
-                  return LectureCard(lecture: widget.course.lectures[index]);
+                children: List<Widget>.generate(widget.course.events.length, (index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: EventCard(event: widget.course.events[index]),
+                  );
                 }),
               ),
             ]
