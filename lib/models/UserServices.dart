@@ -14,8 +14,18 @@ class UserServices {
   DateTime semesterStart, semesterEnd;
 
   UserServices(this.courses, [this.semesterStart, this.semesterEnd]){
-    if(semesterStart == null) semesterStart = DateTime.now();
-    if(semesterStart == null) semesterEnd = DateTime(semesterStart.year, semesterStart.month+3);
+    var today = DateTime.now();
+
+    if(semesterStart == null){
+      semesterStart = today;
+
+      for (var i = 1; semesterStart.weekday != 6; i++) {
+        semesterStart = DateTime(today.year, today.month, today.day + i);
+      }
+    }
+    if(semesterStart.weekday != 6) throw ArgumentError('Semester must start at saturday: ${semesterStart.weekday}');
+
+    if(semesterEnd == null) semesterEnd = DateTime(semesterStart.year, semesterStart.month, semesterStart.day+168);
   }
 
   // ///////////////////////////////////////////////////////////////// JSON ///////////////////////////////////////////////////////////////////
@@ -81,7 +91,6 @@ class UserServices {
       return contents;
     } catch (e) {
       // If encountering an error, return null.
-      print(e.toString());
       return null;
     }
   }

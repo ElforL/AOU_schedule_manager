@@ -12,8 +12,9 @@ class ScheduleView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> cards = new List();
     for (var i = 0; i < lectures.length; i++) {
-      cards.add(LectureCard(dayOfMonth: 22, lecture: lectures[i]));
+      cards.add(LectureCard(type: 0, lecture: lectures[i]));
     }
+    
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

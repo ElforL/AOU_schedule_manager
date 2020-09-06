@@ -3,18 +3,20 @@ part of widgets;
 class LectureCard extends StatelessWidget {
 
   final Lecture lecture;
-  final int dayOfMonth;
+  final int type;
   
   String startTimeString;
   String endTimeString;
 
-  LectureCard({Key key, @required this.lecture, @required this.dayOfMonth}) : super(key: key){
+  LectureCard({Key key, @required this.lecture, this.type}) : super(key: key){
     startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
     endTimeString = DateFormat('hh:mm a').format(lecture.endTime);
   }
 
   @override
   Widget build(BuildContext context) {
+    var subBlueString = type == 0? getDate(): getRepeatString();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Material(
@@ -60,10 +62,10 @@ class LectureCard extends StatelessWidget {
 
                           // Date
                           Text(
-                            dayOfMonth.toString(), //TODO: try to calculate the day in the card?
+                            subBlueString, //TODO: try to calculate the day in the card?
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 15,
+                              fontSize: type == 0? 15: 10,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -143,5 +145,24 @@ class LectureCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getDate(){
+    var today = DateTime.now();
+    var tmp = today;
+
+    for (var i = 1; UserServices.getWeekday(tmp) != lecture.day ; i++) {
+      tmp = DateTime(today.year, today.month, today.day + i);
+    }
+
+    return tmp.day.toString();
+  }
+
+  String getRepeatString(){
+    switch (lecture.repeatType) {
+      case 0: return 'WEEKLY';
+      case 1: return 'ODD';
+      default: return 'EVEN';
+    }
   }
 }

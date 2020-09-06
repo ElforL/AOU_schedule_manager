@@ -18,7 +18,7 @@ class NextLectureCard extends StatelessWidget {
         title = 'Free';
         subtitle = "We're done for the week";
       }else{
-        subtitle = '${lecture.courseCode} : ${lecture.room}  ${DateFormat('EEEE hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
+        subtitle = '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${DateFormat('hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
         switch (status) {
           case 0: 
             cardColor = Colors.amber;

@@ -5,7 +5,7 @@ class Lecture {
   final String _courseCode;
   String _room;
   int _day;
-  int _repeatType; // 0 weekly, 1 odd, 2 even
+  int _repeatType;
   MyTimeOfDay _startTime;
   MyTimeOfDay _endTime;
 
@@ -45,6 +45,7 @@ class Lecture {
   int get day{
     return _day;
   }
+  /// 0 weekly, 1 odd, 2 even
   int get repeatType{
     return _repeatType;
   }
@@ -121,6 +122,19 @@ class Lecture {
       case 4: return 'TUE';
       case 5: return 'WED';
       case 6: return 'THU';
+      //pretty sure we can't get to here, but it's here, just in case :P
+      default: throw ArgumentError('weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
+    }
+  }
+
+  String getDayName(){
+    switch (day) {
+      case 1: return 'Saturday';
+      case 2: return 'Sunday';
+      case 3: return 'Monday';
+      case 4: return 'Tuesday';
+      case 5: return 'Wednesday';
+      case 6: return 'Thursday';
       //pretty sure we can't get to here, but it's here, just in case :P
       default: throw ArgumentError('weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
     }
