@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       alerts = widget.userServices.getAlerts();
 
       var today = DateTime.now();
-      var firstLecStat = lectures[0].getStatus(today);
+      var firstLecStat = lectures.length > 0 ?lectures[0].getStatus(today):2;
       var duration;
       if(firstLecStat == 0 && lectures[0].day == UserServices.getWeekday(today)){
         var date = DateTime(today.year, today.month, today.day, lectures[0].startTime.hour, lectures[0].startTime.minute);
