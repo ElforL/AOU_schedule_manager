@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uni_assistant/constants.dart';
 import 'package:uni_assistant/models/Course.dart';
 import 'package:uni_assistant/models/Event.dart';
@@ -9,6 +8,7 @@ import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
+// ignore: must_be_immutable
 class CourseEditScreen extends StatefulWidget {
 
   Course course;
@@ -29,7 +29,6 @@ class CourseEditScreen extends StatefulWidget {
 
 class CourseEditScreenState extends State<CourseEditScreen> {
   TextEditingController codeTfController;
-  bool _isCodeValid = true;
 
   @override
   Widget build(BuildContext context) {

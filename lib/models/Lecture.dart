@@ -2,14 +2,14 @@ import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 class Lecture {
-  String _courseCode;
+  String courseCode;
   String _room;
   int _day;
   int _repeatType;
   MyTimeOfDay _startTime;
   MyTimeOfDay _endTime;
 
-  Lecture(this._courseCode, this._room, this._day, this._repeatType, this._startTime, this._endTime){
+  Lecture(this.courseCode, this._room, this._day, this._repeatType, this._startTime, this._endTime){
     if(day > 6 || day < 1) throw ArgumentError('day number should be from 1 to 6: $day');
     if(_room.length > 10) throw ArgumentError('room can\'t be more than 10 characters long');
     if(repeatType > 2 || repeatType < 0) throw ArgumentError('repeat type should be from 0 to 2: $repeatType');
@@ -17,7 +17,7 @@ class Lecture {
   }
 
   Lecture.fromJson(Map<String, dynamic> parsedJson):
-    _courseCode = parsedJson['code'],
+    courseCode = parsedJson['code'],
     _room = parsedJson['room'],
     _day = parsedJson['day'],
     _repeatType = parsedJson['repeatType'],
@@ -36,10 +36,8 @@ class Lecture {
     };
   }
 
-  String get courseCode{
-    return _courseCode;
-  }
   String get room{
+    if(_room.length > 10) throw ArgumentError('room can\'t be more than 10 characters long');
     return _room;
   }
   int get day{
@@ -56,9 +54,6 @@ class Lecture {
     return _endTime;
   }
 
-  set courseCode(String newCode){
-    _courseCode = newCode;
-  }
   set room(String newRoom){
     _room = newRoom;
   }

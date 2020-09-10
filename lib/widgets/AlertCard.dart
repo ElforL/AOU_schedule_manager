@@ -1,5 +1,6 @@
 part of widgets;
 
+// ignore: must_be_immutable
 class AlertCard extends StatelessWidget {
 
   final Event event;

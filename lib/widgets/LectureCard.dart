@@ -1,5 +1,6 @@
 part of widgets;
 
+// ignore: must_be_immutable
 class LectureCard extends StatelessWidget {
 
   final Lecture lecture;
@@ -7,7 +8,6 @@ class LectureCard extends StatelessWidget {
   
   String startTimeString;
   String endTimeString;
-
   LectureCard({Key key, @required this.lecture, this.type}) : super(key: key){
     startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
     endTimeString = DateFormat('hh:mm a').format(lecture.endTime);

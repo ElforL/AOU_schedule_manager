@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:uni_assistant/models/Course.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/models/UserServices.dart';
-import 'package:uni_assistant/models/myTimeOfDay.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 
 import '../widgets/widgetsLib.dart';
@@ -29,6 +27,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   loadCourses() async{
+    // wait then setState()
+    // ignore: await_only_futures
     await widget.userServices.loadUser();
     setState(() {
       
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             print('page refreshed at ${DateTime.now()}');
           });
         });
-        print('TimerSet: will refresh after ${duration}');
+        print('TimerSet: will refresh after $duration');
       }
     }
 

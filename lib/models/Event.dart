@@ -1,27 +1,27 @@
 class Event {
   //0 TMA, 1 MTA, 2 Final
-  int _type;
-  final String _courseCode;
-  String _description;
-  DateTime _startDateTime;
-  DateTime _endDateTime;
+  int type;
+  final String courseCode;
+  String description;
+  DateTime startDateTime;
+  DateTime endDateTime;
 
-  Event(this._type, this._courseCode, this._description, this._startDateTime, this._endDateTime){
+  Event(this.type, this.courseCode, this.description, this.startDateTime, this.endDateTime){
     if(type > 2 || type < 0) throw ArgumentError('Event type must be 0, 1, or 2');
     if(description.length > 46) throw ArgumentError('Event "included" can\'t be more than 46 characters long');
   }
 
   Event.fromJson(Map<String, dynamic> parsedJson):
-    _type = parsedJson['type'],
-    _courseCode = parsedJson['courseCode'],
-    _description = parsedJson['description'],
-    _startDateTime = DateTime(parsedJson['startDateTime']['year'],
+    type = parsedJson['type'],
+    courseCode = parsedJson['courseCode'],
+    description = parsedJson['description'],
+    startDateTime = DateTime(parsedJson['startDateTime']['year'],
                               parsedJson['startDateTime']['month'],
                               parsedJson['startDateTime']['day'],
                               parsedJson['startDateTime']['hour'],
                               parsedJson['startDateTime']['minute']
     ),
-    _endDateTime = DateTime(parsedJson['endDateTime']['year'],
+    endDateTime = DateTime(parsedJson['endDateTime']['year'],
                             parsedJson['endDateTime']['month'],
                             parsedJson['endDateTime']['day'],
                             parsedJson['endDateTime']['hour'],
@@ -48,35 +48,6 @@ class Event {
         'minute': endDateTime.minute,
       },
     };
-  }
-
-  int get type{
-    return _type;
-  }
-  String get courseCode{
-    return _courseCode;
-  }
-  String get description{
-    return _description;
-  }
-  DateTime get startDateTime{
-    return _startDateTime;
-  }
-  DateTime get endDateTime{
-    return _endDateTime;
-  }
-
-  set type(int newType){
-    _type = newType;
-  }
-  set description(String newDesc){
-    _description = newDesc;
-  }
-  set startDateTime(DateTime newStart){
-    _startDateTime = newStart;
-  }
-  set endDateTime(DateTime newEnd){
-    _endDateTime = newEnd;
   }
 
   /// null: error,
