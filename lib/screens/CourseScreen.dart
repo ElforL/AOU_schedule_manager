@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uni_assistant/constants.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Course.dart';
 import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
@@ -8,9 +9,9 @@ import 'package:uni_assistant/widgets/widgetsLib.dart';
 class CourseScreen extends StatefulWidget {
 
   final Course course;
-  final UserServices userServices;
+  final UserServices userServices = MyApp.userServices;
 
-  const CourseScreen({Key key, @required this.userServices, this.course}) : super(key: key);
+  CourseScreen({Key key, this.course}) : super(key: key);
 
   @override
   _CourseScreenState createState() => _CourseScreenState();
@@ -31,7 +32,7 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
               onPressed: () async{
                 await Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => CourseEditScreen(userServices: widget.userServices,course: widget.course)
+                  builder: (context) => CourseEditScreen(course: widget.course)
                 ));
                 widget.userServices.writeToFile();
                 if(!widget.userServices.courses.contains(widget.course))

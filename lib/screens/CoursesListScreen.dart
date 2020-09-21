@@ -2,15 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uni_assistant/constants.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/UserServices.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class CoursesListScreen extends StatefulWidget {
   
-  const CoursesListScreen(this.userServices);
-
-  final UserServices userServices;
+  final UserServices userServices = MyApp.userServices;
 
   @override
   CoursesListScreenState createState() => CoursesListScreenState();
@@ -48,7 +47,7 @@ class CoursesListScreenState extends State<CoursesListScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
           await Navigator.push(context, MaterialPageRoute(builder: 
-            (context) => CourseEditScreen(userServices: widget.userServices, course: null)
+            (context) => CourseEditScreen(course: null)
           ));
           widget.userServices.writeToFile();
           setState(() {

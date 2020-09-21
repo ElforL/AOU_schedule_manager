@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
 
       ),
-      home: MyHomePage(userServices: userServices),
+      home: MyHomePage(),
     );
   }
 }

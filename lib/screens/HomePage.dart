@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/models/UserServices.dart';
@@ -10,9 +11,8 @@ import '../widgets/widgetsLib.dart';
 
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.userServices,});
 
-  final UserServices userServices;
+  final UserServices userServices = MyApp.userServices;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.library_books),
                   onPressed: () async{
                     await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CoursesListScreen(widget.userServices))
+                      MaterialPageRoute(builder: (context) => CoursesListScreen())
                     );
                     setState(() {
                       
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Color(0xffe7e7e7),
                     onPressed: () async{
                       await Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CoursesListScreen(widget.userServices))
+                        MaterialPageRoute(builder: (context) => CoursesListScreen())
                       );
                       setState(() {
                         
