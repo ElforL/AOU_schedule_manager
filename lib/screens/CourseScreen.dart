@@ -55,19 +55,22 @@ class _CourseScreenState extends State<CourseScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                decoration: BoxDecoration(
+              Hero(
+                tag: 'courseCode',
+                child: Material(
                   color: kGrayCardColor,
-                  borderRadius: BorderRadius.circular(15)
-                ),                
-                child: Center(
-                  child: Text(
-                    widget.course.code,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
+                  borderRadius: BorderRadius.circular(15),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                    child: Center(
+                      child: Text(
+                        widget.course.code,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -37,7 +37,10 @@ class CoursesListScreenState extends State<CoursesListScreen> {
         List<Widget>.generate(widget.userServices.courses.length, (index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CourseCard(parent: this, userServices: widget.userServices ,course: widget.userServices.courses[index]),
+            child: Hero(
+              tag: 'courseCode',
+              child: CourseCard(parent: this, userServices: widget.userServices ,course: widget.userServices.courses[index]),
+            )
           );
         })
       ),
