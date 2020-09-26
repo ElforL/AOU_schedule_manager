@@ -21,7 +21,7 @@ class _CourseCardState extends State<CourseCard> {
       borderRadius: radius,
       child: InkWell(
         onTap: () async{
-          await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseScreen(userServices: widget.userServices,course: widget.course)));
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseScreen(course: widget.course)));
           setState(() {
             
           });

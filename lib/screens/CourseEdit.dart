@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uni_assistant/constants.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Course.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
@@ -12,10 +13,10 @@ import 'package:uni_assistant/widgets/widgetsLib.dart';
 class CourseEditScreen extends StatefulWidget {
 
   Course course;
-  final UserServices userServices;
+  final UserServices userServices = MyApp.userServices;
   bool shouldAutoFocus = false;
 
-  CourseEditScreen({Key key, this.course, this.userServices}) : super(key: key) {
+  CourseEditScreen({Key key, this.course}) : super(key: key) {
     if(course == null){
       shouldAutoFocus = true;
       course = new Course('M');

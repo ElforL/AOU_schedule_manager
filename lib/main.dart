@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'University Schedule Helper',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
 
       ),
-      home: MyHomePage(userServices: userServices),
+      home: MyHomePage(),
     );
   }
 }
