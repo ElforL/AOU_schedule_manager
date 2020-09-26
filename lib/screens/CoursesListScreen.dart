@@ -37,7 +37,7 @@ class CoursesListScreenState extends State<CoursesListScreen> {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Hero(
-              tag: 'courseCode',
+              tag: widget.userServices.courses[index].code,
               child: CourseCard(parent: this, userServices: widget.userServices ,course: widget.userServices.courses[index]),
             )
           );
