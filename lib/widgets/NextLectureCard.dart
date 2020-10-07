@@ -7,30 +7,32 @@ class NextLectureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var cardColor;
     var title;
     var subtitle;
-    var status = lecture == null? 2: lecture.getStatus(DateTime.now());
-      
-    if(status == 2){
-      cardColor = Colors.blue; 
+    var status = lecture == null ? 2 : lecture.getStatus(DateTime.now());
+
+    if (status == 2) {
+      cardColor = Colors.blue;
       title = 'Free';
       subtitle = "We're done for the week";
-    }else{
-      subtitle = '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${DateFormat('hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
+    } else {
+      subtitle =
+          '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${DateFormat('hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
       switch (status) {
-        case 0: 
-          cardColor = Colors.amber;
+        case 0:
+          if (lecture.day == UserServices.getWeekday(DateTime.now()))
+            cardColor = Colors.amber[800];
+          else
+            cardColor = Colors.amber;
           title = 'Next up';
           break;
-        case 1: 
-          cardColor = Colors.red; 
+        case 1:
+          cardColor = Colors.red;
           title = 'Going on';
           break;
       }
     }
-    
 
     return Material(
       color: Colors.transparent,
@@ -47,17 +49,12 @@ class NextLectureCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             SizedBox(height: 10),
             Text(
               subtitle,
-              style: TextStyle(
-                fontSize: 12
-              ),
+              style: TextStyle(fontSize: 12),
             )
           ],
         ),

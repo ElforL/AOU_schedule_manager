@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,55 +11,56 @@ class UserServices {
   List<Course> courses;
   DateTime semesterStart, semesterEnd;
 
-  UserServices(this.courses, [this.semesterStart, this.semesterEnd]){
+  UserServices(this.courses, [this.semesterStart, this.semesterEnd]) {
     var today = DateTime.now();
 
-    if(semesterStart == null){
+    if (semesterStart == null) {
       semesterStart = today;
 
       for (var i = 1; semesterStart.weekday != 6; i++) {
         semesterStart = DateTime(today.year, today.month, today.day + i);
       }
     }
-    if(semesterStart.weekday != 6) throw ArgumentError('Semester must start at saturday: ${semesterStart.weekday}');
+    if (semesterStart.weekday != 6)
+      throw ArgumentError(
+          'Semester must start at saturday: ${semesterStart.weekday}');
 
-    if(semesterEnd == null) semesterEnd = DateTime(semesterStart.year, semesterStart.month, semesterStart.day+168);
+    if (semesterEnd == null)
+      semesterEnd = DateTime(
+          semesterStart.year, semesterStart.month, semesterStart.day + 168);
   }
 
   // ///////////////////////////////////////////////////////////////// JSON ///////////////////////////////////////////////////////////////////
 
-  UserServices.fromJson(Map<String, dynamic> parsedJson){
-    semesterStart = DateTime( 
-      parsedJson['semesterStart']['year'], parsedJson['semesterStart']['month'], parsedJson['semesterStart']['day']
-    );
-    semesterEnd = DateTime( 
-      parsedJson['semesterEnd']['year'], parsedJson['semesterEnd']['month'], parsedJson['semesterEnd']['day']
-    );
-    courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
+  UserServices.fromJson(Map<String, dynamic> parsedJson) {
+    semesterStart = DateTime(
+        parsedJson['semesterStart']['year'],
+        parsedJson['semesterStart']['month'],
+        parsedJson['semesterStart']['day']);
+    semesterEnd = DateTime(parsedJson['semesterEnd']['year'],
+        parsedJson['semesterEnd']['month'], parsedJson['semesterEnd']['day']);
+    courses =
+        (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
-      'semesterStart':{
+      'semesterStart': {
         'year': semesterStart.year,
         'month': semesterStart.month,
         'day': semesterStart.day,
       },
-      'semesterEnd':{
+      'semesterEnd': {
         'year': semesterEnd.year,
         'month': semesterEnd.month,
         'day': semesterEnd.day,
       },
-      'courses':[
-        for (var course in courses)
-          course.toJson()
-      ]
+      'courses': [for (var course in courses) course.toJson()]
     };
-  }  
-
+  }
 
   // //////////////// read / write //////////////////
-  
+
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
 
@@ -78,7 +78,7 @@ class UserServices {
     // Write the file.
     return file.writeAsString(jsonEncode(this));
   }
-  
+
   Future<String> readFile() async {
     try {
       final file = await _localFile;
@@ -101,46 +101,47 @@ class UserServices {
     semesterStart = parsedUser.semesterStart;
     semesterEnd = parsedUser.semesterEnd;
   }
-  
+
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
-  List<Lecture> getNextLectures(){
+  List<Lecture> getNextLectures() {
     List<Lecture> outputList = new List();
     DateTime today = DateTime.now();
 
     for (var i = 0; i < courses.length; i++) {
       for (var lecture in courses[i].lectures) {
-        if(lecture.getStatus(today) == 2) continue;                   // continue if the lecture passed
-        if(!lecture.isOnThisWeek(today, getWeekNum(today))) continue; // or if the lecture is even and it's an odd week, or vice versa
+        if (lecture.getStatus(today) == 2)
+          continue; // continue if the lecture passed
+        if (!lecture.isOnThisWeek(today, getWeekNum(today)))
+          continue; // or if the lecture is even and it's an odd week, or vice versa
         outputList.add(lecture);
       }
     }
-    outputList.sort((a,b) => a.day - b.day);
+    outputList.sort((a, b) => a.day - b.day);
     return outputList;
   }
 
-  List<Event> getAlerts(){
+  List<Event> getAlerts() {
     List<Event> outputList = new List();
 
     for (var i = 0; i < courses.length; i++) {
       for (var event in courses[i].events) {
         var minsRem = event.remainingTime;
 
-        if(minsRem < 21600 && minsRem >= 0)
-          outputList.add(event);
+        if (minsRem < 21600 && minsRem >= 0) outputList.add(event);
       }
     }
 
-    outputList.sort((a,b) => a.remainingTime - b.remainingTime);
+    outputList.sort((a, b) => a.remainingTime - b.remainingTime);
     return outputList;
   }
 
-  int getWeekNum(DateTime todayDate){
-    return (todayDate.difference(semesterStart).inDays ~/ 7)+1;
+  int getWeekNum(DateTime todayDate) {
+    return (todayDate.difference(semesterStart).inDays ~/ 7) + 1;
   }
 
-  static int getWeekday(DateTime date){
-    return date.weekday + 2 > 7? date.weekday - 5: date.weekday + 2;
+  static int getWeekday(DateTime date) {
+    return date.weekday + 2 > 7 ? date.weekday - 5 : date.weekday + 2;
   }
 
   // ///////////////////////////////////////////////////////////////// constants ///////////////////////////////////////////////////////////////////
