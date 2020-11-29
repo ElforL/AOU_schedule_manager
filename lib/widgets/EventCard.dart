@@ -1,10 +1,9 @@
 part of widgets;
 
 class EventCard extends StatelessWidget {
-
   final Event event;
 
-  const EventCard({Key key, this.event}) : super(key: key); 
+  const EventCard({Key key, this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +19,27 @@ class EventCard extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Material(
-                  elevation: 3,
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(15),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      height: 35,
-                      child: Center(
-                        child: Text(
-                          Event.getTypeName(event.type),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                elevation: 3,
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(15),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Container(
+                    height: 35,
+                    child: Center(
+                      child: Text(
+                        Event.getTypeName(event.type),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
                 ),
+              ),
             ),
-
 
             Expanded(
               flex: 4,
@@ -53,19 +51,17 @@ class EventCard extends StatelessWidget {
                   children: [
                     FittedBox(
                       child: Text(
-                        event.description,
+                        event.description.isNotEmpty ? event.description : ' ',
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     ),
                     Text(
-                      (DateFormat('dd/MM/yyyy hh:mm a').format(event.type == 0? event.endDateTime: event.startDateTime))+
-                      (event.type != 0? DateFormat('- hh:mm a').format(event.endDateTime):''),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10
-                      ),
+                      (DateFormat('dd/MM/yyyy hh:mm a')
+                              .format(event.type == 0 ? event.endDateTime : event.startDateTime)) +
+                          (event.type != 0 ? DateFormat('- hh:mm a').format(event.endDateTime) : ''),
+                      style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
                   ],
                 ),
