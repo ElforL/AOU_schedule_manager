@@ -69,7 +69,9 @@ class AlertCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
           splashColor: Color(0xffe7e7e7),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CourseScreen(course: event.course)));
+          },
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
