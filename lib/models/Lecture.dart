@@ -9,17 +9,12 @@ class Lecture {
   MyTimeOfDay _startTime;
   MyTimeOfDay _endTime;
 
-  Lecture(this.courseCode, this._room, this._day, this._repeatType,
-      this._startTime, this._endTime) {
-    if (day > 6 || day < 1)
-      throw ArgumentError('day number should be from 1 to 6: $day');
-    if (_room.length > 10)
-      throw ArgumentError('room can\'t be more than 10 characters long');
-    if (repeatType > 2 || repeatType < 0)
-      throw ArgumentError('repeat type should be from 0 to 2: $repeatType');
+  Lecture(this.courseCode, this._room, this._day, this._repeatType, this._startTime, this._endTime) {
+    if (day > 6 || day < 1) throw ArgumentError('day number should be from 1 to 6: $day');
+    if (_room.length > 10) throw ArgumentError('room can\'t be more than 10 characters long');
+    if (repeatType > 2 || repeatType < 0) throw ArgumentError('repeat type should be 0, 1, or 2: $repeatType');
     if (startTime.hour > endTime.hour)
-      throw ArgumentError(
-          "Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
+      throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
   }
 
   Lecture.fromJson(Map<String, dynamic> parsedJson)
@@ -42,8 +37,7 @@ class Lecture {
   }
 
   String get room {
-    if (_room.length > 10)
-      throw ArgumentError('room can\'t be more than 10 characters long');
+    if (_room.length > 10) throw ArgumentError('room can\'t be more than 10 characters long');
     return _room;
   }
 
@@ -69,28 +63,24 @@ class Lecture {
   }
 
   set day(int newDay) {
-    if (newDay > 6 || newDay < 1)
-      throw ArgumentError('day number should be from 1 to 6: $newDay');
+    if (newDay > 6 || newDay < 1) throw ArgumentError('day number should be from 1 to 6: $newDay');
     _day = newDay;
   }
 
   set repeatType(int newRepeat) {
-    if (repeatType > 2 || repeatType < 0)
-      throw ArgumentError('repeat type should be from 0 to 2: $repeatType');
+    if (repeatType > 2 || repeatType < 0) throw ArgumentError('repeat type should be from 0 to 2: $repeatType');
     _repeatType = newRepeat;
   }
 
   set startTime(MyTimeOfDay newStart) {
     if (!(newStart < endTime))
-      throw ArgumentError(
-          "Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
+      throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
     _startTime = newStart;
   }
 
   set endTime(MyTimeOfDay newEnd) {
     if (!(startTime < newEnd))
-      throw ArgumentError(
-          "Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
+      throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
     _endTime = newEnd;
   }
 
@@ -100,10 +90,8 @@ class Lecture {
   /// 1 for 'going on',
   /// 2 for 'passed'.
   int getStatus(DateTime today) {
-    DateTime compareStartTime = DateTime(
-        today.year, today.month, today.day, startTime.hour, startTime.minute);
-    DateTime compareEndTime = DateTime(
-        today.year, today.month, today.day, endTime.hour, endTime.minute);
+    DateTime compareStartTime = DateTime(today.year, today.month, today.day, startTime.hour, startTime.minute);
+    DateTime compareEndTime = DateTime(today.year, today.month, today.day, endTime.hour, endTime.minute);
 
     // if the day already passed
     if (day < UserServices.getWeekday(today)) {
@@ -125,8 +113,7 @@ class Lecture {
 
   bool isOnThisWeek(DateTime today, int weekNum) {
     if (repeatType == 0) return true;
-    if ((repeatType == 1 && weekNum.isOdd) ||
-        repeatType == 2 && weekNum.isEven) {
+    if ((repeatType == 1 && weekNum.isOdd) || repeatType == 2 && weekNum.isEven) {
       return true;
     } else {
       return false;
@@ -149,8 +136,7 @@ class Lecture {
         return 'THU';
       //pretty sure we can't get to here, but it's here, just in case :P
       default:
-        throw ArgumentError(
-            'weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
+        throw ArgumentError('weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
     }
   }
 
@@ -171,8 +157,7 @@ class Lecture {
         return 'Thursday';
       //pretty sure we can't get to here, but it's here, just in case :P
       default:
-        throw ArgumentError(
-            'weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
+        throw ArgumentError('weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
     }
   }
 }
