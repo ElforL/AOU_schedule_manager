@@ -73,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 return await Future.delayed(Duration(seconds: 1));
               },
               child: ListView(
-                // physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   Row(
@@ -90,7 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 10),
                   alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
                   SizedBox(height: 10),
-                  ScheduleView(lectures: lectures)
+                  ScheduleView(
+                    lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
+                    forNextWeek: lectures.length == 0,
+                  )
                 ],
               ),
             )

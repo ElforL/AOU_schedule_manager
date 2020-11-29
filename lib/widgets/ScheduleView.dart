@@ -4,9 +4,11 @@ class ScheduleView extends StatelessWidget {
   const ScheduleView({
     Key key,
     this.lectures,
+    this.forNextWeek,
   }) : super(key: key);
 
   final List<Lecture> lectures;
+  final bool forNextWeek;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ScheduleView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Lectures for this week",
+            "Lectures for ${forNextWeek ? 'next' : 'this'} week",
             style: TextStyle(
               color: kOnBackgroundColor,
             ),

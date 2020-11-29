@@ -113,6 +113,21 @@ class UserServices {
     return outputList;
   }
 
+  List<Lecture> getWeekLectures() {
+    List<Lecture> outputList = new List();
+    DateTime today = DateTime.now();
+
+    for (var i = 0; i < courses.length; i++) {
+      for (var lecture in courses[i].lectures) {
+        if (!lecture.isOnThisWeek(today, getWeekNum(today) + 1))
+          continue; // skip if the lecture is even and it's an odd week, or vice versa
+        outputList.add(lecture);
+      }
+    }
+    outputList.sort((a, b) => a.day - b.day);
+    return outputList;
+  }
+
   List<Event> getAlerts() {
     List<Event> outputList = new List();
 
@@ -135,7 +150,4 @@ class UserServices {
   static int getWeekday(DateTime date) {
     return date.weekday + 2 > 7 ? date.weekday - 5 : date.weekday + 2;
   }
-
-  // ///////////////////////////////////////////////////////////////// constants ///////////////////////////////////////////////////////////////////
-
 }
