@@ -1,11 +1,14 @@
 part of widgets;
 
 class LectureEditCard extends StatefulWidget {
-
   final Lecture lecture;
   final CourseEditScreenState parent;
 
-  LectureEditCard({Key key, this.lecture, this.parent, }) : super(key: key);
+  LectureEditCard({
+    Key key,
+    this.lecture,
+    this.parent,
+  }) : super(key: key);
 
   @override
   _LectureEditCardState createState() => _LectureEditCardState();
@@ -34,7 +37,6 @@ class _LectureEditCardState extends State<LectureEditCard> {
       ),
       child: Column(
         children: [
-
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -50,7 +52,7 @@ class _LectureEditCardState extends State<LectureEditCard> {
                   iconSize: 10,
                   padding: EdgeInsets.all(0),
                   icon: Icon(Icons.remove),
-                  onPressed: (){
+                  onPressed: () {
                     widget.parent.setState(() {
                       widget.parent.widget.course.lectures.remove(widget.lecture);
                     });
@@ -63,7 +65,6 @@ class _LectureEditCardState extends State<LectureEditCard> {
           ////// Day and Repeat
           Row(
             children: [
-
               // Day
               Expanded(
                 flex: 2,
@@ -71,50 +72,48 @@ class _LectureEditCardState extends State<LectureEditCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('DAY',
+                    Text(
+                      'DAY',
                       style: TextStyle(
                         color: Color(0xFF828282),
                         fontSize: 12,
                       ),
                     ),
                     DropdownButton<int>(
-                      /// Colors
-                      // Underline
-                      underline: Container(
-                        height: 1.0,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xFF828282),
-                              width: 1,
+
+                        /// Colors
+                        // Underline
+                        underline: Container(
+                          height: 1.0,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Color(0xFF828282),
+                                width: 1,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      // Icon and text
-                      iconEnabledColor: Color(0xFF828282),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),
-                      dropdownColor: Color(0xffe7e7e7),
+                        // Icon and text
+                        iconEnabledColor: Color(0xFF828282),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                        dropdownColor: Color(0xffe7e7e7),
 
-                      /// Values
-                      value: dayVal,
-                      elevation: 1,
-                      onChanged: (int newVal) {
-                        setState(() {
-                          dayVal = newVal;
-                          widget.lecture.day = newVal;
-                        });
-                      },
-                      items: List<DropdownMenuItem<int>>.generate(6, (index) {
-                        return DropdownMenuItem<int>(
-                          value: (index + 1),
-                          child: Text(widget.lecture.getDayName(index + 1)),
-                        );
-                      })
-                    ),
+                        /// Values
+                        value: dayVal,
+                        elevation: 1,
+                        onChanged: (int newVal) {
+                          setState(() {
+                            dayVal = newVal;
+                            widget.lecture.day = newVal;
+                          });
+                        },
+                        items: List<DropdownMenuItem<int>>.generate(6, (index) {
+                          return DropdownMenuItem<int>(
+                            value: (index + 1),
+                            child: Text(widget.lecture.getDayName(index + 1)),
+                          );
+                        })),
                   ],
                 ),
               ),
@@ -128,65 +127,62 @@ class _LectureEditCardState extends State<LectureEditCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('REPEAT',
+                    Text(
+                      'REPEAT',
                       style: TextStyle(
                         color: Color(0xFF828282),
                         fontSize: 12,
                       ),
                     ),
                     DropdownButton<int>(
-                      isExpanded: true,
-                      /// Colors
-                      // Underline
-                      underline: Container(
-                        height: 1.0,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xFF828282),
-                              width: 1,
+                        isExpanded: true,
+
+                        /// Colors
+                        // Underline
+                        underline: Container(
+                          height: 1.0,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Color(0xFF828282),
+                                width: 1,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      // Icon and text
-                      iconEnabledColor: Color(0xFF828282),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),
-                      dropdownColor: Color(0xffe7e7e7),
+                        // Icon and text
+                        iconEnabledColor: Color(0xFF828282),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                        dropdownColor: Color(0xffe7e7e7),
 
-                      /// Values
-                      value: repeatVal,
-                      elevation: 1,
-                      onChanged: (int newVal) {
-                        setState(() {
-                          repeatVal = newVal;
-                          widget.lecture.repeatType = newVal;
-                        });
-                      },
-                      items: [
-                        DropdownMenuItem<int>(
+                        /// Values
+                        value: repeatVal,
+                        elevation: 1,
+                        onChanged: (int newVal) {
+                          setState(() {
+                            repeatVal = newVal;
+                            widget.lecture.repeatType = newVal;
+                          });
+                        },
+                        items: [
+                          DropdownMenuItem<int>(
                             value: (0),
                             child: Text('Weekly'),
-                        ),
-                        DropdownMenuItem<int>(
+                          ),
+                          DropdownMenuItem<int>(
                             value: (1),
                             child: Text('Odd'),
-                        ),
-                        DropdownMenuItem<int>(
+                          ),
+                          DropdownMenuItem<int>(
                             value: (2),
                             child: Text('Even'),
-                        ),
-                      ]
-                    ),
+                          ),
+                        ]),
                   ],
                 ),
               ),
 
               Expanded(child: Container()),
-            
             ],
           ),
 
@@ -195,14 +191,14 @@ class _LectureEditCardState extends State<LectureEditCard> {
           // Start and end times
           Row(
             children: [
-
               // Start
               Expanded(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('START TIME',
+                    Text(
+                      'START TIME',
                       style: TextStyle(
                         color: Color(0xFF828282),
                         fontSize: 12,
@@ -210,6 +206,7 @@ class _LectureEditCardState extends State<LectureEditCard> {
                     ),
                     DropdownButton<MyTimeOfDay>(
                       isExpanded: true,
+
                       /// Colors
                       // Underline
                       underline: Container(
@@ -225,41 +222,28 @@ class _LectureEditCardState extends State<LectureEditCard> {
                       ),
                       // Icon and text
                       iconEnabledColor: Color(0xFF828282),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       dropdownColor: Color(0xffe7e7e7),
 
                       /// Values
                       value: startVal,
                       elevation: 1,
-                      onChanged: (MyTimeOfDay newVal) {
+                      onChanged: (MyTimeOfDay newStartVal) {
                         setState(() {
-                          startVal = newVal;
-                          if(newVal < widget.lecture.endTime)
-                            widget.lecture.startTime = newVal;
+                          startVal = newStartVal;
+                          if (!(newStartVal < widget.lecture.endTime))
+                            widget.lecture.endTime =
+                                MyTimeOfDay(hour: newStartVal.hour + 2, minute: newStartVal.minute);
+                          widget.lecture.startTime = newStartVal;
                         });
                       },
-                      items: List<DropdownMenuItem<MyTimeOfDay>>.generate(64, (index) {
-                        var time = MyTimeOfDay(hour: 7+ index~/4, minute: 15*(index % 4));
-                        if(time != widget.lecture.startTime)
-                          return DropdownMenuItem<MyTimeOfDay>(
-                            value: time,
-                            child: Text('${DateFormat('hh:mm a').format(time)}'),
-                          );
-                        else
-                          return DropdownMenuItem<MyTimeOfDay>(
-                            value: MyTimeOfDay(hour: time.hour, minute: time.minute+1),
-                            child: Text('${DateFormat('hh:mm a').format(time)}'),
-                          );
-                      })
-                      +[
-                        DropdownMenuItem<MyTimeOfDay>(
-                          value: widget.lecture.startTime,
-                          child: Text('${DateFormat('hh:mm a').format(widget.lecture.startTime)}'),
-                        )
-                      ]
+                      items: List<DropdownMenuItem<MyTimeOfDay>>.generate(32, (index) {
+                        var time = MyTimeOfDay(hour: 7 + index ~/ 2, minute: 30 * (index % 2));
+                        return DropdownMenuItem<MyTimeOfDay>(
+                          value: time,
+                          child: Text('${DateFormat('hh:mm a').format(time)}'),
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -274,7 +258,8 @@ class _LectureEditCardState extends State<LectureEditCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('END TIME',
+                    Text(
+                      'END TIME',
                       style: TextStyle(
                         color: Color(0xFF828282),
                         fontSize: 12,
@@ -282,6 +267,7 @@ class _LectureEditCardState extends State<LectureEditCard> {
                     ),
                     DropdownButton<MyTimeOfDay>(
                       isExpanded: true,
+
                       /// Colors
                       // Underline
                       underline: Container(
@@ -297,66 +283,46 @@ class _LectureEditCardState extends State<LectureEditCard> {
                       ),
                       // Icon and text
                       iconEnabledColor: Color(0xFF828282),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       dropdownColor: Color(0xffe7e7e7),
 
                       /// Values
                       value: endVal,
                       elevation: 1,
-                      onChanged: (MyTimeOfDay newVal) {
+                      onChanged: (MyTimeOfDay newEndVal) {
                         setState(() {
-                          endVal = newVal;
-                          if(widget.lecture.startTime < newVal)
-                            widget.lecture.endTime = newVal;
+                          endVal = newEndVal;
+                          if (widget.lecture.startTime < newEndVal) widget.lecture.endTime = newEndVal;
                         });
                       },
-                      items: List<DropdownMenuItem<MyTimeOfDay>>.generate(64, (index) {
-                        var time = MyTimeOfDay(hour: 7+ index~/4, minute: 15*(index % 4));
-                        if(time != widget.lecture.endTime)
-                          return DropdownMenuItem<MyTimeOfDay>(
-                            value: time,
-                            child: Text('${DateFormat('hh:mm a').format(time)}'),
-                          );
-                        else
-                          return DropdownMenuItem<MyTimeOfDay>(
-                            value: MyTimeOfDay(hour: time.hour, minute: time.minute+1),
-                            child: Text('${DateFormat('hh:mm a').format(time)}'),
-                          );
-                      })
-                      +[
-                        DropdownMenuItem<MyTimeOfDay>(
-                          value: widget.lecture.endTime,
-                          child: Text('${DateFormat('hh:mm a').format(widget.lecture.endTime)}'),
-                        )
-                      ]
+                      items: List<DropdownMenuItem<MyTimeOfDay>>.generate(32, (index) {
+                        var time = MyTimeOfDay(hour: 9 + index ~/ 2, minute: 30 * (index % 2));
+                        return DropdownMenuItem<MyTimeOfDay>(
+                          value: time,
+                          child: Text('${DateFormat('hh:mm a').format(time)}'),
+                        );
+                      }),
                     ),
                   ],
                 ),
               ),
-              
+
               Expanded(child: Container())
             ],
           ),
 
           // Room
           TextField(
-            controller: TextEditingController(
-              text: widget.lecture.room
-            ),
+            controller: TextEditingController(text: widget.lecture.room),
             decoration: InputDecoration(
               labelText: 'ROOM',
               labelStyle: TextStyle(
                 color: Color(0xFF828282),
               ),
-              counterStyle: TextStyle(
-                color: Color(0xff828282)
+              counterStyle: TextStyle(color: Color(0xff828282)),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF828282)),
               ),
-              enabledBorder: UnderlineInputBorder(      
-                borderSide: BorderSide(color: Color(0xFF828282)),   
-              ),  
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF828282)),
               ),
