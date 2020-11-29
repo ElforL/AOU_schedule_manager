@@ -1,7 +1,6 @@
 part of widgets;
 
 class CourseCard extends StatefulWidget {
-
   final Course course;
   final UserServices userServices;
   final CoursesListScreenState parent;
@@ -20,14 +19,10 @@ class _CourseCardState extends State<CourseCard> {
       color: Color(0xFFE7E7E7),
       borderRadius: radius,
       child: InkWell(
-        onTap: () async{
+        onTap: () async {
           await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseScreen(course: widget.course)));
-          setState(() {
-            
-          });
-          widget.parent.setState(() {
-            
-          });
+          setState(() {});
+          widget.parent.setState(() {});
         },
         borderRadius: radius,
         child: Center(

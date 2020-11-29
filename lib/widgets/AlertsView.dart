@@ -5,7 +5,7 @@ class AlertsView extends StatelessWidget {
     Key key,
     this.alerts,
   }) : super(key: key);
-  
+
   final List<Event> alerts;
 
   @override
@@ -18,7 +18,8 @@ class AlertsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Alerts",
+          Text(
+            "Alerts",
             style: TextStyle(
               color: kOnBackgroundColor,
             ),

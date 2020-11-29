@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uni_assistant/constants.dart';
@@ -8,7 +7,6 @@ import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class CoursesListScreen extends StatefulWidget {
-  
   final UserServices userServices = MyApp.userServices;
 
   @override
@@ -16,50 +14,38 @@ class CoursesListScreen extends StatefulWidget {
 }
 
 class CoursesListScreenState extends State<CoursesListScreen> {
-
   List<Widget> liist = List<Widget>();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-      ),
-
+      appBar: AppBar(),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        children: [
-          // Date Pickers
-          DatePicker(widget.userServices),
-          SizedBox(height: 50),
-        ]+
-        List<Widget>.generate(widget.userServices.courses.length, (index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Hero(
-              tag: widget.userServices.courses[index].code,
-              child: CourseCard(parent: this, userServices: widget.userServices ,course: widget.userServices.courses[index]),
-            )
-          );
-        })
-      ),
-
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          children: [
+                // Date Pickers
+                DatePicker(widget.userServices),
+                SizedBox(height: 50),
+              ] +
+              List<Widget>.generate(widget.userServices.courses.length, (index) {
+                return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Hero(
+                      tag: widget.userServices.courses[index].code,
+                      child: CourseCard(
+                          parent: this, userServices: widget.userServices, course: widget.userServices.courses[index]),
+                    ));
+              })),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async{
-          await Navigator.push(context, MaterialPageRoute(builder: 
-            (context) => CourseEditScreen(course: null)
-          ));
+        onPressed: () async {
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: null)));
           widget.userServices.writeToFile();
-          setState(() {
-            
-          });
+          setState(() {});
         },
         child: Icon(Icons.add),
       ),
     );
   }
-
-  
 }
 
 class DatePicker extends StatefulWidget {
@@ -82,22 +68,18 @@ class _DatePickerState extends State<DatePicker> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("SEMESTER START DATE",
-                style: TextStyle(
-                  color: kOnBackgroundColor,
-                  fontSize: 10
-                ),
+              Text(
+                "SEMESTER START DATE",
+                style: TextStyle(color: kOnBackgroundColor, fontSize: 10),
               ),
               TextField(
                 readOnly: true,
                 controller: TextEditingController(
-                  text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterStart)}'
-                ),
-                onTap: () async{
+                    text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterStart)}'),
+                onTap: () async {
                   widget.userServices.semesterStart = await _selectDate(context, widget.userServices.semesterStart);
                   widget.userServices.writeToFile();
-                  setState(() {
-                  });
+                  setState(() {});
                 },
               )
             ],
@@ -109,21 +91,17 @@ class _DatePickerState extends State<DatePicker> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("SEMESTER END DATE",
-                style: TextStyle(
-                  color: kOnBackgroundColor,
-                  fontSize: 10
-                ),
+              Text(
+                "SEMESTER END DATE",
+                style: TextStyle(color: kOnBackgroundColor, fontSize: 10),
               ),
               TextField(
                 readOnly: true,
-                controller: TextEditingController(
-                  text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterEnd)}'
-                ),
-                onTap: () async{
+                controller:
+                    TextEditingController(text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterEnd)}'),
+                onTap: () async {
                   widget.userServices.semesterEnd = await _selectDate(context, widget.userServices.semesterEnd);
-                  setState(() {
-                  });
+                  setState(() {});
                 },
               )
             ],

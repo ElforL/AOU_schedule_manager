@@ -9,22 +9,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   static UserServices userServices;
 
-  MyApp(){
+  MyApp() {
     userServices = UserServices(new List());
   }
-  
-  @override
-  Widget build(BuildContext context){
 
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'University Schedule Helper',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        
+
         accentColor: Color(0xFFe7e7e7),
 
         textSelectionColor: Colors.blue,
@@ -39,19 +37,12 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
 
-        textTheme: TextTheme(
-          bodyText2: TextStyle(
-            color: Colors.black
-          )
-        ),
+        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
         iconTheme: IconThemeData(
           color: kOnBackgroundColor,
         ),
-
       ),
       home: MyHomePage(),
     );
   }
 }
-
-

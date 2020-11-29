@@ -9,14 +9,12 @@ import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/screens/CourseScreen.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 
-
 import '../constants.dart';
 
 // models
 import '../models/Lecture.dart';
 import '../models/Event.dart';
 import '../models/Course.dart';
-
 
 // Widgets
 part 'NextLectureCard.dart';
@@ -29,6 +27,3 @@ part 'CourseCard.dart';
 part 'LectureEditCard.dart';
 part 'EventEditCard.dart';
 part 'EventCard.dart';
-
-
-

@@ -21,26 +21,19 @@ class UserServices {
         semesterStart = DateTime(today.year, today.month, today.day + i);
       }
     }
-    if (semesterStart.weekday != 6)
-      throw ArgumentError(
-          'Semester must start at saturday: ${semesterStart.weekday}');
+    if (semesterStart.weekday != 6) throw ArgumentError('Semester must start at saturday: ${semesterStart.weekday}');
 
-    if (semesterEnd == null)
-      semesterEnd = DateTime(
-          semesterStart.year, semesterStart.month, semesterStart.day + 168);
+    if (semesterEnd == null) semesterEnd = DateTime(semesterStart.year, semesterStart.month, semesterStart.day + 168);
   }
 
   // ///////////////////////////////////////////////////////////////// JSON ///////////////////////////////////////////////////////////////////
 
   UserServices.fromJson(Map<String, dynamic> parsedJson) {
     semesterStart = DateTime(
-        parsedJson['semesterStart']['year'],
-        parsedJson['semesterStart']['month'],
-        parsedJson['semesterStart']['day']);
-    semesterEnd = DateTime(parsedJson['semesterEnd']['year'],
-        parsedJson['semesterEnd']['month'], parsedJson['semesterEnd']['day']);
-    courses =
-        (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
+        parsedJson['semesterStart']['year'], parsedJson['semesterStart']['month'], parsedJson['semesterStart']['day']);
+    semesterEnd = DateTime(
+        parsedJson['semesterEnd']['year'], parsedJson['semesterEnd']['month'], parsedJson['semesterEnd']['day']);
+    courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -110,8 +103,7 @@ class UserServices {
 
     for (var i = 0; i < courses.length; i++) {
       for (var lecture in courses[i].lectures) {
-        if (lecture.getStatus(today) == 2)
-          continue; // continue if the lecture passed
+        if (lecture.getStatus(today) == 2) continue; // continue if the lecture passed
         if (!lecture.isOnThisWeek(today, getWeekNum(today)))
           continue; // or if the lecture is even and it's an odd week, or vice versa
         outputList.add(lecture);

@@ -14,18 +14,18 @@ class ScheduleView extends StatelessWidget {
     for (var i = 0; i < lectures.length; i++) {
       cards.add(LectureCard(type: 0, lecture: lectures[i]));
     }
-    
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Lectures for this week",
+          Text(
+            "Lectures for this week",
             style: TextStyle(
               color: kOnBackgroundColor,
             ),
           ),
           SizedBox(height: 5),
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: cards,

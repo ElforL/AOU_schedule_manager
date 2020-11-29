@@ -2,20 +2,19 @@ part of widgets;
 
 // ignore: must_be_immutable
 class LectureCard extends StatelessWidget {
-
   final Lecture lecture;
   final int type;
-  
+
   String startTimeString;
   String endTimeString;
-  LectureCard({Key key, @required this.lecture, this.type}) : super(key: key){
+  LectureCard({Key key, @required this.lecture, this.type}) : super(key: key) {
     startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
     endTimeString = DateFormat('hh:mm a').format(lecture.endTime);
   }
 
   @override
   Widget build(BuildContext context) {
-    var subBlueString = type == 0? getDate(): getRepeatString();
+    var subBlueString = type == 0 ? getDate() : getRepeatString();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -23,11 +22,11 @@ class LectureCard extends StatelessWidget {
         elevation: 2,
         borderRadius: BorderRadius.circular(20),
         color: kGrayCardColor,
-        child: IntrinsicHeight( // Thank you anmol.majhail :)
+        child: IntrinsicHeight(
+          // Thank you anmol.majhail :)
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-
               // Day & Date
               Expanded(
                 flex: 1,
@@ -59,7 +58,7 @@ class LectureCard extends StatelessWidget {
                           subBlueString,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: type == 0? 15: 10,
+                            fontSize: type == 0 ? 15 : 10,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -68,7 +67,7 @@ class LectureCard extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               // Time
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -78,21 +77,13 @@ class LectureCard extends StatelessWidget {
                     // Start
                     Text(
                       startTimeString,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w300),
                     ),
 
                     // End
                     Text(
                       endTimeString,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w300),
                     ),
                   ],
                 ),
@@ -112,21 +103,13 @@ class LectureCard extends StatelessWidget {
                         // Code
                         Text(
                           lecture.courseCode,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w300
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w300),
                         ),
 
                         // Room
                         Text(
                           lecture.room,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w300
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w300),
                         )
                       ],
                     ),
@@ -140,22 +123,25 @@ class LectureCard extends StatelessWidget {
     );
   }
 
-  String getDate(){
+  String getDate() {
     var today = DateTime.now();
     var tmp = today;
 
-    for (var i = 1; UserServices.getWeekday(tmp) != lecture.day ; i++) {
+    for (var i = 1; UserServices.getWeekday(tmp) != lecture.day; i++) {
       tmp = DateTime(today.year, today.month, today.day + i);
     }
 
     return tmp.day.toString();
   }
 
-  String getRepeatString(){
+  String getRepeatString() {
     switch (lecture.repeatType) {
-      case 0: return 'WEEKLY';
-      case 1: return 'ODD';
-      default: return 'EVEN';
+      case 0:
+        return 'WEEKLY';
+      case 1:
+        return 'ODD';
+      default:
+        return 'EVEN';
     }
   }
 }

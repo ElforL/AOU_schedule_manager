@@ -7,7 +7,6 @@ import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class CourseScreen extends StatefulWidget {
-
   final Course course;
   final UserServices userServices = MyApp.userServices;
 
@@ -26,32 +25,26 @@ class _CourseScreenState extends State<CourseScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              icon: Icon(
-                Icons.edit,
-                size: 20,
-              ),
-              onPressed: () async{
-                await Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => CourseEditScreen(course: widget.course)
-                ));
-                widget.userServices.writeToFile();
-                if(!widget.userServices.courses.contains(widget.course))
-                  Navigator.pop(context);
-                for (var i = 0; i < widget.course.lectures.length; i++) {
-                  widget.course.lectures[i].courseCode = widget.course.code;
-                }
-                setState(() {
-                });
-              }
-            )
+                icon: Icon(
+                  Icons.edit,
+                  size: 20,
+                ),
+                onPressed: () async {
+                  await Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: widget.course)));
+                  widget.userServices.writeToFile();
+                  if (!widget.userServices.courses.contains(widget.course)) Navigator.pop(context);
+                  for (var i = 0; i < widget.course.lectures.length; i++) {
+                    widget.course.lectures[i].courseCode = widget.course.code;
+                  }
+                  setState(() {});
+                })
           ],
         ),
       ),
-
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [
-
           // Course code
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,11 +59,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     child: Center(
                       child: Text(
                         widget.course.code,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -79,63 +68,56 @@ class _CourseScreenState extends State<CourseScreen> {
             ],
           ),
           SizedBox(height: 20),
-            
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('Lectures',
-                style: TextStyle(
-                  color: kOnBackgroundColor,
-                ),
-              ),
-              SizedBox(height: 15),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.course.lectures.length > 0?
-                List<Widget>.generate(widget.course.lectures.length, (index){
-                  return LectureCard(lecture: widget.course.lectures[index]);
-                })
-                
-                // Empty
-                :[
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 45),
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(
-                      child: Text('No Lectures',
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                    ),
-                  )
-                ]
-              ),
-            ]
-          ),
 
-          widget.course.events.length > 0 ?Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Dates',
-                style: TextStyle(
-                  color: kOnBackgroundColor,
-                ),
+          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(
+              'Lectures',
+              style: TextStyle(
+                color: kOnBackgroundColor,
               ),
-              Column(
-                children: List<Widget>.generate(widget.course.events.length, (index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: EventCard(event: widget.course.events[index]),
-                  );
-                }),
-              ),
-            ]
-          ):SizedBox(),
+            ),
+            SizedBox(height: 15),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: widget.course.lectures.length > 0
+                    ? List<Widget>.generate(widget.course.lectures.length, (index) {
+                        return LectureCard(lecture: widget.course.lectures[index]);
+                      })
+
+                    // Empty
+                    : [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 45),
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: Text(
+                              'No Lectures',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ]),
+          ]),
+
+          widget.course.events.length > 0
+              ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    'Dates',
+                    style: TextStyle(
+                      color: kOnBackgroundColor,
+                    ),
+                  ),
+                  Column(
+                    children: List<Widget>.generate(widget.course.events.length, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: EventCard(event: widget.course.events[index]),
+                      );
+                    }),
+                  ),
+                ])
+              : SizedBox(),
         ],
       ),
     );
