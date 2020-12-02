@@ -117,7 +117,7 @@ class UserServices {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         i,
         '${lecture.courseCode} Lecture',
-        '${lecture.courseCode} lecture in 5 minutes',
+        '${lecture.room}: ${lecture.courseCode} lecture in 5 minutes',
         _getNextDateOfLec(lecture).add(Duration(minutes: -5)),
         const NotificationDetails(
           android: AndroidNotificationDetails(
