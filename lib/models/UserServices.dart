@@ -1,9 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'Course.dart';
 
@@ -96,6 +101,65 @@ class UserServices {
   }
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
+
+  scheduleNotifications(flutterLocalNotificationsPlugin) async {
+    tz.initializeTimeZones();
+    String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+    await flutterLocalNotificationsPlugin.cancelAll();
+
+    var lectures = getAllLectures();
+
+    for (var i = 0; i < lectures.length; i++) {
+      var lecture = lectures[i];
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        i,
+        '${lecture.courseCode} Lecture',
+        '${lecture.courseCode} lecture in 5 minutes',
+        _getNextDateOfLec(lecture).add(Duration(minutes: -5)),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'lecNoti', // channel id
+            'lectures channel', // channel name
+            'channel for lectures notification... duh', // channel desc
+          ),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    }
+  }
+
+  tz.TZDateTime _getNextDateOfLec(Lecture lecture) {
+    var weekday = lecture.day + 5 > 7 ? lecture.day - 2 : lecture.day + 5;
+
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      lecture.startTime.hour,
+      lecture.startTime.minute,
+    );
+    while (scheduledDate.weekday != weekday || scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  List<Lecture> getAllLectures() {
+    List<Lecture> outputList = new List();
+
+    for (var i = 0; i < courses.length; i++) {
+      for (var lecture in courses[i].lectures) {
+        outputList.add(lecture);
+      }
+    }
+    return outputList;
+  }
 
   List<Lecture> getNextLectures() {
     List<Lecture> outputList = new List();

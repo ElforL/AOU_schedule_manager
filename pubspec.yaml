@@ -24,7 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.16.1 # DateFormat
-  path_provider: ^1.6.11 #saving
+  path_provider: ^1.6.11 # saving
+  flutter_local_notifications: ^3.0.1+6 # notifications
+  flutter_native_timezone: ^1.0.4
 
 
   # The following adds the Cupertino Icons font to your application.

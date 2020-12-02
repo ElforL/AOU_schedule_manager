@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:uni_assistant/models/UserServices.dart';
 
 import 'constants.dart';
 import 'screens/HomePage.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  const AndroidInitializationSettings androidInitializationSettings =
+      AndroidInitializationSettings('@mipmap/uni_launcher');
+  InitializationSettings initializationSettings = InitializationSettings(
+    android: androidInitializationSettings,
+  );
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+  );
   runApp(MyApp());
 }
 
