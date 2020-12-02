@@ -102,7 +102,7 @@ class UserServices {
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
-  scheduleNotifications(flutterLocalNotificationsPlugin) async {
+  scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     tz.initializeTimeZones();
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
@@ -127,6 +127,7 @@ class UserServices {
           ),
         ),
         androidAllowWhileIdle: true,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
     }
