@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'University Schedule Helper',
+      title: 'AOU Schedule Manager',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
 

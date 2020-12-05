@@ -1,8 +1,8 @@
-# University Schedule Helper
+# AOU Schedule Manager
 
 an app for Arab Open University students to help track courses lectures TMA, MTA, and Finals
 
-# Screenshots
+## Screenshots
 
 <img src="https://user-images.githubusercontent.com/57017872/101246810-a3b89500-3726-11eb-9be5-757fa177048f.png" width=300> <img src="https://user-images.githubusercontent.com/57017872/101246812-a4e9c200-3726-11eb-9eb6-be57de72870f.png" width=300>
 <img src="https://user-images.githubusercontent.com/57017872/101246815-a5825880-3726-11eb-9c40-65c2af980784.png" width=300>
