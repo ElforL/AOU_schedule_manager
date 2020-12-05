@@ -40,6 +40,7 @@ class CoursesListScreenState extends State<CoursesListScreen> {
         onPressed: () async {
           await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: null)));
           widget.userServices.writeToFile();
+          await widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
           setState(() {});
         },
         child: Icon(Icons.add),

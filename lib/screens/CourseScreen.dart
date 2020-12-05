@@ -25,20 +25,22 @@ class _CourseScreenState extends State<CourseScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  size: 20,
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: widget.course)));
-                  widget.userServices.writeToFile();
-                  if (!widget.userServices.courses.contains(widget.course)) Navigator.pop(context);
-                  for (var i = 0; i < widget.course.lectures.length; i++) {
-                    widget.course.lectures[i].courseCode = widget.course.code;
-                  }
-                  setState(() {});
-                })
+              icon: Icon(
+                Icons.edit,
+                size: 20,
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: widget.course)));
+                widget.userServices.writeToFile();
+                if (!widget.userServices.courses.contains(widget.course)) Navigator.pop(context);
+                for (var i = 0; i < widget.course.lectures.length; i++) {
+                  widget.course.lectures[i].courseCode = widget.course.code;
+                }
+                await widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+                setState(() {});
+              },
+            ),
           ],
         ),
       ),
