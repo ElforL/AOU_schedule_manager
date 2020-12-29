@@ -4,7 +4,7 @@ import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Course.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
-import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 import 'package:uni_assistant/widgets/widgetsLib.dart';

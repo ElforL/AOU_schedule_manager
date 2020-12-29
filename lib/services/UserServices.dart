@@ -10,7 +10,7 @@ import 'package:uni_assistant/models/Lecture.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import 'Course.dart';
+import '../models/Course.dart';
 
 class UserServices {
   List<Course> courses;

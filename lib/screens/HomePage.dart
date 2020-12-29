@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
-import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 
 import '../widgets/widgetsLib.dart';

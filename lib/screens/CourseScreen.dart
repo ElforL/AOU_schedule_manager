@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uni_assistant/constants.dart';
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Course.dart';
-import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 

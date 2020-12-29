@@ -1,4 +1,4 @@
-import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/models/myTimeOfDay.dart';
 
 class Lecture {

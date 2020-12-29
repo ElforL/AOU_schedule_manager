@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:uni_assistant/models/UserServices.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 
 import 'constants.dart';
 import 'screens/HomePage.dart';
