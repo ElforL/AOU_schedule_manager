@@ -111,7 +111,7 @@ class Lecture {
     }
   }
 
-  bool isOnThisWeek(DateTime today, int weekNum) {
+  bool isOnThisWeek(int weekNum) {
     if (repeatType == 0) return true;
     if ((repeatType == 1 && weekNum.isOdd) || repeatType == 2 && weekNum.isEven) {
       return true;

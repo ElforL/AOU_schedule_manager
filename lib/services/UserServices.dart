@@ -169,7 +169,7 @@ class UserServices {
     for (var i = 0; i < courses.length; i++) {
       for (var lecture in courses[i].lectures) {
         if (lecture.getStatus(today) == 2) continue; // continue if the lecture passed
-        if (!lecture.isOnThisWeek(today, getWeekNum(today)))
+        if (!lecture.isOnThisWeek(getWeekNum(today)))
           continue; // or if the lecture is even and it's an odd week, or vice versa
         outputList.add(lecture);
       }
@@ -184,7 +184,7 @@ class UserServices {
 
     for (var i = 0; i < courses.length; i++) {
       for (var lecture in courses[i].lectures) {
-        if (!lecture.isOnThisWeek(today, getWeekNum(today) + 1))
+        if (!lecture.isOnThisWeek(getWeekNum(today) + 1))
           continue; // skip if the lecture is even and it's an odd week, or vice versa
         outputList.add(lecture);
       }
