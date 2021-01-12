@@ -90,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
                   SizedBox(height: 10),
                   ScheduleView(
+                    userServices: widget.userServices,
                     lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
                     forNextWeek: lectures.length == 0,
                   )

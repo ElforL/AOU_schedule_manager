@@ -83,7 +83,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: widget.course.lectures.length > 0
                     ? List<Widget>.generate(widget.course.lectures.length, (index) {
-                        return LectureCard(lecture: widget.course.lectures[index]);
+                        return LectureCard(userServices: widget.userServices, lecture: widget.course.lectures[index]);
                       })
 
                     // Empty

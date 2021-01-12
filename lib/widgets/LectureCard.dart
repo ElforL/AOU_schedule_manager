@@ -4,10 +4,11 @@ part of widgets;
 class LectureCard extends StatelessWidget {
   final Lecture lecture;
   final int type;
+  final UserServices userServices;
 
   String startTimeString;
   String endTimeString;
-  LectureCard({Key key, @required this.lecture, this.type}) : super(key: key) {
+  LectureCard({Key key, @required this.lecture, this.type, @required this.userServices}) : super(key: key) {
     startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
     endTimeString = DateFormat('hh:mm a').format(lecture.endTime);
   }
@@ -127,8 +128,10 @@ class LectureCard extends StatelessWidget {
     var today = DateTime.now();
     var tmp = today;
 
-    for (var i = 1; UserServices.getWeekday(tmp) != lecture.day; i++) {
-      tmp = DateTime(today.year, today.month, today.day + i);
+    for (var i = 1;
+        UserServices.getWeekday(tmp) != lecture.day || !lecture.isOnThisWeek(userServices.getWeekNum(tmp));
+        i++) {
+      tmp = today.add(Duration(days: i));
     }
 
     return tmp.day.toString();

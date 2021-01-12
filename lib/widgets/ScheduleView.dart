@@ -5,16 +5,18 @@ class ScheduleView extends StatelessWidget {
     Key key,
     this.lectures,
     this.forNextWeek,
+    @required this.userServices,
   }) : super(key: key);
 
   final List<Lecture> lectures;
   final bool forNextWeek;
+  final UserServices userServices;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> cards = new List();
     for (var i = 0; i < lectures.length; i++) {
-      cards.add(LectureCard(type: 0, lecture: lectures[i]));
+      cards.add(LectureCard(userServices: userServices, type: 0, lecture: lectures[i]));
     }
 
     return Container(
