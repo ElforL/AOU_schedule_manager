@@ -125,13 +125,18 @@ class LectureCard extends StatelessWidget {
   }
 
   String getDate() {
-    var today = DateTime.now();
-    var tmp = today;
+    var tmp = DateTime.now();
 
-    for (var i = 1;
-        UserServices.getWeekday(tmp) != lecture.day || !lecture.isOnThisWeek(userServices.getWeekNum(tmp));
-        i++) {
-      tmp = today.add(Duration(days: i));
+    // get tmp to be the same day as the lecture
+    // i.e. if the lecture is on wednesday keep adding 1 day to tmp until it's on wednesday
+    while (UserServices.getWeekday(tmp) != lecture.day) {
+      tmp = tmp.add(Duration(days: 1));
+    }
+
+    // if the lecture is not on this week (e.g. even and it's an odd week)
+    // add 1 week
+    while (!lecture.isOnThisWeek(userServices.getWeekNum(tmp))) {
+      tmp = tmp.add(Duration(days: 7));
     }
 
     return tmp.day.toString();
