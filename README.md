@@ -1,7 +1,7 @@
 # AOU Schedule Manager
 an app for Arab Open University students to help track courses lectures TMA, MTA, and Finals.  
 
-### [Download](https://github.com/ElforL/AOU_schedule_manager/releases)
+### [Download v1.7.1](https://github.com/ElforL/AOU_schedule_manager/releases)
 
 ## Screenshots
 
