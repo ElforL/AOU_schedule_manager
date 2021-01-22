@@ -14,9 +14,9 @@ import '../models/Course.dart';
 
 class UserServices {
   List<Course> courses;
-  DateTime semesterStart, semesterEnd;
+  DateTime semesterStart /* , semesterEnd */;
 
-  UserServices(this.courses, [this.semesterStart, this.semesterEnd]) {
+  UserServices(this.courses, [this.semesterStart]) {
     var today = DateTime.now();
 
     if (semesterStart == null) {
@@ -27,8 +27,6 @@ class UserServices {
       }
     }
     if (semesterStart.weekday != 6) throw ArgumentError('Semester must start at saturday: ${semesterStart.weekday}');
-
-    if (semesterEnd == null) semesterEnd = DateTime(semesterStart.year, semesterStart.month, semesterStart.day + 168);
   }
 
   // ///////////////////////////////////////////////////////////////// JSON ///////////////////////////////////////////////////////////////////
@@ -36,8 +34,6 @@ class UserServices {
   UserServices.fromJson(Map<String, dynamic> parsedJson) {
     semesterStart = DateTime(
         parsedJson['semesterStart']['year'], parsedJson['semesterStart']['month'], parsedJson['semesterStart']['day']);
-    semesterEnd = DateTime(
-        parsedJson['semesterEnd']['year'], parsedJson['semesterEnd']['month'], parsedJson['semesterEnd']['day']);
     courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
   }
 
@@ -47,11 +43,6 @@ class UserServices {
         'year': semesterStart.year,
         'month': semesterStart.month,
         'day': semesterStart.day,
-      },
-      'semesterEnd': {
-        'year': semesterEnd.year,
-        'month': semesterEnd.month,
-        'day': semesterEnd.day,
       },
       'courses': [for (var course in courses) course.toJson()]
     };
@@ -97,7 +88,6 @@ class UserServices {
     UserServices parsedUser = UserServices.fromJson(jsonResponse);
     courses = parsedUser.courses;
     semesterStart = parsedUser.semesterStart;
-    semesterEnd = parsedUser.semesterEnd;
   }
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////

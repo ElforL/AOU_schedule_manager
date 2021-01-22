@@ -67,7 +67,6 @@ class _DatePickerState extends State<DatePicker> {
         Expanded(
           flex: 2,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 "SEMESTER START DATE",
@@ -75,33 +74,12 @@ class _DatePickerState extends State<DatePicker> {
               ),
               TextField(
                 readOnly: true,
+                textAlign: TextAlign.center,
                 controller: TextEditingController(
                     text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterStart)}'),
                 onTap: () async {
                   widget.userServices.semesterStart = await _selectDate(context, widget.userServices.semesterStart);
                   widget.userServices.writeToFile();
-                  setState(() {});
-                },
-              )
-            ],
-          ),
-        ),
-        Expanded(child: Container()),
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "SEMESTER END DATE",
-                style: TextStyle(color: kOnBackgroundColor, fontSize: 10),
-              ),
-              TextField(
-                readOnly: true,
-                controller:
-                    TextEditingController(text: '${DateFormat('dd/MM/yyyy').format(widget.userServices.semesterEnd)}'),
-                onTap: () async {
-                  widget.userServices.semesterEnd = await _selectDate(context, widget.userServices.semesterEnd);
                   setState(() {});
                 },
               )
