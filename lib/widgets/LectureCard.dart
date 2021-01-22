@@ -9,8 +9,8 @@ class LectureCard extends StatelessWidget {
   String startTimeString;
   String endTimeString;
   LectureCard({Key key, @required this.lecture, this.type, @required this.userServices}) : super(key: key) {
-    startTimeString = DateFormat('hh:mm a').format(lecture.startTime);
-    endTimeString = DateFormat('hh:mm a').format(lecture.endTime);
+    startTimeString = lecture.startTime.toString();
+    endTimeString = lecture.endTime.toString();
   }
 
   @override

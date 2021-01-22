@@ -18,7 +18,7 @@ class NextLectureCard extends StatelessWidget {
       subtitle = "We're done for the week";
     } else {
       subtitle =
-          '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${DateFormat('hh:mm a').format(lecture.startTime)} - ${DateFormat('hh:mm a').format(lecture.endTime)}';
+          '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${lecture.startTime.toString()} - ${lecture.endTime.toString()}';
       switch (status) {
         case 0:
           if (lecture.day == UserServices.getWeekday(DateTime.now()))

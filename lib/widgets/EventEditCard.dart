@@ -219,60 +219,49 @@ class _EventEditCardState extends State<EventEditCard> {
                               fontSize: 12,
                             ),
                           ),
-                          DropdownButton<DateTime>(
-                              isExpanded: true,
-
-                              /// Colors
-                              // Underline
-                              underline: Container(
-                                height: 1.0,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Color(0xFF828282),
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
+                          TextField(
+                            readOnly: true,
+                            controller: TextEditingController(
+                              text: DateFormat('hh:mm a').format(widget.event.startDateTime),
+                            ),
+                            decoration: InputDecoration(
+                              labelStyle: TextStyle(
+                                color: Color(0xFF828282),
                               ),
-                              // Icon and text
-                              iconEnabledColor: Color(0xFF828282),
-                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                              dropdownColor: Color(0xffe7e7e7),
-
-                              /// Values
-                              value: startVal,
-                              elevation: 1,
-                              onChanged: (DateTime newVal) {
+                              counterStyle: TextStyle(color: Color(0xff828282)),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFF828282)),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFF828282)),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFF828282)),
+                              ),
+                            ),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onTap: () async {
+                              var newTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.fromDateTime(widget.event.startDateTime),
+                              );
+                              if (newTime != null) {
                                 setState(() {
-                                  startVal = newVal;
-                                  widget.event.startDateTime = newVal;
+                                  var old = widget.event.startDateTime;
+                                  widget.event.startDateTime = DateTime(
+                                    old.year,
+                                    old.month,
+                                    old.day,
+                                    newTime.hour,
+                                    newTime.minute,
+                                  );
                                 });
-                              },
-                              items: List<DropdownMenuItem<DateTime>>.generate(96, (index) {
-                                    var time = DateTime(
-                                        widget.event.startDateTime.year,
-                                        widget.event.startDateTime.month,
-                                        widget.event.startDateTime.day,
-                                        0 + index ~/ 4,
-                                        15 * (index % 4));
-                                    if (widget.event.startDateTime != time)
-                                      return DropdownMenuItem<DateTime>(
-                                        value: time,
-                                        child: Text('${DateFormat('hh:mm a').format(time)}'),
-                                      );
-                                    else
-                                      return DropdownMenuItem<DateTime>(
-                                        value: time.add(Duration(minutes: 5)),
-                                        child: Text('${DateFormat('hh:mm a').format(time)}'),
-                                      );
-                                  }) +
-                                  [
-                                    DropdownMenuItem<DateTime>(
-                                      value: widget.event.startDateTime,
-                                      child: Text('${DateFormat('hh:mm a').format(widget.event.startDateTime)}'),
-                                    )
-                                  ]),
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -291,56 +280,49 @@ class _EventEditCardState extends State<EventEditCard> {
                         fontSize: 12,
                       ),
                     ),
-                    DropdownButton<DateTime>(
-                        isExpanded: true,
-
-                        /// Colors
-                        // Underline
-                        underline: Container(
-                          height: 1.0,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Color(0xFF828282),
-                                width: 1,
-                              ),
-                            ),
-                          ),
+                    TextField(
+                      readOnly: true,
+                      controller: TextEditingController(
+                        text: DateFormat('hh:mm a').format(widget.event.endDateTime),
+                      ),
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                          color: Color(0xFF828282),
                         ),
-                        // Icon and text
-                        iconEnabledColor: Color(0xFF828282),
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                        dropdownColor: Color(0xffe7e7e7),
-
-                        /// Values
-                        value: endVal,
-                        elevation: 1,
-                        onChanged: (DateTime newVal) {
+                        counterStyle: TextStyle(color: Color(0xff828282)),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF828282)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF828282)),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF828282)),
+                        ),
+                      ),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onTap: () async {
+                        var newTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(widget.event.endDateTime),
+                        );
+                        if (newTime != null) {
                           setState(() {
-                            endVal = newVal;
-                            widget.event.endDateTime = newVal;
+                            var old = widget.event.endDateTime;
+                            widget.event.endDateTime = DateTime(
+                              old.year,
+                              old.month,
+                              old.day,
+                              newTime.hour,
+                              newTime.minute,
+                            );
                           });
-                        },
-                        items: List<DropdownMenuItem<DateTime>>.generate(96, (index) {
-                              var time = DateTime(widget.event.endDateTime.year, widget.event.endDateTime.month,
-                                  widget.event.endDateTime.day, index ~/ 4, 15 * (index % 4));
-                              if (time != widget.event.endDateTime)
-                                return DropdownMenuItem<DateTime>(
-                                  value: time,
-                                  child: Text('${DateFormat('hh:mm a').format(time)}'),
-                                );
-                              else
-                                return DropdownMenuItem<DateTime>(
-                                  value: time.add(Duration(minutes: 5)),
-                                  child: Text('${DateFormat('hh:mm a').format(time)}'),
-                                );
-                            }) +
-                            [
-                              DropdownMenuItem<DateTime>(
-                                value: widget.event.endDateTime,
-                                child: Text('${DateFormat('hh:mm a').format(widget.event.endDateTime)}'),
-                              )
-                            ]),
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
