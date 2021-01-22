@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:github/github.dart' as github;
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
+import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 
@@ -11,6 +13,7 @@ import '../widgets/widgetsLib.dart';
 
 class MyHomePage extends StatefulWidget {
   final UserServices userServices = MyApp.userServices;
+  final githubServices = GithubServices();
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -21,6 +24,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     loadCourses();
+    widget.githubServices.checkNewVersion().then((release) {
+      if (release != null) _showNewVersionDialog(release);
+    });
   }
 
   loadCourses() async {
@@ -28,6 +34,40 @@ class _MyHomePageState extends State<MyHomePage> {
     // ignore: await_only_futures
     await widget.userServices.loadUser();
     setState(() {});
+  }
+
+  _showNewVersionDialog(github.Release release) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Newer version available"),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '${release.tagName}: ${release.name}',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 5),
+          Text(release.body),
+        ],
+      ),
+      actions: [okButton],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
