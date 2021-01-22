@@ -1,7 +1,16 @@
 # AOU Schedule Manager
 an app for Arab Open University students to help track courses lectures TMA, MTA, and Finals.  
 
-### [Download v1.7.1](https://github.com/ElforL/AOU_schedule_manager/releases)
+## Download
+**The download page is <ins>android only</ins>.**  
+To install the app on an iOS device, you need to [install flutter][install flutter], then compile and [deploy to your iOS device][iOS deploy].
+
+### [Download Page](https://github.com/ElforL/AOU_schedule_manager/releases)
+
+[install flutter]: https://flutter.dev/docs/get-started/install
+[iOS deploy]: https://flutter.dev/docs/get-started/install/macos#deploy-to-ios-devices
+[apk]: https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/
+
 
 ## Screenshots
 
