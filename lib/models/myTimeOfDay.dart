@@ -33,4 +33,23 @@ class MyTimeOfDay extends TimeOfDay {
       return this.minute < other.minute;
     }
   }
+
+  /// * returns 1 if t1 is earlier
+  /// * returns -1 if t2 is earlier
+  /// * returns 0 if both are the same
+  static int compare(TimeOfDay t1, TimeOfDay t2) {
+    if (t1.hour > t2.hour) {
+      return -1;
+    } else if (t1.hour < t2.hour) {
+      return 1;
+    } else {
+      // same hour
+      if (t1.minute > t2.minute) {
+        return -1;
+      } else if (t1.minute < t2.minute) {
+        return 1;
+      }
+    }
+    return 0;
+  }
 }
