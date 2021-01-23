@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github/github.dart' as github;
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
+import 'package:uni_assistant/screens/CoursesListScreen.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
-import 'package:uni_assistant/screens/CoursesListScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/widgetsLib.dart';
 
@@ -42,6 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Text("OK"),
       onPressed: () => Navigator.pop(context),
     );
+    Widget downloadButton = FlatButton(
+      child: Text("DOWNLOAD PAGE"),
+      onPressed: () => _launchURL('https://github.com/ElforL/AOU_schedule_manager/releases'),
+    );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -58,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Text(release.body),
         ],
       ),
-      actions: [okButton],
+      actions: [downloadButton, okButton],
     );
 
     // show the dialog
@@ -68,6 +75,60 @@ class _MyHomePageState extends State<MyHomePage> {
         return alert;
       },
     );
+  }
+
+  _showUnableToOpenLinkDialog() {
+    const url = 'https://github.com/ElforL/AOU_schedule_manager/releases';
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () => Navigator.pop(context),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Failed"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('The app was unable to open the download page in your browser.\nPlease try again later.'),
+          SizedBox(height: 10),
+          Text('Or use the link to access the page manually:'),
+          SizedBox(height: 10),
+          Theme(
+            data: ThemeData(textSelectionColor: Colors.white),
+            child: SelectableText(
+              url,
+              style: TextStyle(color: Colors.blue),
+              onTap: () {
+                Clipboard.setData(new ClipboardData(text: url));
+                Fluttertoast.showToast(msg: 'Link copied to clipboard');
+              },
+            ),
+          ),
+        ],
+      ),
+      actions: [okButton],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Builder(
+          builder: (context) => alert,
+        ),
+      ),
+    );
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      _showUnableToOpenLinkDialog();
+    }
   }
 
   @override
@@ -118,11 +179,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.library_books),
-                          onPressed: () async {
-                            await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                            setState(() {});
-                          })
+                        icon: Icon(Icons.library_books),
+                        onPressed: () async {
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
+                          setState(() {});
+                        },
+                      )
                     ],
                   ),
                   NextLectureCard(lecture: lectures.length > 0 ? lectures[0] : null),
