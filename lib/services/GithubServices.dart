@@ -41,9 +41,9 @@ class GithubServices {
     var arr2 = [for (var x in v2.split('.')) int.parse(x)];
 
     if (arr1.length > arr2.length) {
-      return 1;
-    } else if (arr1.length < arr2.length) {
       return -1;
+    } else if (arr1.length < arr2.length) {
+      return 1;
     }
 
     for (var i = 0; i < arr1.length; i++) {
