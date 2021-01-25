@@ -3,7 +3,7 @@ import 'package:github/github.dart';
 class GithubServices {
   final owner = 'ElforL';
   final repoName = 'AOU_schedule_manager';
-  final currentVersion = '1.8.0';
+  final currentVersion = '1.8.1';
   var github = GitHub();
 
   /// Checks if there's a newer version than [currentVersion]
