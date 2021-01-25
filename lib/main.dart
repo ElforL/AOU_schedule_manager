@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'AOU Schedule Manager',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
