@@ -17,7 +17,7 @@ class MyTimeOfDay extends TimeOfDay {
   }
 
   String toString() {
-    var hh = this.hourOfPeriod.toString().padLeft(2, '0');
+    var hh = this.hourOfPeriod == 0 ? '12' : this.hourOfPeriod.toString().padLeft(2, '0');
     var mm = this.minute.toString().padLeft(2, '0');
     var a = this.period.index == 0 ? 'AM' : 'PM';
 
