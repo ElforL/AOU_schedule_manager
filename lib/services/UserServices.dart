@@ -164,7 +164,7 @@ class UserServices {
         outputList.add(lecture);
       }
     }
-    outputList.sort((a, b) => a.day - b.day);
+    outputList.sort((a, b) => a.compareTime(b));
     return outputList;
   }
 

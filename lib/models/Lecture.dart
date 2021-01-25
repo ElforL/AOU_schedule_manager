@@ -160,4 +160,17 @@ class Lecture {
         throw ArgumentError('weekday number should be from 1 to 6: $day.\nthis object is faulty and can cause errors');
     }
   }
+
+  int compareTime(Lecture other) {
+    if (this.day < other.day) {
+      // [other] is after
+      return -1;
+    } else if (this.day > other.day) {
+      // [other] is before
+      return 1;
+    } else {
+      // both on the same day
+      return MyTimeOfDay.compare(this.startTime, other.startTime);
+    }
+  }
 }
