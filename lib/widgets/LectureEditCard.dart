@@ -233,7 +233,8 @@ class _LectureEditCardState extends State<LectureEditCard> {
                         );
                         if (newTime != null) {
                           setState(() {
-                            if (MyTimeOfDay.compare(newTime, widget.lecture.endTime) == -1) {
+                            var timeCompare = MyTimeOfDay.compare(newTime, widget.lecture.endTime);
+                            if (timeCompare == 1 || timeCompare == 0) {
                               widget.lecture.endTime = MyTimeOfDay(hour: newTime.hour + 2, minute: newTime.minute);
                             }
                             widget.lecture.startTime = MyTimeOfDay(hour: newTime.hour, minute: newTime.minute);
