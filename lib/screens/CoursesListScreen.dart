@@ -21,21 +21,26 @@ class CoursesListScreenState extends State<CoursesListScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          children: [
-                // Date Pickers
-                DatePicker(widget.userServices),
-                SizedBox(height: 50),
-              ] +
-              List<Widget>.generate(widget.userServices.courses.length, (index) {
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        children: [
+              // Date Pickers
+              DatePicker(widget.userServices),
+              SizedBox(height: 50),
+            ] +
+            List<Widget>.generate(
+              widget.userServices.courses.length,
+              (index) {
                 return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Hero(
-                      tag: widget.userServices.courses[index].code,
-                      child: CourseCard(
-                          parent: this, userServices: widget.userServices, course: widget.userServices.courses[index]),
-                    ));
-              })),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Hero(
+                    tag: widget.userServices.courses[index],
+                    child: CourseCard(
+                        parent: this, userServices: widget.userServices, course: widget.userServices.courses[index]),
+                  ),
+                );
+              },
+            ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.push(context, MaterialPageRoute(builder: (context) => CourseEditScreen(course: null)));

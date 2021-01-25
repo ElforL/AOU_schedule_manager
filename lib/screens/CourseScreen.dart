@@ -52,7 +52,7 @@ class _CourseScreenState extends State<CourseScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: widget.course.code,
+                tag: widget.course,
                 child: Material(
                   color: kGrayCardColor,
                   borderRadius: BorderRadius.circular(15),
