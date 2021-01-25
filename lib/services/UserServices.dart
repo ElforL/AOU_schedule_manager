@@ -103,11 +103,13 @@ class UserServices {
 
     for (var i = 0; i < lectures.length; i++) {
       var lecture = lectures[i];
+      var title = '${lecture.courseCode} Lecture';
+      var body = (lecture.room.isNotEmpty ? '${lecture.room} : ' : '') + '${lecture.courseCode} lecture in 5 minutes';
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
         i,
-        '${lecture.courseCode} Lecture',
-        '${lecture.room.isNotEmpty ? '$lecture.room : ' : ''}${lecture.courseCode} lecture in 5 minutes',
+        title,
+        body,
         _getNextDateOfLec(lecture).add(Duration(minutes: -5)),
         const NotificationDetails(
           android: AndroidNotificationDetails(
