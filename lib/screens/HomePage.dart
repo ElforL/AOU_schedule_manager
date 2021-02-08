@@ -172,6 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SliverAppBar(
                 floating: true,
                 centerTitle: true,
+                title: Text('AOU Schedule Manager'),
                 leading: IconButton(
                   icon: Icon(Icons.library_books),
                   onPressed: () async {
