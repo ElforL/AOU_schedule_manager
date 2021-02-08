@@ -31,6 +31,7 @@ class _CourseCardState extends State<CourseCard> {
             child: Text(
               widget.course.code,
               style: TextStyle(
+                color: Colors.black,
                 fontSize: 35,
                 fontWeight: FontWeight.w300,
               ),

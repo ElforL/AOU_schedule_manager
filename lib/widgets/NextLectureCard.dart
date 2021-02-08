@@ -49,12 +49,12 @@ class NextLectureCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
             ),
             SizedBox(height: 10),
             Text(
               subtitle,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(color: Colors.black, fontSize: 12),
             )
           ],
         ),

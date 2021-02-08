@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
 
-        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
         iconTheme: IconThemeData(
           color: kOnBackgroundColor,
         ),

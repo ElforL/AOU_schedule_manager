@@ -2,6 +2,7 @@ part of widgets;
 
 // ignore: must_be_immutable
 class AlertCard extends StatelessWidget {
+  static const _textStyle = TextStyle(color: Colors.black);
   final Event event;
   Color cardColor;
   String title, line1, line2;
@@ -81,23 +82,18 @@ class AlertCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
                 Text(
                   line1,
-                  style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      // fontSize: 18,
-                      ),
+                  style: _textStyle,
                 ),
                 Text(
                   line2,
-                  style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      // fontSize: 18,
-                      ),
+                  style: _textStyle,
                 ),
               ],
             ),
