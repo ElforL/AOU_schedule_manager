@@ -160,84 +160,84 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         print('TimerSet: will refresh after $duration');
       }
-    }
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0),
-        child: AppBar(),
-      ),
-      body: widget.userServices.courses.length > 0
-          ? RefreshIndicator(
-              onRefresh: () async {
-                setState(() {});
-                return await Future.delayed(Duration(seconds: 1));
-              },
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+      return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(0),
+          child: AppBar(),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+            return await Future.delayed(Duration(seconds: 1));
+          },
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.library_books),
-                        onPressed: () async {
-                          await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                          setState(() {});
-                        },
-                      )
-                    ],
-                  ),
-                  NextLectureCard(lecture: lectures.length > 0 ? lectures[0] : null),
-                  SizedBox(height: 10),
-                  alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
-                  SizedBox(height: 10),
-                  ScheduleView(
-                    userServices: widget.userServices,
-                    lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
-                    forNextWeek: lectures.length == 0,
+                  IconButton(
+                    icon: Icon(Icons.library_books),
+                    onPressed: () async {
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
+                      setState(() {});
+                    },
                   )
                 ],
               ),
-            )
-
-          // Empty Courses
-          : Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Empty :(",
-                          style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          "You dont have any courses registered",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(height: 25),
-                        RaisedButton(
-                          color: Color(0xffe7e7e7),
-                          onPressed: () async {
-                            await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                            setState(() {});
-                          },
-                          child: Text(
-                            "ADD COURSES",
-                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                          ),
-                        )
-                      ],
+              NextLectureCard(lecture: lectures.length > 0 ? lectures[0] : null),
+              SizedBox(height: 10),
+              alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
+              SizedBox(height: 10),
+              ScheduleView(
+                userServices: widget.userServices,
+                lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
+                forNextWeek: lectures.length == 0,
+              )
+            ],
+          ),
+        ),
+      );
+    }
+    // No Courses
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Empty :(",
+                    style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "You dont have any courses registered",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
                     ),
                   ),
-                )
-              ],
+                  SizedBox(height: 25),
+                  RaisedButton(
+                    color: Color(0xffe7e7e7),
+                    onPressed: () async {
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
+                      setState(() {});
+                    },
+                    child: Text(
+                      "ADD COURSES",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  )
+                ],
+              ),
             ),
+          )
+        ],
+      ),
     );
   }
 }
