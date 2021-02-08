@@ -104,7 +104,15 @@ class UserServices {
     for (var i = 0; i < lectures.length; i++) {
       var lecture = lectures[i];
       var title = '${lecture.courseCode} Lecture';
-      var body = (lecture.room.isNotEmpty ? '${lecture.room} : ' : '') + '${lecture.courseCode} lecture in 5 minutes';
+      var body = '${lecture.courseCode} lecture in 5 minutes';
+
+      if (lecture.room.isNotEmpty) {
+        body = body + ' in ${lecture.room}';
+      }
+      if (lecture.repeatType != 0) {
+        title = 'Possible ' + title;
+        body = 'Possible ' + body + '. Check the app';
+      }
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
         i,
