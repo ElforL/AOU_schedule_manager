@@ -162,38 +162,46 @@ class _MyHomePageState extends State<MyHomePage> {
       }
 
       return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
-          child: AppBar(),
-        ),
         body: RefreshIndicator(
           onRefresh: () async {
             setState(() {});
             return await Future.delayed(Duration(seconds: 1));
           },
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.library_books),
-                    onPressed: () async {
-                      await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                      setState(() {});
-                    },
-                  )
-                ],
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                centerTitle: true,
+                leading: IconButton(
+                  icon: Icon(Icons.library_books),
+                  onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
+                    setState(() {});
+                  },
+                ),
               ),
-              NextLectureCard(lecture: lectures.length > 0 ? lectures[0] : null),
-              SizedBox(height: 10),
-              alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
-              SizedBox(height: 10),
-              ScheduleView(
-                userServices: widget.userServices,
-                lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
-                forNextWeek: lectures.length == 0,
-              )
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                      child: NextLectureCard(lecture: lectures.length > 0 ? lectures[0] : null),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      child: alerts.length > 0 ? AlertsView(alerts: alerts) : SizedBox(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      child: ScheduleView(
+                        userServices: widget.userServices,
+                        lectures: lectures.length > 0 ? lectures : widget.userServices.getWeekLectures(),
+                        forNextWeek: lectures.length == 0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),

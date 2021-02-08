@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         backgroundColor: kBackgroundColor,
         scaffoldBackgroundColor: kBackgroundColor,
         appBarTheme: AppBarTheme(
-          color: Colors.transparent,
           elevation: 0,
         ),
 
