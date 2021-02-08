@@ -162,6 +162,59 @@ class _MyHomePageState extends State<MyHomePage> {
       }
 
       return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Center(
+                  child: FittedBox(
+                    child: Text(
+                      'Arap Open University\nSchedule Manager',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.list_alt_rounded),
+                title: Text('My Courses'),
+                onLongPress: () => Fluttertoast.showToast(msg: 'Opens courses list'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.push(context, MaterialPageRoute(builder: (_) => CoursesListScreen()));
+                  setState(() {});
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onLongPress: () => Fluttertoast.showToast(msg: 'Opens settings page'),
+                // TODO setting page
+                // onTap: () async {
+                //   Navigator.pop(context);
+                //   await Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (_) => SettingsPage(),
+                //     ),
+                //   );
+                //   setState(() {});
+                // },
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('About'),
+                onLongPress: () => Fluttertoast.showToast(msg: 'Opens settings page'),
+                onTap: () => showAboutDialog(
+                  context: context,
+                  applicationVersion: '2.1.3',
+                  applicationLegalese: 'This app is an open source project under the BSD-3 License',
+                ),
+              ),
+            ],
+          ),
+        ),
         body: RefreshIndicator(
           onRefresh: () async {
             setState(() {});
@@ -173,13 +226,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 floating: true,
                 centerTitle: true,
                 title: Text('AOU Schedule Manager'),
-                leading: IconButton(
-                  icon: Icon(Icons.library_books),
-                  onPressed: () async {
-                    await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                    setState(() {});
-                  },
-                ),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
