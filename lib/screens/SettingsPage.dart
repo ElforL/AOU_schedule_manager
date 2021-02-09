@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_assistant/main.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 
 class SettingsPage extends StatefulWidget {
+  final UserServices userServices;
+
+  const SettingsPage({Key key, this.userServices}) : super(key: key);
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -34,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
       case Settings.notifications:
         return true;
         break;
-      case Settings.lecturePreTime:
+      case Settings.minutesB4LecNoti:
         return 10;
         break;
     }
@@ -58,13 +63,12 @@ class _SettingsPageState extends State<SettingsPage> {
           settingsVals = [];
           for (var setting in Settings.values) {
             var val = prefs.get(setting.toShortString());
+            settingsVals.add(val);
 
             if (val == null) {
               val = _getDefaultValue(setting);
               _setSetting(setting, val);
             }
-
-            settingsVals.add(val);
           }
 
           return ListView(
@@ -85,7 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               ListTile(
                 title: Text('Duration before lectures'),
-                subtitle: Text('Set to ${settingsVals[Settings.lecturePreTime.index]} minutes'),
+                subtitle: Text('Set to ${settingsVals[Settings.minutesB4LecNoti.index]} minutes'),
                 enabled: settingsVals[Settings.notifications.index],
                 onTap: () async {
                   await _showLecturePreTimeDialog();
@@ -100,14 +104,17 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _showLecturePreTimeDialog() async {
-    int current = settingsVals[Settings.lecturePreTime.index];
+    int current = settingsVals[Settings.minutesB4LecNoti.index];
 
     var result = await showDialog(
       context: context,
       child: DurationDialoig(currentVal: current),
     );
 
-    if (result != null) _setSetting(Settings.lecturePreTime, result);
+    if (result != null) {
+      await _setSetting(Settings.minutesB4LecNoti, result);
+      widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+    }
   }
 }
 
@@ -164,7 +171,7 @@ class _DurationDialoigState extends State<DurationDialoig> {
 
 enum Settings {
   notifications,
-  lecturePreTime,
+  minutesB4LecNoti,
 }
 
 extension ParseToString on Settings {

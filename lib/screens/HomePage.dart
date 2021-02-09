@@ -196,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => SettingsPage(),
+                      builder: (_) => SettingsPage(userServices: widget.userServices),
                     ),
                   );
                   setState(() {});

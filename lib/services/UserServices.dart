@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:uni_assistant/screens/SettingsPage.dart';
 
 import '../models/Course.dart';
 
@@ -93,6 +95,11 @@ class UserServices {
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
   scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+    var prefs = await SharedPreferences.getInstance();
+    if (!prefs.get(Settings.notifications.toShortString()) ?? true) return;
+
+    var minutesBefore = prefs.get(Settings.minutesB4LecNoti.toShortString()) ?? 10;
+
     tz.initializeTimeZones();
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
@@ -118,7 +125,7 @@ class UserServices {
         i,
         title,
         body,
-        _getNextDateOfLec(lecture).add(Duration(minutes: -5)),
+        _getNextDateOfLec(lecture).add(Duration(minutes: -minutesBefore)),
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'lecNoti', // channel id
