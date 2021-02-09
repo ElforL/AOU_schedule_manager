@@ -20,6 +20,7 @@ import '../models/Course.dart';
 part 'AlertCard.dart';
 part 'AlertsView.dart';
 part 'CourseCard.dart';
+part 'DurationDialog.dart';
 part 'EventCard.dart';
 part 'EventEditCard.dart';
 part 'LectureCard.dart';
