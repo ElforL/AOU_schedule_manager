@@ -45,22 +45,26 @@ class LectureCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Day
-                        Text(
-                          lecture.getDayShortcut(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                        FittedBox(
+                          child: Text(
+                            lecture.getDayShortcut(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
 
                         // Date
-                        Text(
-                          subBlueString,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: type == 0 ? 15 : 10,
-                            fontWeight: FontWeight.bold,
+                        FittedBox(
+                          child: Text(
+                            subBlueString,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: type == 0 ? 15 : 10,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],

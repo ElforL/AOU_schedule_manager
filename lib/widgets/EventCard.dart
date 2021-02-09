@@ -27,12 +27,14 @@ class EventCard extends StatelessWidget {
                   child: Container(
                     height: 35,
                     child: Center(
-                      child: Text(
-                        Event.getTypeName(event.type),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      child: FittedBox(
+                        child: Text(
+                          Event.getTypeName(event.type),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
