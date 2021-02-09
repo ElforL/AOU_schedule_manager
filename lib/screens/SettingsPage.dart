@@ -96,6 +96,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   setState(() {});
                 },
               ),
+              Divider(height: 20),
+              // About
+              ListTile(
+                title: Text('About AOU Schedule Manager'),
+                enabled: settingsVals[Settings.notifications.index],
+                onTap: () => showAboutDialog(
+                  context: context,
+                  applicationVersion: '1.8.1',
+                ),
+              ),
             ],
           );
         },

@@ -202,15 +202,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text('About'),
-                onLongPress: () => Fluttertoast.showToast(msg: 'Opens settings page'),
-                onTap: () => showAboutDialog(
-                  context: context,
-                  applicationVersion: '2.1.3',
-                ),
-              ),
             ],
           ),
         ),
