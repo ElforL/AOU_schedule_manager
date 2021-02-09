@@ -8,6 +8,7 @@ import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
+import 'package:uni_assistant/screens/SettingsPage.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -190,17 +191,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
                 onLongPress: () => Fluttertoast.showToast(msg: 'Opens settings page'),
-                // TODO setting page
-                // onTap: () async {
-                //   Navigator.pop(context);
-                //   await Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (_) => SettingsPage(),
-                //     ),
-                //   );
-                //   setState(() {});
-                // },
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SettingsPage(),
+                    ),
+                  );
+                  setState(() {});
+                },
               ),
               ListTile(
                 leading: Icon(Icons.info),
