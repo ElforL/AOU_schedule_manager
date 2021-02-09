@@ -17,8 +17,10 @@ class _SettingsPageState extends State<SettingsPage> {
   List settingsVals;
 
   _setSetting(Settings setting, value) async {
+    // ensure SharedPreferences isn't null
     prefs ??= await SharedPreferences.getInstance();
 
+    // set the value according to its type
     switch (_settingsTypes[setting.index]) {
       case 'bool':
         if (value is bool) {
@@ -35,6 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  /// returns the default value of a setting
   _getDefaultValue(Settings setting) {
     switch (setting) {
       case Settings.notifications:
@@ -56,12 +59,15 @@ class _SettingsPageState extends State<SettingsPage> {
       body: FutureBuilder(
         future: prefs == null ? SharedPreferences.getInstance() : Future.value(prefs),
         builder: (context, AsyncSnapshot<SharedPreferences> snapshot) {
+          // if the settings are still loading, show a `CircularProgressIndicator`
           if (snapshot.connectionState != ConnectionState.done && prefs == null) {
             return Center(child: CircularProgressIndicator());
           }
 
           prefs = snapshot.data;
           settingsVals = [];
+          // load the settings value in `settingsVals`
+          // they're ordered as the `Settings` enum
           for (var setting in Settings.values) {
             var val = prefs.get(setting.toShortString());
             settingsVals.add(val);
