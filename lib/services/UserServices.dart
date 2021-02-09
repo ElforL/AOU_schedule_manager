@@ -121,11 +121,15 @@ class UserServices {
         body = 'Possible ' + body + '. Check the app';
       }
 
+      var date = _getNextDateOfLec(lecture).add(Duration(minutes: -minutesBefore));
+      // ensure that the date is in the future to avoid errors with notification plugin
+      if (date.isBefore(DateTime.now())) date = date.add(Duration(days: 7));
+
       await flutterLocalNotificationsPlugin.zonedSchedule(
         i,
         title,
         body,
-        _getNextDateOfLec(lecture).add(Duration(minutes: -minutesBefore)),
+        date,
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'lecNoti', // channel id
