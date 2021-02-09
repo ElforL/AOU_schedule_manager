@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/services/UserServices.dart';
+import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class SettingsPage extends StatefulWidget {
   final UserServices userServices;
@@ -74,6 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
           return ListView(
             children: [
               // Notifications
+              ListLabel(text: 'Notifications', color: Colors.blue),
               ListTile(
                 title: Text('Notifications'),
                 subtitle: Text('Enable notifications'),
@@ -98,13 +100,13 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Divider(height: 20),
               // About
+              ListLabel(text: 'About', color: Colors.blue),
               ListTile(
                 title: Text('About AOU Schedule Manager'),
                 enabled: settingsVals[Settings.notifications.index],
-                onTap: () => showAboutDialog(
-                  context: context,
-                  applicationVersion: '1.8.1',
-                ),
+                onTap: () async {
+                  showAboutDialog(context: context, applicationVersion: '1.8.1');
+                },
               ),
             ],
           );

@@ -17,13 +17,13 @@ import '../models/Event.dart';
 import '../models/Course.dart';
 
 // Widgets
-part 'NextLectureCard.dart';
 part 'AlertCard.dart';
 part 'AlertsView.dart';
-part 'ScheduleView.dart';
-part 'LectureCard.dart';
-
 part 'CourseCard.dart';
-part 'LectureEditCard.dart';
-part 'EventEditCard.dart';
 part 'EventCard.dart';
+part 'EventEditCard.dart';
+part 'LectureCard.dart';
+part 'LectureEditCard.dart';
+part 'ListLabel.dart';
+part 'NextLectureCard.dart';
+part 'ScheduleView.dart';
