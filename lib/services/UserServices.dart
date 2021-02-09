@@ -86,6 +86,7 @@ class UserServices {
 
   void loadUser() async {
     String jsonString = await readFile();
+    if (jsonString == null) return;
     final jsonResponse = json.decode(jsonString);
     UserServices parsedUser = UserServices.fromJson(jsonResponse);
     courses = parsedUser.courses;
