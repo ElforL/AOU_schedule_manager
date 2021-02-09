@@ -1,16 +1,22 @@
 import 'package:github/github.dart';
+import 'package:package_info/package_info.dart';
 
 class GithubServices {
   final owner = 'ElforL';
   final repoName = 'AOU_schedule_manager';
-  final currentVersion = '1.8.1';
+  String currentVersion;
   var github = GitHub();
+
+  GithubServices() {
+    PackageInfo.fromPlatform().then((value) => currentVersion = value.version);
+  }
 
   /// Checks if there's a newer version than [currentVersion]
   ///
   /// * returns the release if there is a newer version
   /// * returns null if there's not
   Future<Release> checkNewVersion() async {
+    currentVersion ??= (await PackageInfo.fromPlatform()).version;
     var release = await github.repositories.getLatestRelease(RepositorySlug(owner, repoName));
 
     if (compare(currentVersion, release.tagName) == -1) {

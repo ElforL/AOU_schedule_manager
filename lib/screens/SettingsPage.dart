@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_assistant/main.dart';
+import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class SettingsPage extends StatefulWidget {
   final UserServices userServices;
+  final GithubServices githubServices;
 
-  const SettingsPage({Key key, this.userServices}) : super(key: key);
+  const SettingsPage({Key key, this.userServices, this.githubServices}) : super(key: key);
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -112,7 +115,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text('About AOU Schedule Manager'),
                 enabled: settingsVals[Settings.notifications.index],
                 onTap: () async {
-                  showAboutDialog(context: context, applicationVersion: '1.8.1');
+                  var version = widget.githubServices.currentVersion ?? (await PackageInfo.fromPlatform()).version;
+                  showAboutDialog(context: context, applicationVersion: version);
                 },
               ),
             ],
