@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ListLabel(text: 'Notifications', color: Colors.blue),
               ListTile(
                 title: Text('Notifications'),
-                subtitle: Text('Enable notifications'),
+                subtitle: Text('Enable notifications for lectures'),
                 trailing: Switch(
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.notifications.index],
