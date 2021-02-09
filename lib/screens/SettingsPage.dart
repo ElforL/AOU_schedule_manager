@@ -75,6 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
             if (val == null) {
               val = _getDefaultValue(setting);
               _setSetting(setting, val);
+              settingsVals[setting.index] = val;
             }
           }
 
