@@ -209,7 +209,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () => showAboutDialog(
                   context: context,
                   applicationVersion: '2.1.3',
-                  applicationLegalese: 'This app is an open source project under the BSD-3 License',
                 ),
               ),
             ],
