@@ -95,7 +95,7 @@ class UserServices {
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
-  scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+  scheduleLecturesNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var prefs = await SharedPreferences.getInstance();
     if (!prefs.get(Settings.notifications.toShortString()) ?? true) return;
 

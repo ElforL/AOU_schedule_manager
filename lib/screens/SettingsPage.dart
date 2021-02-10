@@ -136,7 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (result != null) {
       await _setSetting(Settings.minutesB4LecNoti, result);
-      widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+      widget.userServices.scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
     }
   }
 }
