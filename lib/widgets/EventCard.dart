@@ -28,12 +28,15 @@ class EventCard extends StatelessWidget {
                     height: 35,
                     child: Center(
                       child: FittedBox(
-                        child: Text(
-                          Event.getTypeName(event.type),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            event.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -60,9 +63,7 @@ class EventCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      (DateFormat('dd/MM/yyyy hh:mm a')
-                              .format(event.type == 0 ? event.endDateTime : event.startDateTime)) +
-                          (event.type != 0 ? DateFormat('- hh:mm a').format(event.endDateTime) : ''),
+                      DateFormat('dd/MM/yyyy hh:mm a').format(event.time),
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
                   ],

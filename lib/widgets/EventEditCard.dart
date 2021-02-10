@@ -13,17 +13,12 @@ class EventEditCard extends StatefulWidget {
 class _EventEditCardState extends State<EventEditCard> {
   int typeVal;
   String descVal;
-  DateTime startVal;
-  DateTime endVal;
+  DateTime timeVal;
 
   @override
   Widget build(BuildContext context) {
-    typeVal = widget.event.type;
     descVal = widget.event.description;
-    startVal = widget.event.startDateTime;
-    endVal = widget.event.endDateTime;
-
-    List<int> available = widget.parent.widget.course.nextEventsList() + [typeVal];
+    timeVal = widget.event.time;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -58,65 +53,34 @@ class _EventEditCardState extends State<EventEditCard> {
             ],
           ),
 
-          // TYPE
-          Row(
-            children: [
-              // Day
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'TYPE',
-                      style: TextStyle(
-                        color: Color(0xFF828282),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                    ),
-                    DropdownButton<int>(
-
-                        /// Colors
-                        // Underline
-                        isExpanded: true,
-                        underline: Container(
-                          height: 1.0,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Color(0xFF828282),
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Icon and text
-                        iconEnabledColor: Color(0xFF828282),
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                        dropdownColor: Color(0xffe7e7e7),
-
-                        /// Values
-                        value: typeVal,
-                        elevation: 1,
-                        onChanged: (int newVal) {
-                          setState(() {
-                            typeVal = newVal;
-                            widget.event.type = newVal;
-                          });
-                          widget.parent.setState(() {});
-                        },
-                        items: available.map((e) {
-                          return DropdownMenuItem(value: e, child: Text(Event.getTypeName(e)));
-                        }).toList()),
-                  ],
-                ),
+          // Title
+          TextField(
+            controller: TextEditingController(text: widget.event.title),
+            decoration: InputDecoration(
+              labelText: 'TITLE',
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF828282),
               ),
-              SizedBox(width: 30),
-              Expanded(flex: 2, child: Container()),
-              Expanded(child: Container()),
-            ],
+              counterStyle: TextStyle(color: Color(0xff828282)),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF828282)),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF828282)),
+              ),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF828282)),
+              ),
+            ),
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            maxLength: 10,
+            onChanged: (value) {
+              if (value.length <= 10) widget.event.title = value;
+            },
           ),
 
           SizedBox(height: 10),
@@ -161,9 +125,7 @@ class _EventEditCardState extends State<EventEditCard> {
                   children: <Widget>[
                     TextField(
                       readOnly: true,
-                      controller: TextEditingController(
-                          text:
-                              '${DateFormat('dd/MM/yyyy').format(widget.event.type == 0 ? widget.event.endDateTime : widget.event.startDateTime)}'),
+                      controller: TextEditingController(text: '${DateFormat('dd/MM/yyyy').format(widget.event.time)}'),
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -186,10 +148,7 @@ class _EventEditCardState extends State<EventEditCard> {
                         ),
                       ),
                       onTap: () async {
-                        if (widget.event.type != 0)
-                          widget.event.startDateTime = await _selectDate(context, widget.event.startDateTime);
-                        else
-                          widget.event.endDateTime = await _selectDate(context, widget.event.endDateTime);
+                        widget.event.time = await _selectDate(context, widget.event.time);
                         setState(() {});
                       },
                     )
@@ -205,76 +164,13 @@ class _EventEditCardState extends State<EventEditCard> {
           Row(
             children: [
               // Start
-              widget.event.type == 0
-                  ? SizedBox()
-                  : Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'START TIME',
-                            style: TextStyle(
-                              color: Color(0xFF828282),
-                              fontSize: 12,
-                            ),
-                          ),
-                          TextField(
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: DateFormat('hh:mm a').format(widget.event.startDateTime),
-                            ),
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(
-                                color: Color(0xFF828282),
-                              ),
-                              counterStyle: TextStyle(color: Color(0xff828282)),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFF828282)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFF828282)),
-                              ),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFF828282)),
-                              ),
-                            ),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            onTap: () async {
-                              var newTime = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.fromDateTime(widget.event.startDateTime),
-                              );
-                              if (newTime != null) {
-                                setState(() {
-                                  var old = widget.event.startDateTime;
-                                  widget.event.startDateTime = DateTime(
-                                    old.year,
-                                    old.month,
-                                    old.day,
-                                    newTime.hour,
-                                    newTime.minute,
-                                  );
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-              SizedBox(width: widget.event.type != 0 ? 30 : 0),
-
               Expanded(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'END TIME',
+                      'START TIME',
                       style: TextStyle(
                         color: Color(0xFF828282),
                         fontSize: 12,
@@ -283,7 +179,7 @@ class _EventEditCardState extends State<EventEditCard> {
                     TextField(
                       readOnly: true,
                       controller: TextEditingController(
-                        text: DateFormat('hh:mm a').format(widget.event.endDateTime),
+                        text: DateFormat('hh:mm a').format(widget.event.time),
                       ),
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
@@ -307,12 +203,12 @@ class _EventEditCardState extends State<EventEditCard> {
                       onTap: () async {
                         var newTime = await showTimePicker(
                           context: context,
-                          initialTime: TimeOfDay.fromDateTime(widget.event.endDateTime),
+                          initialTime: TimeOfDay.fromDateTime(widget.event.time),
                         );
                         if (newTime != null) {
                           setState(() {
-                            var old = widget.event.endDateTime;
-                            widget.event.endDateTime = DateTime(
+                            var old = widget.event.time;
+                            widget.event.time = DateTime(
                               old.year,
                               old.month,
                               old.day,
@@ -327,7 +223,7 @@ class _EventEditCardState extends State<EventEditCard> {
                 ),
               ),
 
-              Expanded(flex: widget.event.type == 0 ? 2 : 1, child: Container())
+              Expanded(flex: 2, child: Container()),
             ],
           ),
         ],

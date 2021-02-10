@@ -11,9 +11,7 @@ class AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var diff = event.type == 0
-        ? event.endDateTime.difference(DateTime.now()).inDays
-        : event.startDateTime.difference(DateTime.now()).inDays;
+    var diff = event.time.difference(DateTime.now()).inDays;
 
     // Colors
     // amber[500]  14 13 12
@@ -36,18 +34,7 @@ class AlertCard extends StatelessWidget {
       throw ArgumentError("event submitted already passed: $diff");
     }
 
-    title = '${event.course.code} ';
-    //0 TMA, 1 MTA, 2 Final
-    switch (event.type) {
-      case 0:
-        title += 'TMA';
-        break;
-      case 1:
-        title += 'MTA';
-        break;
-      default:
-        title += 'Final';
-    }
+    title = '${event.course.code}: ${event.title}';
 
     if (event.remainingTime >= 1440) {
       line1 = '${event.remainingTime ~/ 1440} day${event.remainingTime ~/ 1440 != 1 ? 's' : ''} remainig';
@@ -59,7 +46,7 @@ class AlertCard extends StatelessWidget {
       }
     }
 
-    line2 = 'Due at ' + DateFormat('dd/MM/yyyy – hh:mm a').format(event.compareDate);
+    line2 = 'at ' + DateFormat('dd/MM/yyyy – hh:mm a').format(event.time);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),

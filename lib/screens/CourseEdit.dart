@@ -32,8 +32,6 @@ class CourseEditScreenState extends State<CourseEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var nextEvent = widget.course.nextAvailableEvent();
-
     codeTfController = TextEditingController(text: widget.course.code);
     return Scaffold(
       appBar: AppBar(),
@@ -140,38 +138,37 @@ class CourseEditScreenState extends State<CourseEditScreen> {
 
                 // Button
                 [
-                  nextEvent != -1
-                      ? Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: SizedBox(
-                                height: 28,
-                                child: RaisedButton.icon(
-                                    icon: Icon(
-                                      Icons.add,
-                                      size: 20,
-                                    ),
-                                    label: Text(
-                                      "ADD EVENT",
-                                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                                    ),
-                                    textColor: Colors.black,
-                                    color: Color(0xffe7e7e7),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        widget.course.addEvent(Event(nextEvent, widget.course, '', DateTime.now(),
-                                            DateTime.now().add(Duration(days: 90))));
-                                      });
-                                    }),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: SizedBox(
+                          height: 28,
+                          child: RaisedButton.icon(
+                              icon: Icon(
+                                Icons.add,
+                                size: 20,
                               ),
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
+                              label: Text(
+                                "ADD EVENT",
+                                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                              ),
+                              textColor: Colors.black,
+                              color: Color(0xffe7e7e7),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  widget.course.addEvent(
+                                    Event('', widget.course, '', DateTime.now()),
+                                  );
+                                });
+                              }),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
           ),
 
