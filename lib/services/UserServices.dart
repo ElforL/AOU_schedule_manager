@@ -95,11 +95,60 @@ class UserServices {
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
-  scheduleLecturesNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+  scheduleAllNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+    await scheduleEventsNotifications(flutterLocalNotificationsPlugin);
+    await scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
+  }
+
+  scheduleEventsNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var prefs = await SharedPreferences.getInstance();
     if (!prefs.get(Settings.notifications.toShortString()) ?? true) return;
+    if (!prefs.get(Settings.eventsNotifications.toShortString()) ?? true) return;
 
-    var minutesBefore = prefs.get(Settings.minutesB4LecNoti.toShortString()) ?? 10;
+    var minutesBefore = prefs.get(Settings.minutesBeforeEventNotifications.toShortString()) ?? 10;
+
+    tz.initializeTimeZones();
+    String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+    await flutterLocalNotificationsPlugin.cancelAll();
+
+    var events = getAllEvents();
+
+    for (var i = 0; i < events.length; i++) {
+      var event = events[i];
+      var title = '${event.course.code} Event';
+      var body = '${event.course.code} ${event.title} in 5 minutes';
+
+      var date = tz.TZDateTime.from(event.time.add(Duration(minutes: -minutesBefore)), tz.local);
+      // ensure that the date is in the future to avoid errors with notification plugin
+      if (date.isBefore(DateTime.now())) date = date.add(Duration(days: 7));
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        i,
+        title,
+        body,
+        date,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'lecNoti', // channel id
+            'lectures channel', // channel name
+            'channel for lectures notification... duh', // channel desc
+          ),
+        ),
+        androidAllowWhileIdle: true,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    }
+  }
+
+  scheduleLecturesNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+    var prefs = await SharedPreferences.getInstance();
+    if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return;
+    if (!(prefs.get(Settings.lecturesNotifications.toShortString()) ?? true)) return;
+
+    var minutesBefore = prefs.get(Settings.minutesBeforeLecNotifications.toShortString()) ?? 10;
 
     tz.initializeTimeZones();
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
@@ -161,6 +210,17 @@ class UserServices {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
+  }
+
+  List<Event> getAllEvents() {
+    List<Event> outputList = new List();
+
+    for (var course in courses) {
+      for (var event in course.events) {
+        outputList.add(event);
+      }
+    }
+    return outputList;
   }
 
   List<Lecture> getAllLectures() {

@@ -37,7 +37,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 for (var i = 0; i < widget.course.lectures.length; i++) {
                   widget.course.lectures[i].courseCode = widget.course.code;
                 }
-                await widget.userServices.scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
+                await widget.userServices.scheduleAllNotifications(flutterLocalNotificationsPlugin);
                 setState(() {});
               },
             ),

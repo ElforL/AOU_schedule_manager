@@ -46,7 +46,16 @@ class _SettingsPageState extends State<SettingsPage> {
       case Settings.notifications:
         return true;
         break;
-      case Settings.minutesB4LecNoti:
+      case Settings.minutesBeforeLecNotifications:
+        return 10;
+        break;
+      case Settings.lecturesNotifications:
+        return true;
+        break;
+      case Settings.eventsNotifications:
+        return true;
+        break;
+      case Settings.minutesBeforeEventNotifications:
         return 10;
         break;
     }
@@ -88,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ListLabel(text: 'Notifications', color: Colors.blue),
               ListTile(
                 title: Text('Notifications'),
-                subtitle: Text('Enable notifications for lectures'),
+                subtitle: Text('Enable all notifications'),
                 trailing: Switch(
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.notifications.index],
@@ -100,20 +109,71 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               ListTile(
-                title: Text('Duration before lectures'),
-                subtitle: Text('Set to ${settingsVals[Settings.minutesB4LecNoti.index]} minutes'),
+                title: Text('Lecture notifications'),
+                subtitle: Text('Enable notifications for lectures'),
                 enabled: settingsVals[Settings.notifications.index],
+                trailing: Switch(
+                  activeColor: Colors.blue,
+                  value: settingsVals[Settings.lecturesNotifications.index],
+                  onChanged: settingsVals[Settings.notifications.index]
+                      ? (bool value) {
+                          setState(() {
+                            _setSetting(Settings.lecturesNotifications, value);
+                          });
+                        }
+                      : null,
+                ),
+              ),
+
+              ListTile(
+                title: Text('Duration before lectures'),
+                subtitle: Text('Set to ${settingsVals[Settings.minutesBeforeLecNotifications.index]} minutes'),
+                enabled:
+                    settingsVals[Settings.notifications.index] && settingsVals[Settings.lecturesNotifications.index],
                 onTap: () async {
-                  await _showLecturePreTimeDialog();
+                  var result = await _showLecturePreTimeDialog(Settings.minutesBeforeLecNotifications);
+                  if (result != null) {
+                    await _setSetting(Settings.minutesBeforeLecNotifications, result);
+                    widget.userServices.scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
+                  }
+                  setState(() {});
+                },
+              ),
+              ListTile(
+                title: Text('Events notifications'),
+                subtitle: Text('Enable notifications for events'),
+                enabled: settingsVals[Settings.notifications.index],
+                trailing: Switch(
+                  activeColor: Colors.blue,
+                  value: settingsVals[Settings.eventsNotifications.index],
+                  onChanged: settingsVals[Settings.notifications.index]
+                      ? (bool value) {
+                          setState(() {
+                            _setSetting(Settings.eventsNotifications, value);
+                          });
+                        }
+                      : null,
+                ),
+              ),
+              ListTile(
+                title: Text('Duration before events'),
+                subtitle: Text('Set to ${settingsVals[Settings.minutesBeforeEventNotifications.index]} minutes'),
+                enabled: settingsVals[Settings.notifications.index] && settingsVals[Settings.eventsNotifications.index],
+                onTap: () async {
+                  var result = await _showLecturePreTimeDialog(Settings.minutesBeforeEventNotifications);
+                  if (result != null) {
+                    await _setSetting(Settings.minutesBeforeEventNotifications, result);
+                    widget.userServices.scheduleEventsNotifications(flutterLocalNotificationsPlugin);
+                  }
                   setState(() {});
                 },
               ),
               Divider(height: 20),
+
               // About
               ListLabel(text: 'About', color: Colors.blue),
               ListTile(
                 title: Text('About AOU Schedule Manager'),
-                enabled: settingsVals[Settings.notifications.index],
                 onTap: () async {
                   var version = widget.githubServices.currentVersion ?? (await PackageInfo.fromPlatform()).version;
                   showAboutDialog(context: context, applicationVersion: version);
@@ -126,24 +186,24 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  _showLecturePreTimeDialog() async {
-    int current = settingsVals[Settings.minutesB4LecNoti.index];
+  Future _showLecturePreTimeDialog(Settings setting) async {
+    int current = settingsVals[setting.index];
 
     var result = await showDialog(
       context: context,
       child: DurationDialoig(currentVal: current),
     );
 
-    if (result != null) {
-      await _setSetting(Settings.minutesB4LecNoti, result);
-      widget.userServices.scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
-    }
+    return result;
   }
 }
 
 enum Settings {
   notifications,
-  minutesB4LecNoti,
+  lecturesNotifications,
+  eventsNotifications,
+  minutesBeforeLecNotifications,
+  minutesBeforeEventNotifications,
 }
 
 extension ParseToString on Settings {
@@ -154,5 +214,8 @@ extension ParseToString on Settings {
 
 const _settingsTypes = <String>[
   'bool',
+  'bool',
+  'bool',
+  'int',
   'int',
 ];
