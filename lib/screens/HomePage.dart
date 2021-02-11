@@ -7,6 +7,7 @@ import 'package:github/github.dart' as github;
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/models/Event.dart';
 import 'package:uni_assistant/models/Lecture.dart';
+import 'package:uni_assistant/screens/CourseScreen.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 import 'package:uni_assistant/screens/SettingsPage.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
@@ -179,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 leading: Icon(Icons.list_alt_rounded),
-                title: Text('My Courses'),
+                title: Text('Courses List'),
                 onLongPress: () => Fluttertoast.showToast(msg: 'Opens courses list'),
                 onTap: () async {
                   Navigator.pop(context);
@@ -187,6 +188,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
               ),
+              for (var course in widget.userServices.courses)
+                ListTile(
+                  leading: SizedBox(),
+                  title: Text(course.code),
+                  onLongPress: () => Fluttertoast.showToast(msg: 'Opens ${course.code} course page'),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Navigator.push(context, MaterialPageRoute(builder: (_) => CourseScreen(course: course)));
+                    setState(() {});
+                  },
+                ),
+              Divider(),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
