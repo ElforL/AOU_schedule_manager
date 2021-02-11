@@ -101,10 +101,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 trailing: Switch(
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.notifications.index],
-                  onChanged: (bool value) {
-                    setState(() {
-                      _setSetting(Settings.notifications, value);
-                    });
+                  onChanged: (bool value) async {
+                    await _setSetting(Settings.notifications, value);
+                    widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+                    setState(() {});
                   },
                 ),
               ),
@@ -116,10 +116,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.lecturesNotifications.index],
                   onChanged: settingsVals[Settings.notifications.index]
-                      ? (bool value) {
-                          setState(() {
-                            _setSetting(Settings.lecturesNotifications, value);
-                          });
+                      ? (bool value) async {
+                          await _setSetting(Settings.lecturesNotifications, value);
+                          widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+                          setState(() {});
                         }
                       : null,
                 ),
@@ -147,10 +147,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.eventsNotifications.index],
                   onChanged: settingsVals[Settings.notifications.index]
-                      ? (bool value) {
-                          setState(() {
-                            _setSetting(Settings.eventsNotifications, value);
-                          });
+                      ? (bool value) async {
+                          await _setSetting(Settings.eventsNotifications, value);
+                          widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
+                          setState(() {});
                         }
                       : null,
                 ),
