@@ -3,7 +3,6 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# TODO also change lib\services\GithubServices.dart > currentVersion
 version: 1.8.1+12
 
 environment:
@@ -21,6 +20,7 @@ dependencies:
   fluttertoast: ^7.1.6
   shared_preferences: ^0.5.12+4 # Settings
   package_info: ^0.4.3+4
+  flutter_markdown: ^0.5.2
 
   cupertino_icons: ^0.1.3
 

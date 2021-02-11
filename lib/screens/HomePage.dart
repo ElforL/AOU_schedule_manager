@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github/github.dart' as github;
 import 'package:uni_assistant/main.dart';
@@ -64,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5),
-          Text(release.body),
+          MarkdownBody(data: release.body),
         ],
       ),
       actions: [downloadButton, okButton],
