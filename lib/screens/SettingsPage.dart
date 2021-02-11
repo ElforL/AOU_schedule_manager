@@ -102,6 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   activeColor: Colors.blue,
                   value: settingsVals[Settings.notifications.index],
                   onChanged: (bool value) {
+                    widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
                     setState(() {
                       _setSetting(Settings.notifications, value);
                     });
