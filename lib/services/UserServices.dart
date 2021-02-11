@@ -95,7 +95,7 @@ class UserServices {
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
 
-  scheduleAllNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+  scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var id = await _scheduleLecturesNotifications(flutterLocalNotificationsPlugin);
     await _scheduleEventsNotifications(flutterLocalNotificationsPlugin, id);
   }
@@ -143,8 +143,10 @@ class UserServices {
 
   Future<int> _scheduleLecturesNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var prefs = await SharedPreferences.getInstance();
-    if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return null;
-    if (!(prefs.get(Settings.lecturesNotifications.toShortString()) ?? true)) return null;
+    await flutterLocalNotificationsPlugin.cancelAll();
+    var i = 0;
+    if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return i;
+    if (!(prefs.get(Settings.lecturesNotifications.toShortString()) ?? true)) return i;
 
     var minutesBefore = prefs.get(Settings.minutesBeforeLecNotifications.toShortString()) ?? 10;
 
@@ -152,11 +154,8 @@ class UserServices {
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
 
-    await flutterLocalNotificationsPlugin.cancelAll();
-
     var lectures = getAllLectures();
 
-    var i;
     for (i = 0; i < lectures.length; i++) {
       var lecture = lectures[i];
       var title = '${lecture.courseCode} Lecture';

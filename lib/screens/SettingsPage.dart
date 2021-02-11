@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   var result = await _showLecturePreTimeDialog(Settings.minutesBeforeLecNotifications);
                   if (result != null) {
                     await _setSetting(Settings.minutesBeforeLecNotifications, result);
-                    widget.userServices.scheduleAllNotifications(flutterLocalNotificationsPlugin);
+                    widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
                   }
                   setState(() {});
                 },
@@ -163,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   var result = await _showLecturePreTimeDialog(Settings.minutesBeforeEventNotifications);
                   if (result != null) {
                     await _setSetting(Settings.minutesBeforeEventNotifications, result);
-                    widget.userServices.scheduleAllNotifications(flutterLocalNotificationsPlugin);
+                    widget.userServices.scheduleNotifications(flutterLocalNotificationsPlugin);
                   }
                   setState(() {});
                 },
