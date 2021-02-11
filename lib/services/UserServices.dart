@@ -102,8 +102,8 @@ class UserServices {
 
   _scheduleEventsNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, int startID) async {
     var prefs = await SharedPreferences.getInstance();
-    if (!prefs.get(Settings.notifications.toShortString()) ?? true) return;
-    if (!prefs.get(Settings.eventsNotifications.toShortString()) ?? true) return;
+    if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return;
+    if (!(prefs.get(Settings.eventsNotifications.toShortString()) ?? true)) return;
 
     var minutesBefore = prefs.get(Settings.minutesBeforeEventNotifications.toShortString()) ?? 10;
 
