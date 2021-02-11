@@ -7,7 +7,7 @@ class AlertCard extends StatelessWidget {
   Color cardColor;
   String title, line1, line2;
 
-  AlertCard({Key key, @required this.event}) {}
+  AlertCard({Key key, @required this.event});
 
   @override
   Widget build(BuildContext context) {
