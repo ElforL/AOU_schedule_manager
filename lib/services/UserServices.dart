@@ -117,7 +117,7 @@ class UserServices {
       var id = startID + i;
       var event = events[i];
       var title = '${event.course.code} Event';
-      var body = '${event.course.code} ${event.title} in 5 minutes';
+      var body = '${event.course.code} ${event.title} in $minutesBefore minutes';
 
       var date = tz.TZDateTime.from(event.time.add(Duration(minutes: -minutesBefore)), tz.local);
       // ensure that the date is in the future to avoid errors with notification plugin
@@ -159,7 +159,7 @@ class UserServices {
     for (i = 0; i < lectures.length; i++) {
       var lecture = lectures[i];
       var title = '${lecture.courseCode} Lecture';
-      var body = '${lecture.courseCode} lecture in 5 minutes';
+      var body = '${lecture.courseCode} lecture in $minutesBefore minutes';
 
       if (lecture.room.isNotEmpty) {
         body = body + ' in ${lecture.room}';
