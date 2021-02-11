@@ -137,7 +137,6 @@ class UserServices {
           ),
         ),
         androidAllowWhileIdle: true,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
     }
