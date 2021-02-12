@@ -36,12 +36,6 @@ class MyApp extends StatelessWidget {
 
         accentColor: Color(0xFFe7e7e7),
 
-        // switchTheme: SwitchThemeData(
-        //   thumbColor: MaterialStateProperty.all(Colors.blue[200]),
-        //   trackColor: MaterialStateProperty.all(Colors.blue),
-        //   overlayColor: MaterialStateProperty.all(Colors.blue),
-        // ),
-
         textSelectionColor: Colors.blue,
         textSelectionHandleColor: Colors.blue,
 
