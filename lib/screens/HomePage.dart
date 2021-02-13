@@ -11,7 +11,9 @@ import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/screens/CourseScreen.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 import 'package:uni_assistant/screens/SettingsPage.dart';
+import 'package:uni_assistant/screens/WelcomeScreen.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
+import 'package:uni_assistant/services/SettingsServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,6 +22,7 @@ import '../widgets/widgetsLib.dart';
 class MyHomePage extends StatefulWidget {
   final UserServices userServices = MyApp.userServices;
   final githubServices = GithubServices();
+  final settings = SettingsServices();
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -30,8 +33,19 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     loadCourses();
+
     widget.githubServices.checkNewVersion().then((release) {
       if (release != null) _showNewVersionDialog(release);
+    });
+
+    widget.settings.getSettingAsync(Settings.firstOpen).then((value) async {
+      if (value) {
+        await showDialog(
+          context: context,
+          builder: (context) => WelcomeScreen(),
+        );
+        widget.settings.setSetting(Settings.firstOpen, false);
+      }
     });
   }
 

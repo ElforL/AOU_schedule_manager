@@ -74,6 +74,9 @@ class SettingsServices {
       case Settings.minutesBeforeEventNotifications:
         return 10;
         break;
+      case Settings.firstOpen:
+        return true;
+        break;
     }
   }
 
@@ -83,6 +86,7 @@ class SettingsServices {
     'bool', // eventsNotifications
     'int', // minutesBeforeLecNotifications
     'int', // minutesBeforeEventNotifications
+    'bool', // firstOpen
   ];
 } // SettingsServices
 
@@ -92,6 +96,7 @@ enum Settings {
   eventsNotifications,
   minutesBeforeLecNotifications,
   minutesBeforeEventNotifications,
+  firstOpen,
 }
 
 extension ParseToString on Settings {
