@@ -5,12 +5,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_assistant/models/Event.dart';
-import 'package:uni_assistant/models/Lecture.dart';
-
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:uni_assistant/screens/SettingsPage.dart';
+import 'package:uni_assistant/models/Event.dart';
+import 'package:uni_assistant/models/Lecture.dart';
+import 'package:uni_assistant/services/SettingsServices.dart';
 
 import '../models/Course.dart';
 
