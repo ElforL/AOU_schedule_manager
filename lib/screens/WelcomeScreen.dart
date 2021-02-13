@@ -78,16 +78,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   String _getLeftBtnText() {
     if (_controller.hasClients) {
-      if (_controller.page != 0) return 'Previous';
+      if (_controller.page != 0) return 'PREVIOUS';
     }
-    return 'Skip';
+    return 'SKIP';
   }
 
   String _getRightBtnText() {
     if (_controller.hasClients) {
-      if (_controller.page == _views.length - 1) return 'Done';
+      if (_controller.page == _views.length - 1) return 'DONE';
     }
-    return 'Next';
+    return 'NEXT';
   }
 
   @override
@@ -123,7 +123,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: FlatButton.icon(
                     label: Text(_getLeftBtnText()),
                     icon: Icon(
-                      _getLeftBtnText() == 'Previous' ? Icons.navigate_before_rounded : Icons.skip_previous,
+                      _getLeftBtnText() == 'PREVIOUS' ? Icons.navigate_before_rounded : Icons.skip_previous,
                     ),
                     onPressed: () {
                       _previoudPage(context);
@@ -133,7 +133,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Expanded(
                   child: FlatButton.icon(
                     label: Icon(
-                      _getRightBtnText() == 'Next' ? Icons.navigate_next_rounded : Icons.done,
+                      _getRightBtnText() == 'NEXT' ? Icons.navigate_next_rounded : Icons.done,
                     ),
                     icon: Text(_getRightBtnText()),
                     onPressed: () {
