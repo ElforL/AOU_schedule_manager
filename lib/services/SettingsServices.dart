@@ -2,39 +2,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsServices {
   SharedPreferences _prefs;
-  List<dynamic> _settingsVals = [];
   bool isInitiated = false;
 
   SettingsServices() {
     SharedPreferences.getInstance().then((value) {
-      // _prefs
       _prefs = value;
-
-      _loadSettings();
-
       isInitiated = true;
     });
-  }
-
-  _loadSettings() {
-    // load the settings value in `settingsVals`
-    // they're ordered as the `Settings` enum
-    for (var setting in Settings.values) {
-      var val = _prefs.get(setting.toShortString());
-      _settingsVals.add(val);
-
-      if (val == null) {
-        val = _getDefaultValue(setting);
-        setSetting(setting, val);
-        _settingsVals[setting.index] = val;
-      }
-    }
   }
 
   ensureInitiated() async {
     if (_prefs == null || !isInitiated) {
       _prefs = await SharedPreferences.getInstance();
-      _loadSettings();
       isInitiated = true;
     }
   }
@@ -45,16 +24,21 @@ class SettingsServices {
   getSetting(Settings setting) {
     if (_prefs == null)
       throw Exception(
-        "SharedPreferences is null. Make sure to call settingsServices.ensureInitiated() before calling settingsServices.getSetting()",
+        "SharedPreferences is null. Make sure to call settingsServices.ensureInitiated() before calling getSetting(). or, use getSettingAsync()",
       );
 
     // else
-    return _settingsVals[setting.index];
+    var val = _prefs.get(setting.toShortString());
+    if (val == null) {
+      val = _getDefaultValue(setting);
+      setSetting(setting, val);
+    }
+    return val;
   }
 
   Future<dynamic> getSettingAsync(Settings setting) async {
     await ensureInitiated();
-    return _settingsVals[setting.index];
+    return getSetting(setting);
   }
 
   setSetting(Settings setting, value) async {
@@ -64,16 +48,10 @@ class SettingsServices {
     // set the value according to its type
     switch (_settingsTypes[setting.index]) {
       case 'bool':
-        if (value is bool) {
-          _settingsVals[setting.index] = value;
-          await _prefs.setBool(setting.toShortString(), value);
-        }
+        if (value is bool) await _prefs.setBool(setting.toShortString(), value);
         break;
       case 'int':
-        if (value is int) {
-          _settingsVals[setting.index] = value;
-          await _prefs.setInt(setting.toShortString(), value);
-        }
+        if (value is int) await _prefs.setInt(setting.toShortString(), value);
         break;
     }
   }
