@@ -38,12 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (release != null) _showNewVersionDialog(release);
     });
 
-    widget.settings.getSettingAsync(Settings.firstOpen).then((value) async {
-      if (value) {
-        await showDialog(
-          context: context,
-          builder: (context) => WelcomeScreen(),
-        );
+    widget.settings.getSettingAsync(Settings.firstOpen).then((firstOpen) async {
+      if (firstOpen) {
+        await Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
         widget.settings.setSetting(Settings.firstOpen, false);
       }
     });
@@ -196,6 +193,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               Divider(),
+              ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text('Tutorial'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
