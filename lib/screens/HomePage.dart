@@ -143,26 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
       lectures = widget.userServices.getNextLectures();
       alerts = widget.userServices.getAlerts();
 
-      var today = DateTime.now();
-      var firstLecStat = lectures.length > 0 ? lectures[0].getStatus(today) : 2;
-      var duration;
-      if (firstLecStat == 0 && lectures[0].day == UserServices.getWeekday(today)) {
-        var date =
-            DateTime(today.year, today.month, today.day, lectures[0].startTime.hour, lectures[0].startTime.minute);
-        duration = date.difference(today);
-      } else if (firstLecStat == 1 && lectures[0].day == UserServices.getWeekday(today)) {
-        var date = DateTime(today.year, today.month, today.day, lectures[0].endTime.hour, lectures[0].endTime.minute);
-        duration = date.difference(today);
-      }
-
-      if (duration != null) {
-        Timer(duration, () {
-          setState(() {
-            print('page refreshed at ${DateTime.now()}');
-          });
-        });
-        print('TimerSet: will refresh after $duration');
-      }
+      setRefreshTimer(lectures);
 
       return Scaffold(
         drawer: Drawer(
@@ -262,6 +243,47 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
     // No Courses
+    return EmptyCoursesPage(
+      onPress: () async {
+        await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
+        setState(() {});
+      },
+    );
+  }
+
+  setRefreshTimer(lectures) {
+    var today = DateTime.now();
+    var firstLecStat = lectures.length > 0 ? lectures[0].getStatus(today) : 2;
+    var duration;
+    if (firstLecStat == 0 && lectures[0].day == UserServices.getWeekday(today)) {
+      var date = DateTime(today.year, today.month, today.day, lectures[0].startTime.hour, lectures[0].startTime.minute);
+      duration = date.difference(today);
+    } else if (firstLecStat == 1 && lectures[0].day == UserServices.getWeekday(today)) {
+      var date = DateTime(today.year, today.month, today.day, lectures[0].endTime.hour, lectures[0].endTime.minute);
+      duration = date.difference(today);
+    }
+
+    if (duration != null) {
+      Timer(duration, () {
+        setState(() {
+          print('page refreshed at ${DateTime.now()}');
+        });
+      });
+      print('TimerSet: will refresh after $duration');
+    }
+  }
+}
+
+class EmptyCoursesPage extends StatelessWidget {
+  const EmptyCoursesPage({
+    Key key,
+    @required this.onPress,
+  }) : super(key: key);
+
+  final Future<Null> Function() onPress;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
@@ -285,10 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 25),
                   RaisedButton(
                     color: Color(0xffe7e7e7),
-                    onPressed: () async {
-                      await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
-                      setState(() {});
-                    },
+                    onPressed: onPress,
                     child: Text(
                       "ADD COURSES",
                       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
