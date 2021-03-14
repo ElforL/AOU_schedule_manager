@@ -119,8 +119,8 @@ class UserServices {
       var body = '${event.course.code} ${event.title} in $minutesBefore minutes';
 
       var date = tz.TZDateTime.from(event.time.add(Duration(minutes: -minutesBefore)), tz.local);
-      // ensure that the date is in the future to avoid errors with notification plugin
-      if (date.isBefore(DateTime.now())) date = date.add(Duration(days: 7));
+      // ensure that the date is in the future
+      if (date.isBefore(DateTime.now())) return;
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
