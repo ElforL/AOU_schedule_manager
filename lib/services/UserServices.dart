@@ -188,8 +188,8 @@ class UserServices {
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
-      return ++i;
     }
+    return ++i;
   }
 
   tz.TZDateTime _getNextDateOfLec(Lecture lecture) {
