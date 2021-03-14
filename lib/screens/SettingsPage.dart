@@ -135,7 +135,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var result = await showDialog(
       context: context,
-      child: DurationDialoig(currentVal: current),
+      builder: (_) => DurationDialoig(currentVal: current),
     );
 
     return result;
