@@ -54,17 +54,18 @@ class EventCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FittedBox(
-                      child: Text(
-                        event.description.isNotEmpty ? event.description : ' ',
-                        style: TextStyle(
-                          color: Colors.white,
+                    if (event.description.isNotEmpty)
+                      FittedBox(
+                        child: Text(
+                          event.description.isNotEmpty ? event.description : ' ',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
                     Text(
                       DateFormat('dd/MM/yyyy hh:mm a').format(event.time),
-                      style: TextStyle(color: Colors.white, fontSize: 10),
+                      style: TextStyle(color: Colors.white, fontSize: event.description.isNotEmpty ? 10 : 13),
                     ),
                   ],
                 ),
