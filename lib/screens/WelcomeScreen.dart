@@ -161,23 +161,23 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            constraints: BoxConstraints(maxHeight: 450),
-            margin: EdgeInsets.all(50),
-            decoration: BoxDecoration(
-              border: isBordered ? Border.all(color: Colors.white) : null,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              constraints: BoxConstraints(maxHeight: 450),
+              margin: EdgeInsets.all(50),
+              decoration: BoxDecoration(
+                border: isBordered ? Border.all(color: Colors.white) : null,
+              ),
+              child: Image(
+                image: image,
+              ),
             ),
-            child: Image(
-              image: image,
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(child: text),
-          ),
-        ],
+            text,
+          ],
+        ),
       ),
     );
   }
