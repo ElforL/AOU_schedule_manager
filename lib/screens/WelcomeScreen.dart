@@ -161,11 +161,11 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
               constraints: BoxConstraints(maxHeight: 450),
               margin: EdgeInsets.all(50),
               decoration: BoxDecoration(
@@ -175,9 +175,11 @@ class View extends StatelessWidget {
                 image: image,
               ),
             ),
-            text,
-          ],
-        ),
+          ),
+          Container(
+            child: text,
+          ),
+        ],
       ),
     );
   }
