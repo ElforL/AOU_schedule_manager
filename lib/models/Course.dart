@@ -34,7 +34,7 @@ class Course {
           for (var lecture in lectures) lecture.toJson()
       ],
       'events': [
-        if (lectures.length > 0)
+        if (events.length > 0)
           for (var event in events) event.toJson()
       ]
     };
