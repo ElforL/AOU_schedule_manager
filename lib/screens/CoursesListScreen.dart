@@ -96,13 +96,16 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   Future<DateTime> _selectDate(BuildContext context, DateTime selectedDate) async {
+    if (selectedDate.weekday != 7) {
+      selectedDate = selectedDate.add(Duration(days: 7 - selectedDate.weekday));
+    }
     var picked = await showDatePicker(
       context: context,
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(selectedDate.year - 9),
       lastDate: DateTime(selectedDate.year + 9),
       selectableDayPredicate: (day) {
-        return day.weekday == 6;
+        return day.weekday == 7;
       },
       helpText: 'SELECT SEMESTER START DATE',
     );
