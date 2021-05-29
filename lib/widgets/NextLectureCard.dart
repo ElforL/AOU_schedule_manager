@@ -15,7 +15,7 @@ class NextLectureCard extends StatelessWidget {
     if (status == 2) {
       cardColor = Colors.blue;
       title = 'Free';
-      subtitle = "We're done for the week";
+      subtitle = "You're done for the week";
     } else {
       subtitle =
           '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${lecture.startTime.toString()} - ${lecture.endTime.toString()}';

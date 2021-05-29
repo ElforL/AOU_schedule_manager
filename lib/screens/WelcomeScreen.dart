@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       image: AssetImage('assets/4.png'),
       text: MarkdownBody(
         data: "This is the _course edit screen_ where you can:\n" +
-            "1. Edit the courses code in the top field.\n" +
+            "1. Edit the course code in the top field.\n" +
             "2. Add a lecture using the `ADD LECTURE` button.\n" +
             "3. Add an _event_ using the `ADD EVENT` button. This could be a TMA, MTA, Final, Quiz, etc...\n" +
             "4. Delete the course using the bottom button.",
