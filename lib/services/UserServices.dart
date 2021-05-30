@@ -62,11 +62,11 @@ class UserServices {
     return File('$path/user.json');
   }
 
-  Future<File> writeToFile() async {
+  Future<File> writeToFile([String content]) async {
     final file = await _localFile;
 
     // Write the file.
-    return file.writeAsString(jsonEncode(this));
+    return file.writeAsString(content ?? jsonEncode(this));
   }
 
   Future<String> readFile() async {

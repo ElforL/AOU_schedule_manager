@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uni_assistant/constants.dart';
 import 'package:uni_assistant/main.dart';
-import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
+import 'package:uni_assistant/screens/ImportExportScreen.dart';
+import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class CoursesListScreen extends StatefulWidget {
@@ -19,7 +20,28 @@ class CoursesListScreenState extends State<CoursesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            tooltip: 'More options',
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                child: ListTile(
+                  title: Text('Import/Export'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ImportExportScreen(userServices: widget.userServices),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [
