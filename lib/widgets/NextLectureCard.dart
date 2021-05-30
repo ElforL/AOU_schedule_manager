@@ -19,13 +19,11 @@ class NextLectureCard extends StatelessWidget {
     } else {
       subtitle =
           '${lecture.courseCode} : ${lecture.getDayName()} ${lecture.room} ${lecture.startTime.toString()} - ${lecture.endTime.toString()}';
+      var isToday = lecture.day == UserServices.getWeekday(DateTime.now());
       switch (status) {
         case 0:
-          if (lecture.day == UserServices.getWeekday(DateTime.now()))
-            cardColor = Colors.amber[800];
-          else
-            cardColor = Colors.amber;
-          title = 'Next up';
+          cardColor = Colors.amber[isToday ? 800 : 500];
+          title = 'Next up ${isToday ? 'today' : ''}';
           break;
         case 1:
           cardColor = Colors.red;
