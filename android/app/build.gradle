@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         applicationId "com.Elfor.uni_assistant"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
