@@ -4,7 +4,9 @@ import 'package:uni_assistant/constants.dart';
 import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/screens/CourseEdit.dart';
 import 'package:uni_assistant/screens/ImportExportScreen.dart';
+import 'package:uni_assistant/screens/SisScreen.dart';
 import 'package:uni_assistant/services/UserServices.dart';
+import 'package:uni_assistant/screens/sisConfigScreen.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
 
 class CoursesListScreen extends StatefulWidget {
@@ -29,12 +31,29 @@ class CoursesListScreenState extends State<CoursesListScreen> {
               PopupMenuItem(
                 child: ListTile(
                   title: Text('Import/Export'),
-                  onTap: () {
-                    Navigator.of(context).push(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => ImportExportScreen(userServices: widget.userServices),
                       ),
                     );
+                    setState(() {});
+                  },
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  title: Text('Configure SIS'),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => SisScreen(userServices: widget.userServices),
+                        settings: RouteSettings(name: 'SisScreen'),
+                      ),
+                    );
+                    setState(() {});
                   },
                 ),
               ),

@@ -16,8 +16,9 @@ import '../models/Course.dart';
 class UserServices {
   List<Course> courses;
   DateTime semesterStart /* , semesterEnd */;
+  String sisUrl;
 
-  UserServices(this.courses, [this.semesterStart]) {
+  UserServices(this.courses, [this.semesterStart, this.sisUrl]) {
     var today = DateTime.now();
 
     if (semesterStart == null) {
@@ -36,6 +37,7 @@ class UserServices {
     semesterStart = DateTime(
         parsedJson['semesterStart']['year'], parsedJson['semesterStart']['month'], parsedJson['semesterStart']['day']);
     courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
+    sisUrl = parsedJson['sisUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +47,8 @@ class UserServices {
         'month': semesterStart.month,
         'day': semesterStart.day,
       },
-      'courses': [for (var course in courses) course.toJson()]
+      'courses': [for (var course in courses) course.toJson()],
+      'sisUrl': sisUrl,
     };
   }
 

@@ -84,6 +84,17 @@ class Lecture {
     _endTime = newEnd;
   }
 
+  bool equal(Lecture lec) {
+    if (this.courseCode != lec.courseCode) return false;
+    if (this.room != lec.room) return false;
+    if (this.day != lec.day) return false;
+    if (this.repeatType != lec.repeatType) return false;
+    if (this.startTime != lec.startTime) return false;
+    if (this.endTime != lec.endTime) return false;
+
+    return true;
+  }
+
   /// returns and integer depending on it's time status
   ///
   /// 0 for 'coming up',
@@ -172,5 +183,27 @@ class Lecture {
       // both on the same day
       return MyTimeOfDay.compare(this.startTime, other.startTime);
     }
+  }
+
+  @override
+  String toString() {
+    var res = '$courseCode lecture: ';
+    res += '$room: ';
+    res += getDayName(_day);
+    switch (_repeatType) {
+      case 0:
+        res += ' weekly ';
+        break;
+      case 1:
+        res += ' on odd weeks ';
+        break;
+      default:
+        res += ' on even weeks ';
+        break;
+    }
+
+    res += '${startTime.to24hString()} - ${endTime.to24hString()}';
+
+    return res;
   }
 }

@@ -16,6 +16,10 @@ class MyTimeOfDay extends TimeOfDay {
     };
   }
 
+  String to24hString() {
+    return '$hour:${minute.toString().padLeft(2, '0')}';
+  }
+
   String toString() {
     var hh = this.hourOfPeriod == 0 ? '12' : this.hourOfPeriod.toString().padLeft(2, '0');
     var mm = this.minute.toString().padLeft(2, '0');
