@@ -288,7 +288,6 @@ class _MyHomePageState extends State<MyHomePage> {
           print('page refreshed at ${DateTime.now()}');
         });
       });
-      print('TimerSet: will refresh after $duration');
     }
   }
 }
