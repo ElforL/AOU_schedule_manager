@@ -5,6 +5,7 @@ import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/SettingsServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 import 'package:uni_assistant/widgets/widgetsLib.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   final UserServices userServices;
@@ -120,7 +121,29 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text('About AOU Schedule Manager'),
                 onTap: () async {
                   var version = widget.githubServices.currentVersion ?? (await PackageInfo.fromPlatform()).version;
-                  showAboutDialog(context: context, applicationVersion: version);
+                  showAboutDialog(
+                    children: [
+                      Text(
+                        'AOUSM is an app for Arab Open University students to help track courses lectures, Quizzes, TMAs, MTAs, and Finals',
+                      ),
+                      Text('The app is an open source project available on GitHub'),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                          child: Text('Open Github page'),
+                          onPressed: () {
+                            _launchURL('https://github.com/ElforL/AOU_schedule_manager');
+                          },
+                        ),
+                      ),
+                    ],
+                    applicationIcon: Image.asset(
+                      'assets/uni_launcher.png',
+                      scale: 5,
+                    ),
+                    context: context,
+                    applicationVersion: version,
+                  );
                 },
               ),
             ],
@@ -128,6 +151,14 @@ class _SettingsPageState extends State<SettingsPage> {
         },
       ),
     );
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("couldn't launch url: $url");
+    }
   }
 
   Future _showLecturePreTimeDialog(Settings setting) async {
