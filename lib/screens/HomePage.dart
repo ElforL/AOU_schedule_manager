@@ -11,6 +11,7 @@ import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/screens/CourseScreen.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 import 'package:uni_assistant/screens/SettingsPage.dart';
+import 'package:uni_assistant/screens/SisScreen.dart';
 import 'package:uni_assistant/screens/WelcomeScreen.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/SettingsServices.dart';
@@ -29,6 +30,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -57,14 +60,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   checkNewSISUpdate() async {
     if (!MyApp.sisServices.isConfigured) return;
+
     var lastModified = await MyApp.sisServices.lastModified;
     var today = DateTime.now();
     var diff = today.difference(lastModified);
-    if (diff > Duration(days: 2)) {
-      MyApp.sisServices.getNewXML();
-      var foundUpdates = await MyApp.sisServices.checkCoursesForUpdate();
-      if (foundUpdates) setState(() {});
-    }
+
+    if (diff > Duration(days: 2)) MyApp.sisServices.getNewXML();
+    var foundUpdates = await MyApp.sisServices.checkCoursesForUpdate();
+    if (foundUpdates)
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Courses have new upates from SIS')));
+      });
   }
 
   _showNewVersionDialog(github.Release release) {
@@ -171,6 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setRefreshTimer(lectures);
 
       return Scaffold(
+        key: _scaffoldKey,
         drawer: Drawer(
           child: ListView(
             children: [
@@ -206,6 +213,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {});
                   },
                 ),
+              Divider(),
+              ListTile(
+                leading: Text('SIS'),
+                title: Text('Student Information System'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SisScreen(userServices: widget.userServices)),
+                  );
+                  setState(() {});
+                },
+                trailing: MyApp.sisServices.areCoursesUpdated ? null : _buildBlueDot(),
+              ),
               Divider(),
               ListTile(
                 leading: Icon(Icons.info_outline),
@@ -247,6 +268,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 floating: true,
                 centerTitle: true,
                 title: Text('AOU Schedule Manager'),
+                leading: IconButton(
+                  icon: Stack(
+                    children: [
+                      Icon(Icons.menu),
+                      if (!MyApp.sisServices.areCoursesUpdated) _buildBlueDot(),
+                    ],
+                  ),
+                  tooltip: 'Open Navigation Menu',
+                  onPressed: () {
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                ),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
@@ -281,6 +314,14 @@ class _MyHomePageState extends State<MyHomePage> {
         await Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesListScreen()));
         setState(() {});
       },
+    );
+  }
+
+  Icon _buildBlueDot() {
+    return Icon(
+      Icons.circle,
+      size: 10,
+      color: Colors.blue,
     );
   }
 
