@@ -100,8 +100,8 @@ class _SisConfigScreenState extends State<SisConfigScreen> {
         ),
         TextButton(
           child: Text('REMOVE'),
-          onPressed: () {
-            widget.sisServices.removeSisConfig();
+          onPressed: () async {
+            await widget.sisServices.removeSisConfig();
             Navigator.of(context).popUntil(ModalRoute.withName('SisScreen'));
           },
         ),

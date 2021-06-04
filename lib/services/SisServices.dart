@@ -36,10 +36,12 @@ class SisServices {
     }
   }
 
-  removeSisConfig() {
+  removeSisConfig() async {
     _userServices.sisUrl = null;
+    await _userServices.writeToFile();
     newCourses = [];
-    _deleteFile();
+    _xml = null;
+    await _deleteFile();
   }
 
   _deleteFile() async {
