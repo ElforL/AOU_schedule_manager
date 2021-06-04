@@ -51,7 +51,20 @@ class _MyHomePageState extends State<MyHomePage> {
     // ignore: await_only_futures
     await widget.userServices.loadUser();
     await MyApp.sisServices.ensureLoaded();
+    await checkNewSISUpdate();
     setState(() {});
+  }
+
+  checkNewSISUpdate() async {
+    if (!MyApp.sisServices.isConfigured) return;
+    var lastModified = await MyApp.sisServices.lastModified;
+    var today = DateTime.now();
+    var diff = today.difference(lastModified);
+    if (diff > Duration(days: 2)) {
+      MyApp.sisServices.getNewXML();
+      var foundUpdates = await MyApp.sisServices.checkCoursesForUpdate();
+      if (foundUpdates) setState(() {});
+    }
   }
 
   _showNewVersionDialog(github.Release release) {
