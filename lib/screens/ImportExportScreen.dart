@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 
 class ImportExportScreen extends StatelessWidget {
@@ -152,7 +153,8 @@ class _FinalImportExportScreen extends StatelessWidget {
     }
 
     userServices.writeToFile(newJson);
-    userServices.loadUser();
+    userServices.loadUser().then((value) => MyApp.sisServices.ensureLoaded());
+
     return true;
   }
 

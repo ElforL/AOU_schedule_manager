@@ -89,7 +89,7 @@ class UserServices {
     }
   }
 
-  void loadUser() async {
+  Future<void> loadUser() async {
     String jsonString = await readFile();
     if (jsonString == null) return;
     final jsonResponse = json.decode(jsonString);

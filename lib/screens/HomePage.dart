@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // wait then setState()
     // ignore: await_only_futures
     await widget.userServices.loadUser();
+    await MyApp.sisServices.ensureLoaded();
     setState(() {});
   }
 
