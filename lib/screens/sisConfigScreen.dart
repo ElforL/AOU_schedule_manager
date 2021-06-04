@@ -41,6 +41,9 @@ class _SisConfigScreenState extends State<SisConfigScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Here you can configure the app to automatically check the SIS for any updates on your courses.'),
+              Text(
+                'This data is stored on the device only. We have no access to you SIS account or schedule. All the processing is done on the device. To be sure you can check the source code, check the "about" section in the app settings for more info.',
+              ),
               SizedBox(height: 20),
               Text('To set it up, you need to provide the url of the registeration form from SIS.'),
               Text(
