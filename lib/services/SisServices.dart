@@ -12,9 +12,12 @@ import 'package:xml/xml.dart';
 class SisServices {
   XmlDocument _xml;
   UserServices _userServices;
-  String get _path => _userServices.sisUrl;
-  bool isLoaded = false;
   List<Course> newCourses = [];
+
+  String get _path => _userServices.sisUrl;
+
+  bool get isLoaded => _xml != null;
+  bool get isConfigured => _path != null;
 
   bool get areCoursesUpdated => newCourses.length == 0;
 
@@ -35,7 +38,6 @@ class SisServices {
 
   removeSisConfig() {
     _userServices.sisUrl = null;
-    isLoaded = false;
     newCourses = [];
     _deleteFile();
   }
@@ -51,7 +53,6 @@ class SisServices {
       writeToFile(xmlString);
     }
     _xml = XmlDocument.parse(xmlString);
-    isLoaded = true;
   }
 
   /// returns an XML string of the registeration form of the student

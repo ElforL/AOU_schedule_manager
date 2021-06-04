@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github/github.dart';
-import 'package:uni_assistant/models/Course.dart';
+import 'package:uni_assistant/main.dart';
 import 'package:uni_assistant/screens/sisConfigScreen.dart';
 import 'package:uni_assistant/services/SisServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
@@ -16,7 +15,7 @@ class SisScreen extends StatefulWidget {
 }
 
 class _SisScreenState extends State<SisScreen> {
-  SisServices sisServices;
+  SisServices get sisServices => MyApp.sisServices;
 
   bool get isLoaded => sisServices != null && sisServices.isLoaded;
 
@@ -29,9 +28,7 @@ class _SisScreenState extends State<SisScreen> {
   }
 
   ensureSis() async {
-    if (sisServices == null && widget.userServices.sisUrl != null) {
-      sisServices = SisServices(widget.userServices);
-      await sisServices.ensureLoaded();
+    if (sisServices.isConfigured && !sisServices.isLoaded) {
       await sisServices.checkCoursesForUpdate();
       setState(() {});
     }

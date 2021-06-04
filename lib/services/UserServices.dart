@@ -35,7 +35,10 @@ class UserServices {
 
   UserServices.fromJson(Map<String, dynamic> parsedJson) {
     semesterStart = DateTime(
-        parsedJson['semesterStart']['year'], parsedJson['semesterStart']['month'], parsedJson['semesterStart']['day']);
+      parsedJson['semesterStart']['year'],
+      parsedJson['semesterStart']['month'],
+      parsedJson['semesterStart']['day'],
+    );
     courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
     sisUrl = parsedJson['sisUrl'];
   }
@@ -93,9 +96,15 @@ class UserServices {
     UserServices parsedUser = UserServices.fromJson(jsonResponse);
     courses = parsedUser.courses;
     semesterStart = parsedUser.semesterStart;
+    sisUrl = parsedUser.sisUrl;
   }
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
+
+  void setSis(String url) async {
+    sisUrl = url;
+    await writeToFile();
+  }
 
   scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var id = await _scheduleLecturesNotifications(flutterLocalNotificationsPlugin);

@@ -104,7 +104,7 @@ class _SisWebScreenState extends State<SisWebScreen> {
             ElevatedButton(
               child: Text('CONFIRM'),
               onPressed: () async {
-                widget.userServices.sisUrl = await _webController.currentUrl();
+                widget.userServices.setSis(await _webController.currentUrl());
                 Navigator.of(context).popUntil(ModalRoute.withName('SisScreen'));
               },
             ),

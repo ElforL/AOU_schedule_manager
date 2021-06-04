@@ -118,7 +118,6 @@ class _SisConfigScreenState extends State<SisConfigScreen> {
         if (uri.host + uri.path != 'sisksa.aou.edu.kw/SISReports/Report.aspx') {
           _showSnackBar('Invalid URL. URL must starts with sisksa.aou.edu.kw/SISReports/Report.aspx');
         } else {
-          widget.userServices.sisUrl = null;
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => SisWebScreen(
