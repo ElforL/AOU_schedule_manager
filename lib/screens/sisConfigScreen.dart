@@ -75,7 +75,7 @@ class _SisConfigScreenState extends State<SisConfigScreen> {
                   if (widget.userServices.sisUrl != null) SizedBox(width: 50),
                   if (widget.userServices.sisUrl != null)
                     ElevatedButton(
-                      child: Text('REMOVE SIS'),
+                      child: Text('DISABLE SIS'),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
@@ -94,8 +94,8 @@ class _SisConfigScreenState extends State<SisConfigScreen> {
 
   _showRemoveDialog() async {
     var dialog = AlertDialog(
-      title: Text('Remove SIS'),
-      content: Text('Are you sure you want to remove SIS?'),
+      title: Text('Disable SIS'),
+      content: Text('Are you sure you want to disable SIS?'),
       actions: [
         TextButton(
           child: Text('CANCEL'),
