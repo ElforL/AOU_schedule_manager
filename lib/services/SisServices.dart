@@ -19,6 +19,10 @@ class SisServices {
   bool get isLoaded => _xml != null;
   bool get isConfigured => _path != null;
 
+  /// returns the Datetime of last modification of {localPath}/myXml.xml
+  ///
+  /// may throw an exception if the file isn't created
+  Future<DateTime> get lastModified async => (await _localFile).lastModifiedSync();
   bool get areCoursesUpdated => newCourses.length == 0;
 
   SisServices(this._userServices);
