@@ -17,8 +17,6 @@ class SisScreen extends StatefulWidget {
 class _SisScreenState extends State<SisScreen> {
   SisServices get sisServices => MyApp.sisServices;
 
-  bool get isLoaded => sisServices != null && sisServices.isLoaded;
-
   _launchURL(url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -28,9 +26,11 @@ class _SisScreenState extends State<SisScreen> {
   }
 
   ensureSis() async {
-    if (sisServices.isConfigured && !sisServices.isLoaded) {
-      await sisServices.checkCoursesForUpdate();
-      setState(() {});
+    if (sisServices.isConfigured) {
+      var bLoaded = sisServices.isLoaded;
+      var check = sisServices.areCoursesUpdated;
+      var foundUpdates = await sisServices.checkCoursesForUpdate();
+      if (check == foundUpdates || sisServices.isLoaded != bLoaded) setState(() {});
     }
   }
 
@@ -57,31 +57,43 @@ class _SisScreenState extends State<SisScreen> {
   }
 
   @override
-  void initState() {
-    ensureSis();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ensureSis();
     return Scaffold(
       appBar: AppBar(
         title: Text('SIS'),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            tooltip: 'More options',
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                child: ListTile(
+                  title: Text('Configure'),
+                  onTap: () async {
+                    await _gotoConfigScreen();
+                    setState(() {});
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           children: [
             Text(
-              (isLoaded ? '' : 'NOT ') + 'CONFIGURED',
+              (sisServices.isConfigured ? '' : 'NOT ') + 'CONFIGURED',
               style: Theme.of(context).textTheme.headline4.merge(
                     TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: isLoaded ? Colors.green : Colors.red,
+                      color: sisServices.isConfigured ? Colors.green : Colors.red,
                     ),
                   ),
             ),
-            if (isLoaded)
+            if (sisServices.isConfigured && !sisServices.isLoaded) Text('Loading files...'),
+            if (sisServices.isLoaded)
               Column(
                 children: [
                   Text(
@@ -125,24 +137,46 @@ class _SisScreenState extends State<SisScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton(
-                    child: FittedBox(child: Text('CONFIGURE')),
-                    onPressed: () async {
-                      await _gotoConfigScreen();
-                      setState(() {});
-                    },
-                  ),
-                  ElevatedButton(
-                    child: FittedBox(child: Text('OPEN REGISTERATION FORM')),
-                    onPressed: () {
-                      _launchURL(widget.userServices.sisUrl);
-                    },
-                  ),
+                  if (!sisServices.isConfigured)
+                    ElevatedButton(
+                      child: FittedBox(child: Text('CONFIGURE')),
+                      onPressed: () async {
+                        await _gotoConfigScreen();
+                        setState(() {});
+                      },
+                    ),
+                  if (sisServices.isConfigured)
+                    ElevatedButton(
+                      child: FittedBox(child: Text('CHECK FOR UPDATES')),
+                      onPressed: () async {
+                        showScaffold('Checking for updates');
+                        await sisServices.getNewXML();
+                        var foundUpdates = await sisServices.checkCoursesForUpdate();
+                        setState(() {
+                          showScaffold(foundUpdates ? 'New updates available' : 'You are up to date');
+                        });
+                      },
+                    ),
+                  if (sisServices.isConfigured)
+                    ElevatedButton(
+                      child: FittedBox(child: Text('OPEN REGISTERATION FORM')),
+                      onPressed: () {
+                        _launchURL(widget.userServices.sisUrl);
+                      },
+                    ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showScaffold(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
       ),
     );
   }

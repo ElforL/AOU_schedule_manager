@@ -49,10 +49,16 @@ class SisServices {
   _loadXML() async {
     var xmlString = await readFile();
     if (xmlString == null || xmlString.isEmpty) {
-      xmlString = await _getXML(_path);
-      writeToFile(xmlString);
+      xmlString = await getNewXML();
     }
     _xml = XmlDocument.parse(xmlString);
+  }
+
+  Future<String> getNewXML() async {
+    if (!isConfigured) throw Exception('SIS must be configured before getting a new XML');
+    var xmlString = await _getXML(_path);
+    writeToFile(xmlString);
+    return xmlString;
   }
 
   /// returns an XML string of the registeration form of the student
@@ -74,6 +80,7 @@ class SisServices {
       headers: headers,
       body: data,
     );
+    print('http response recived');
     if (res.statusCode != 200) throw Exception('http.post error: statusCode= ${res.statusCode}');
 
     return res.body;
@@ -107,6 +114,7 @@ class SisServices {
       return contents;
     } catch (e) {
       // If encountering an error, return null.
+      print('error reading xml file');
       return null;
     }
   }
