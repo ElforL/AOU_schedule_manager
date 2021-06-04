@@ -195,7 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 leading: Icon(Icons.list_alt_rounded),
                 title: Text('Courses List'),
-                onLongPress: () => Fluttertoast.showToast(msg: 'Opens courses list'),
                 onTap: () async {
                   Navigator.pop(context);
                   await Navigator.push(context, MaterialPageRoute(builder: (_) => CoursesListScreen()));
@@ -206,7 +205,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ListTile(
                   leading: SizedBox(),
                   title: Text(course.code),
-                  onLongPress: () => Fluttertoast.showToast(msg: 'Opens ${course.code} course page'),
                   onTap: () async {
                     Navigator.pop(context);
                     await Navigator.push(context, MaterialPageRoute(builder: (_) => CourseScreen(course: course)));
