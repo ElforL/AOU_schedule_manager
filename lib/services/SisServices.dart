@@ -35,7 +35,7 @@ class SisServices {
   }
 
   ensureLoaded() async {
-    if (!isLoaded) {
+    if (!isLoaded && isConfigured) {
       await _loadXML();
     }
   }
