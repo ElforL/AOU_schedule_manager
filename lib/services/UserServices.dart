@@ -116,7 +116,7 @@ class UserServices {
     if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return;
     if (!(prefs.get(Settings.eventsNotifications.toShortString()) ?? true)) return;
 
-    var minutesBefore = prefs.get(Settings.minutesBeforeEventNotifications.toShortString()) ?? 10;
+    int minutesBefore = prefs.get(Settings.minutesBeforeEventNotifications.toShortString()) ?? 10;
 
     tz.initializeTimeZones();
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
@@ -159,7 +159,7 @@ class UserServices {
     if (!(prefs.get(Settings.notifications.toShortString()) ?? true)) return i;
     if (!(prefs.get(Settings.lecturesNotifications.toShortString()) ?? true)) return i;
 
-    var minutesBefore = prefs.get(Settings.minutesBeforeLecNotifications.toShortString()) ?? 10;
+    int minutesBefore = prefs.get(Settings.minutesBeforeLecNotifications.toShortString()) ?? 10;
 
     tz.initializeTimeZones();
     String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();

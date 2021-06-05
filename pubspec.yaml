@@ -11,14 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.16.1 # DateFormat
-  path_provider: ^1.6.11 # saving
-  flutter_local_notifications: ^3.0.1+6 # notifications
-  flutter_native_timezone: ^1.0.4
+  intl: ^0.17.0 # DateFormat
+  path_provider: ^2.0.2 # saving
+  flutter_local_notifications: ^6.0.0 # notifications
+  flutter_native_timezone: ^2.0.0
   github: ^7.0.4
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.6
   fluttertoast: ^7.1.6
-  shared_preferences: ^0.5.12+4 # Settings
+  shared_preferences: ^2.0.6 # Settings
   package_info: ^0.4.3+4
   flutter_markdown: ^0.5.2
   xml: ^5.1.1
