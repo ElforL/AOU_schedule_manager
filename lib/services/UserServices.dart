@@ -16,9 +16,8 @@ import '../models/Course.dart';
 class UserServices {
   List<Course> courses;
   DateTime semesterStart /* , semesterEnd */;
-  String sisUrl;
 
-  UserServices(this.courses, [this.semesterStart, this.sisUrl]) {
+  UserServices(this.courses, [this.semesterStart]) {
     var today = DateTime.now();
 
     if (semesterStart == null) {
@@ -40,7 +39,6 @@ class UserServices {
       parsedJson['semesterStart']['day'],
     );
     courses = (parsedJson['courses'] as List).map((i) => Course.fromJson(i)).toList();
-    sisUrl = parsedJson['sisUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,7 +49,6 @@ class UserServices {
         'day': semesterStart.day,
       },
       'courses': [for (var course in courses) course.toJson()],
-      'sisUrl': sisUrl,
     };
   }
 
@@ -96,15 +93,9 @@ class UserServices {
     UserServices parsedUser = UserServices.fromJson(jsonResponse);
     courses = parsedUser.courses;
     semesterStart = parsedUser.semesterStart;
-    sisUrl = parsedUser.sisUrl;
   }
 
   // ///////////////////////////////////////////////////////////////// Methods ///////////////////////////////////////////////////////////////////
-
-  void setSis(String url) async {
-    sisUrl = url;
-    await writeToFile();
-  }
 
   scheduleNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var id = await _scheduleLecturesNotifications(flutterLocalNotificationsPlugin);

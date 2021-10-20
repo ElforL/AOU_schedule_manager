@@ -11,7 +11,6 @@ import 'package:uni_assistant/models/Lecture.dart';
 import 'package:uni_assistant/screens/CourseScreen.dart';
 import 'package:uni_assistant/screens/CoursesListScreen.dart';
 import 'package:uni_assistant/screens/SettingsPage.dart';
-import 'package:uni_assistant/screens/SisScreen.dart';
 import 'package:uni_assistant/screens/WelcomeScreen.dart';
 import 'package:uni_assistant/services/GithubServices.dart';
 import 'package:uni_assistant/services/SettingsServices.dart';
@@ -53,24 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // wait then setState()
     // ignore: await_only_futures
     await widget.userServices.loadUser();
-    await MyApp.sisServices.ensureLoaded();
-    await checkNewSISUpdate();
     setState(() {});
-  }
-
-  checkNewSISUpdate() async {
-    if (!MyApp.sisServices.isConfigured) return;
-
-    var lastModified = await MyApp.sisServices.lastModified;
-    var today = DateTime.now();
-    var diff = today.difference(lastModified);
-
-    if (diff > Duration(days: 2)) MyApp.sisServices.getNewXML();
-    var foundUpdates = await MyApp.sisServices.checkCoursesForUpdate();
-    if (foundUpdates)
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Courses have new upates from SIS')));
-      });
   }
 
   _showNewVersionDialog(github.Release release) {
@@ -213,20 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               Divider(),
               ListTile(
-                leading: Text('SIS'),
-                title: Text('Student Information System'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => SisScreen(userServices: widget.userServices)),
-                  );
-                  setState(() {});
-                },
-                trailing: MyApp.sisServices.areCoursesUpdated ? null : _buildBlueDot(),
-              ),
-              Divider(),
-              ListTile(
                 leading: Icon(Icons.info_outline),
                 title: Text('Tutorial'),
                 onTap: () {
@@ -267,12 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 centerTitle: true,
                 title: Text('AOU Schedule Manager'),
                 leading: IconButton(
-                  icon: Stack(
-                    children: [
-                      Icon(Icons.menu),
-                      if (!MyApp.sisServices.areCoursesUpdated) _buildBlueDot(),
-                    ],
-                  ),
+                  icon: Icon(Icons.menu),
                   tooltip: 'Open Navigation Menu',
                   onPressed: () {
                     _scaffoldKey.currentState.openDrawer();

@@ -153,7 +153,7 @@ class _FinalImportExportScreen extends StatelessWidget {
     }
 
     userServices.writeToFile(newJson);
-    userServices.loadUser().then((value) => MyApp.sisServices.ensureLoaded());
+    userServices.loadUser();
 
     return true;
   }

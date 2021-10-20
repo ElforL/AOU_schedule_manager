@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:uni_assistant/services/SisServices.dart';
 import 'package:uni_assistant/services/UserServices.dart';
 
 import 'constants.dart';
@@ -23,11 +22,9 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   static UserServices userServices;
-  static SisServices sisServices;
 
   MyApp() {
     userServices = UserServices(new List());
-    sisServices = SisServices(userServices);
   }
 
   @override
@@ -48,6 +45,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kBackgroundColor,
         appBarTheme: AppBarTheme(
           elevation: 0,
+          backgroundColor: kBackgroundColor,
         ),
 
         iconTheme: IconThemeData(
