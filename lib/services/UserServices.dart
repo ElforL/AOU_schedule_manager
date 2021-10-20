@@ -132,9 +132,9 @@ class UserServices {
         date,
         const NotificationDetails(
           android: AndroidNotificationDetails(
-            'lecNoti', // channel id
-            'lectures channel', // channel name
-            'channel for lectures notification... duh', // channel desc
+            'evenNoti', // channel id
+            'events channel', // channel name
+            'channel for events notifications', // channel desc
           ),
         ),
         androidAllowWhileIdle: true,
@@ -184,7 +184,7 @@ class UserServices {
           android: AndroidNotificationDetails(
             'lecNoti', // channel id
             'lectures channel', // channel name
-            'channel for lectures notification... duh', // channel desc
+            'channel for lectures notifications', // channel desc
           ),
         ),
         androidAllowWhileIdle: true,
