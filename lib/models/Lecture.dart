@@ -5,14 +5,13 @@ class Lecture {
   String courseCode;
   String _room;
   int _day;
-  int _repeatType;
+  RepeatType _repeatType;
   MyTimeOfDay _startTime;
   MyTimeOfDay _endTime;
 
   Lecture(this.courseCode, this._room, this._day, this._repeatType, this._startTime, this._endTime) {
     if (day > 6 || day < 1) throw ArgumentError('day number should be from 1 to 6: $day');
     if (_room.length > 10) throw ArgumentError('room can\'t be more than 10 characters long');
-    if (repeatType > 2 || repeatType < 0) throw ArgumentError('repeat type should be 0, 1, or 2: $repeatType');
     if (startTime.hour > endTime.hour)
       throw ArgumentError("Lecture: end time can't be before the start time: ${startTime.hour} > ${endTime.hour}");
   }
@@ -21,7 +20,11 @@ class Lecture {
       : courseCode = parsedJson['code'],
         _room = parsedJson['room'],
         _day = parsedJson['day'],
-        _repeatType = parsedJson['repeatType'],
+        _repeatType = parsedJson['repeatType'] == 0
+            ? RepeatType.weekly
+            : parsedJson['repeatType'] == 1
+                ? RepeatType.odd
+                : RepeatType.even,
         _startTime = MyTimeOfDay.fromJson(parsedJson['startTime']),
         _endTime = MyTimeOfDay.fromJson(parsedJson['endTime']);
 
@@ -30,7 +33,11 @@ class Lecture {
       'code': courseCode,
       'room': room,
       'day': day,
-      'repeatType': repeatType,
+      'repeatType': repeatType == RepeatType.weekly
+          ? 0
+          : repeatType == RepeatType.odd
+              ? 1
+              : 2,
       'startTime': startTime.toJson(),
       'endTime': endTime.toJson(),
     };
@@ -46,7 +53,7 @@ class Lecture {
   }
 
   /// 0 weekly, 1 odd, 2 even
-  int get repeatType {
+  RepeatType get repeatType {
     return _repeatType;
   }
 
@@ -67,8 +74,7 @@ class Lecture {
     _day = newDay;
   }
 
-  set repeatType(int newRepeat) {
-    if (repeatType > 2 || repeatType < 0) throw ArgumentError('repeat type should be from 0 to 2: $repeatType');
+  set repeatType(RepeatType newRepeat) {
     _repeatType = newRepeat;
   }
 
@@ -123,8 +129,8 @@ class Lecture {
   }
 
   bool isOnThisWeek(int weekNum) {
-    if (repeatType == 0) return true;
-    if ((repeatType == 1 && weekNum.isOdd) || repeatType == 2 && weekNum.isEven) {
+    if (repeatType == RepeatType.weekly) return true;
+    if ((repeatType == RepeatType.odd && weekNum.isOdd) || repeatType == RepeatType.even && weekNum.isEven) {
       return true;
     } else {
       return false;
@@ -191,10 +197,10 @@ class Lecture {
     res += '$room: ';
     res += getDayName(_day);
     switch (_repeatType) {
-      case 0:
+      case RepeatType.weekly:
         res += ' weekly ';
         break;
-      case 1:
+      case RepeatType.odd:
         res += ' on odd weeks ';
         break;
       default:
@@ -206,4 +212,10 @@ class Lecture {
 
     return res;
   }
+}
+
+enum RepeatType {
+  weekly,
+  even,
+  odd,
 }

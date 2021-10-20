@@ -100,7 +100,7 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                                       widget.course.code,
                                       '',
                                       1,
-                                      0,
+                                      RepeatType.weekly,
                                       MyTimeOfDay(hour: 8),
                                       MyTimeOfDay(hour: 10),
                                     ),

@@ -148,9 +148,9 @@ class LectureCard extends StatelessWidget {
 
   String getRepeatString() {
     switch (lecture.repeatType) {
-      case 0:
+      case RepeatType.weekly:
         return 'WEEKLY';
-      case 1:
+      case RepeatType.odd:
         return 'ODD';
       default:
         return 'EVEN';

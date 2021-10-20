@@ -178,7 +178,7 @@ class UserServices {
       // ensure that the date is in the future to avoid errors with notification plugin
       if (date.isBefore(DateTime.now())) date = date.add(Duration(days: 7));
 
-      if (lecture.repeatType == 0) {
+      if (lecture.repeatType == RepeatType.weekly) {
         await flutterLocalNotificationsPlugin.zonedSchedule(
           '$i ${lecture.hashCode}'.hashCode, // random id
           title,
@@ -198,7 +198,7 @@ class UserServices {
           // if it is odd and the lecture is odd or it's even and the lecture is even, then schedule the notification.
           var loopDate = date.add(Duration(days: 7 * j));
           final isOdd = getWeekNum(loopDate).isOdd;
-          if ((isOdd && lecture.repeatType == 1) || (!isOdd && lecture.repeatType == 2)) {
+          if ((isOdd && lecture.repeatType == RepeatType.odd) || (!isOdd && lecture.repeatType == RepeatType.even)) {
             await flutterLocalNotificationsPlugin.zonedSchedule(
               '$i-$j ${lecture.hashCode}'.hashCode, // random id
               title,

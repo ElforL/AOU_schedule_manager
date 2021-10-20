@@ -16,7 +16,7 @@ class LectureEditCard extends StatefulWidget {
 
 class _LectureEditCardState extends State<LectureEditCard> {
   int dayVal;
-  int repeatVal;
+  RepeatType repeatVal;
   MyTimeOfDay startVal;
   MyTimeOfDay endVal;
   String roomVal;
@@ -134,7 +134,7 @@ class _LectureEditCardState extends State<LectureEditCard> {
                         fontSize: 12,
                       ),
                     ),
-                    DropdownButton<int>(
+                    DropdownButton<RepeatType>(
                         isExpanded: true,
 
                         /// Colors
@@ -158,23 +158,23 @@ class _LectureEditCardState extends State<LectureEditCard> {
                         /// Values
                         value: repeatVal,
                         elevation: 1,
-                        onChanged: (int newVal) {
+                        onChanged: (RepeatType newVal) {
                           setState(() {
                             repeatVal = newVal;
                             widget.lecture.repeatType = newVal;
                           });
                         },
                         items: [
-                          DropdownMenuItem<int>(
-                            value: (0),
+                          DropdownMenuItem<RepeatType>(
+                            value: (RepeatType.weekly),
                             child: Text('Weekly'),
                           ),
-                          DropdownMenuItem<int>(
-                            value: (1),
+                          DropdownMenuItem<RepeatType>(
+                            value: (RepeatType.odd),
                             child: Text('Odd'),
                           ),
-                          DropdownMenuItem<int>(
-                            value: (2),
+                          DropdownMenuItem<RepeatType>(
+                            value: (RepeatType.even),
                             child: Text('Even'),
                           ),
                         ]),
