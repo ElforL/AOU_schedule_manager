@@ -126,7 +126,7 @@ class UserServices {
       if (date.isBefore(DateTime.now())) return;
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
+        event.hashCode,
         title,
         body,
         date,
@@ -158,6 +158,14 @@ class UserServices {
 
     var lectures = getAllLectures();
 
+    const notificationDetails = const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'lecNoti', // channel id
+        'lectures channel', // channel name
+        'channel for lectures notifications', // channel desc
+      ),
+    );
+
     for (i = 0; i < lectures.length; i++) {
       var lecture = lectures[i];
       var title = '${lecture.courseCode} Lecture';
@@ -166,31 +174,43 @@ class UserServices {
       if (lecture.room.isNotEmpty) {
         body = body + ' in ${lecture.room}';
       }
-      if (lecture.repeatType != 0) {
-        title = 'Possible ' + title;
-        body = 'Possible ' + body + '. Check the app';
-      }
-
       var date = _getNextDateOfLec(lecture).add(Duration(minutes: -minutesBefore));
       // ensure that the date is in the future to avoid errors with notification plugin
       if (date.isBefore(DateTime.now())) date = date.add(Duration(days: 7));
 
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        i,
-        title,
-        body,
-        date,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'lecNoti', // channel id
-            'lectures channel', // channel name
-            'channel for lectures notifications', // channel desc
-          ),
-        ),
-        androidAllowWhileIdle: true,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      );
+      if (lecture.repeatType == 0) {
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          '$i ${lecture.hashCode}'.hashCode, // random id
+          title,
+          body,
+          date,
+          notificationDetails,
+          androidAllowWhileIdle: true,
+          matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        );
+      } else {
+        for (var j = 0; j < 27; j++) {
+          // [date] is the next date for the lecture - [minutesBefore] disregarding the repeat type
+          // So if it's even and this week is odd date could be in this week.
+          //
+          // So we go through 27 weeks (6 months). and check each week to see if it's odd or not ([isOdd] variable)
+          // if it is odd and the lecture is odd or it's even and the lecture is even, then schedule the notification.
+          var loopDate = date.add(Duration(days: 7 * j));
+          final isOdd = getWeekNum(loopDate).isOdd;
+          if ((isOdd && lecture.repeatType == 1) || (!isOdd && lecture.repeatType == 2)) {
+            await flutterLocalNotificationsPlugin.zonedSchedule(
+              '$i-$j ${lecture.hashCode}'.hashCode, // random id
+              title,
+              body,
+              date,
+              notificationDetails,
+              androidAllowWhileIdle: true,
+              uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+            );
+          }
+        }
+      }
     }
     return ++i;
   }
