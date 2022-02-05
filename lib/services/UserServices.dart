@@ -134,7 +134,7 @@ class UserServices {
           android: AndroidNotificationDetails(
             'evenNoti', // channel id
             'events channel', // channel name
-            'channel for events notifications', // channel desc
+            channelDescription: 'channel for events notifications', // channel desc
           ),
         ),
         androidAllowWhileIdle: true,
@@ -162,7 +162,7 @@ class UserServices {
       android: AndroidNotificationDetails(
         'lecNoti', // channel id
         'lectures channel', // channel name
-        'channel for lectures notifications', // channel desc
+        channelDescription: 'channel for lectures notifications', // channel desc
       ),
     );
 
