@@ -128,9 +128,6 @@ class _DatePickerState extends State<DatePicker> {
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(selectedDate.year - 9),
       lastDate: DateTime(selectedDate.year + 9),
-      selectableDayPredicate: (day) {
-        return day.weekday == 7;
-      },
       helpText: 'SELECT SEMESTER START DATE',
     );
     if (picked != null && picked != selectedDate)

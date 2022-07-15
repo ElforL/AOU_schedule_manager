@@ -79,7 +79,7 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: SizedBox(
                           height: 28,
-                          child: RaisedButton.icon(
+                          child: ElevatedButton.icon(
                               icon: Icon(
                                 Icons.add,
                                 size: 20,
@@ -88,10 +88,12 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                                 "ADD LECTURE",
                                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                               ),
-                              textColor: Colors.black,
-                              color: Color(0xffe7e7e7),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Color(0xffe7e7e7)),
+                                foregroundColor: MaterialStateProperty.all(Colors.black),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -144,7 +146,7 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: SizedBox(
                           height: 28,
-                          child: RaisedButton.icon(
+                          child: ElevatedButton.icon(
                               icon: Icon(
                                 Icons.add,
                                 size: 20,
@@ -153,10 +155,12 @@ class CourseEditScreenState extends State<CourseEditScreen> {
                                 "ADD EVENT",
                                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                               ),
-                              textColor: Colors.black,
-                              color: Color(0xffe7e7e7),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Color(0xffe7e7e7)),
+                                foregroundColor: MaterialStateProperty.all(Colors.black),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -175,12 +179,14 @@ class CourseEditScreenState extends State<CourseEditScreen> {
           // DELETE
           Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: RaisedButton(
-              color: Colors.red,
-              child: Text('DELETE COURSE'),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
               ),
+              child: Text('DELETE COURSE'),
               onPressed: () {
                 widget.userServices.courses.remove(widget.course);
                 Navigator.pop(context);

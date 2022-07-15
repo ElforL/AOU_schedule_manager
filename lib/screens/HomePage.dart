@@ -57,11 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _showNewVersionDialog(github.Release release) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () => Navigator.pop(context),
     );
-    Widget downloadButton = FlatButton(
+    Widget downloadButton = TextButton(
       child: Text("DOWNLOAD PAGE"),
       onPressed: () => _launchURL('https://github.com/ElforL/AOU_schedule_manager/releases'),
     );
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _showUnableToOpenLinkDialog() {
     const url = 'https://github.com/ElforL/AOU_schedule_manager/releases';
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () => Navigator.pop(context),
     );
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Text('Or use the link to access the page manually:'),
           SizedBox(height: 10),
           Theme(
-            data: ThemeData(textSelectionColor: Colors.white),
+            data: ThemeData(textSelectionTheme: TextSelectionThemeData(selectionColor: Colors.white)),
             child: SelectableText(
               url,
               style: TextStyle(color: Colors.blue),
@@ -339,8 +339,10 @@ class EmptyCoursesPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 25),
-                  RaisedButton(
-                    color: Color(0xffe7e7e7),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Color(0xffe7e7e7)),
+                    ),
                     onPressed: onPress,
                     child: Text(
                       "ADD COURSES",
