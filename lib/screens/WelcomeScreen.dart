@@ -120,7 +120,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: FlatButton.icon(
+                  child: TextButton.icon(
                     label: Text(_getLeftBtnText()),
                     icon: Icon(
                       _getLeftBtnText() == 'PREVIOUS' ? Icons.navigate_before_rounded : Icons.skip_previous,
@@ -131,7 +131,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 Expanded(
-                  child: FlatButton.icon(
+                  child: TextButton.icon(
                     label: Icon(
                       _getRightBtnText() == 'NEXT' ? Icons.navigate_next_rounded : Icons.done,
                     ),

@@ -14,14 +14,14 @@ class _DurationDialoigState extends State<DurationDialoig> {
 
   int currentVal;
 
-  Widget okButton() => FlatButton(
+  Widget okButton() => TextButton(
         child: Text("OK"),
         onPressed: () {
           Navigator.pop(context, currentVal);
         },
       );
 
-  Widget cancelButton() => FlatButton(
+  Widget cancelButton() => TextButton(
         child: Text("CANCEL"),
         onPressed: () => Navigator.pop(context),
       );
